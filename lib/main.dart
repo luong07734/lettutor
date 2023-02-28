@@ -5,7 +5,9 @@ import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/view/authentication/pages/forgot_password.dart';
 import 'package:lettutor/view/authentication/pages/log_in.dart';
 import 'package:lettutor/view/authentication/pages/sign_up.dart';
-import 'package:lettutor/view/main_feature/pages/HomePage.dart';
+import 'package:lettutor/view/main_feature/pages/course_page.dart';
+import 'package:lettutor/view/main_feature/pages/home_page.dart';
+import 'package:lettutor/view/main_feature/pages/tutors_page.dart';
 
 void main() {
   runApp(
@@ -83,12 +85,14 @@ class _MyAppState extends State<MyApp> {
           // color: Colors.blueAccent,
           child:
               HomePage(page: _page, bottomNavigationKey: _bottomNavigationKey),
+          // TutorsPage(),
+          // CoursePage(),
         ),
-        floatingActionButton: const FloatingActionButton(
-          tooltip: 'Add', // used by assistive technologies
-          onPressed: null,
-          child: Icon(Icons.add),
-        ),
+        // floatingActionButton: const FloatingActionButton(
+        //   tooltip: 'Add', // used by assistive technologies
+        //   onPressed: null,
+        //   child: Icon(Icons.add),
+        // ),
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Colors.white,
           color: Colors.blueAccent,

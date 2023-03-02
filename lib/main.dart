@@ -1,10 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/view/authentication/pages/forgot_password.dart';
 import 'package:lettutor/view/authentication/pages/log_in.dart';
 import 'package:lettutor/view/authentication/pages/sign_up.dart';
+import 'package:lettutor/view/detail/pages/teacher_detail.dart';
 import 'package:lettutor/view/main_feature/pages/course_page.dart';
 import 'package:lettutor/view/main_feature/pages/home_page.dart';
 import 'package:lettutor/view/main_feature/pages/tutors_page.dart';
@@ -84,9 +86,10 @@ class _MyAppState extends State<MyApp> {
         body: Container(
           // color: Colors.blueAccent,
           child:
-              HomePage(page: _page, bottomNavigationKey: _bottomNavigationKey),
-          // TutorsPage(),
-          // CoursePage(),
+              // HomePage(page: _page, bottomNavigationKey: _bottomNavigationKey),
+              // TutorsPage(),
+              // CoursePage(),
+              TeacherDetail(),
         ),
         // floatingActionButton: const FloatingActionButton(
         //   tooltip: 'Add', // used by assistive technologies
@@ -152,7 +155,7 @@ class _MyAppState extends State<MyApp> {
                     shape: BoxShape.circle,
                   ),
                   child: Image.asset(
-                    'assets/images/flutter_logo.png',
+                    AssetsManager.appLogoImage,
                   ),
                 ),
                 ListTile(

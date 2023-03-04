@@ -6,7 +6,10 @@ import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/view/authentication/pages/forgot_password.dart';
 import 'package:lettutor/view/authentication/pages/log_in.dart';
 import 'package:lettutor/view/authentication/pages/sign_up.dart';
+import 'package:lettutor/view/booking_view/views/history.dart';
+import 'package:lettutor/view/booking_view/views/schedule.dart';
 import 'package:lettutor/view/detail/pages/course_detail.dart';
+import 'package:lettutor/view/detail/pages/lesson_detail.dart';
 import 'package:lettutor/view/detail/pages/teacher_detail.dart';
 import 'package:lettutor/view/main_feature/pages/course_page.dart';
 import 'package:lettutor/view/main_feature/pages/home_page.dart';
@@ -20,6 +23,7 @@ void main() {
       home: MyApp(),
     ),
   );
+  // runApp(LessonDetail());
 }
 
 class MyApp extends StatefulWidget {
@@ -91,7 +95,10 @@ class _MyAppState extends State<MyApp> {
               // TutorsPage(),
               // CoursePage(),
               // TeacherDetail(),
-              CourseDetail(),
+              // CourseDetail(),
+              //  LessonDetail(),
+              // SchedulePage(),
+              HistoryPage(),
         ),
         // floatingActionButton: const FloatingActionButton(
         //   tooltip: 'Add', // used by assistive technologies

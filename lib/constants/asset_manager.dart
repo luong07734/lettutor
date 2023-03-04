@@ -5,4 +5,6 @@ class AssetsManager {
   static String googleImage = '$imagePath/google_logo.png';
   static String avatarImage = '$imagePath/fake_avatar.jpeg';
   static String courseImage = '$imagePath/fake_course.png';
+  static String scheduleImage = '$imagePath/schedule.png';
+  static String historyImage = '$imagePath/history.png';
 }

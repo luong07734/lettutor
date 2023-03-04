@@ -18,7 +18,7 @@ class RatingWidget extends StatelessWidget {
                 : (i - rating < 1 ? Icons.star_half : Icons.star_border),
             color: i < rating
                 ? Colors.yellow
-                : (i - rating < 1 ? Colors.yellow : Colors.grey),
+                : (i - rating < 1 ? Colors.yellow : Colors.grey[300]),
           ),
         SizedBox(width: 8.0),
         Text(text),

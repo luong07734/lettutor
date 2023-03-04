@@ -11,9 +11,12 @@ import 'package:lettutor/view/booking_view/views/schedule.dart';
 import 'package:lettutor/view/detail/pages/course_detail.dart';
 import 'package:lettutor/view/detail/pages/lesson_detail.dart';
 import 'package:lettutor/view/detail/pages/teacher_detail.dart';
+import 'package:lettutor/view/drawer/pages/approval_form.dart';
+import 'package:lettutor/view/drawer/pages/favorite_tutors.dart';
 import 'package:lettutor/view/main_feature/pages/course_page.dart';
 import 'package:lettutor/view/main_feature/pages/home_page.dart';
 import 'package:lettutor/view/main_feature/pages/tutors_page.dart';
+import 'package:lettutor/view/video_call/pages/video_call.dart';
 
 void main() {
   runApp(
@@ -35,7 +38,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  int _page = 0;
+  List<Widget> _pages = [
+    HomePage(),
+    VideoCallWidget(),
+    SchedulePage(),
+    TutorsPage(),
+    TeacherDetail(),
+    HistoryPage(),
+    FavoriteTutorsPage(),
+  ];
+  int _currentIndex = 0;
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final _advancedDrawerController = AdvancedDrawerController();
 
@@ -79,26 +91,25 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           title: const Text('Example title'),
-          actions: const [
-            IconButton(
-              icon: Icon(Icons.search),
-              tooltip: 'Search',
-              onPressed: null,
-            ),
-          ],
+          // actions: const [
+          //   IconButton(
+          //     icon: Icon(Icons.search),
+          //     tooltip: 'Search',
+          //     onPressed: null,
+          //   ),
+          // ],
         ),
         // body is the majority of the screen.
         body: Container(
           // color: Colors.blueAccent,
-          child:
-              // HomePage(page: _page, bottomNavigationKey: _bottomNavigationKey),
-              // TutorsPage(),
-              // CoursePage(),
-              // TeacherDetail(),
-              // CourseDetail(),
-              //  LessonDetail(),
-              // SchedulePage(),
-              HistoryPage(),
+          child: _pages[_currentIndex],
+          // TutorsPage(),
+          // CoursePage(),
+          // TeacherDetail(),
+          // CourseDetail(),
+          //  LessonDetail(),
+          // SchedulePage(),
+          // HistoryPage(),
         ),
         // floatingActionButton: const FloatingActionButton(
         //   tooltip: 'Add', // used by assistive technologies
@@ -138,7 +149,7 @@ class _MyAppState extends State<MyApp> {
           onTap: (index) {
             //Handle button tap
             setState(() {
-              _page = index;
+              _currentIndex = index;
             });
           },
         ),
@@ -168,19 +179,29 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = 5;
+                    });
+                    _advancedDrawerController.hideDrawer();
+                  },
                   leading: Icon(Icons.schedule),
                   title: Text('Schedule History'),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = 6;
+                    });
+                    _advancedDrawerController.hideDrawer();
+                  },
                   leading: Icon(Icons.favorite),
-                  title: Text('Favourite Teachers'),
+                  title: Text('Favourite Tutors'),
                 ),
                 ListTile(
                   onTap: () {},
                   leading: Icon(Icons.co_present),
-                  title: Text('Become a teacher'),
+                  title: Text('Become a Tutor'),
                 ),
                 ListTile(
                   onTap: () {},

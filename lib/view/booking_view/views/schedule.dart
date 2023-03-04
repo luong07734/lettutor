@@ -9,10 +9,13 @@ class SchedulePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(
-          AssetsManager.scheduleImage,
-          width: 200,
-          height: 200,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Image.asset(
+            AssetsManager.scheduleImage,
+            width: 100,
+            height: 100,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),

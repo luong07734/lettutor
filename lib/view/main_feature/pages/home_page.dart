@@ -6,16 +6,7 @@ import 'package:lettutor/view/main_feature/components/teacher_card.dart';
 import '../../../constants/fake_data.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({
-    Key? key,
-    required int page,
-    required GlobalKey<CurvedNavigationBarState> bottomNavigationKey,
-  })  : _page = page,
-        _bottomNavigationKey = bottomNavigationKey,
-        super(key: key);
-
-  final int _page;
-  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

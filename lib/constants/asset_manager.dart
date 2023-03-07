@@ -7,4 +7,5 @@ class AssetsManager {
   static String courseImage = '$imagePath/fake_course.png';
   static String scheduleImage = '$imagePath/schedule.png';
   static String historyImage = '$imagePath/history.png';
+  static String doneImage = '$imagePath/done.png';
 }

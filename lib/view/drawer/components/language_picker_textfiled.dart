@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class LanguageFormField extends StatefulWidget {
   final List<String> languages;
   final IconData icon;
+  final String label;
 
-  LanguageFormField({required this.languages, required this.icon});
+  LanguageFormField({required this.languages, required this.icon, required this.label});
   @override
   _LanguageFormFieldState createState() => _LanguageFormFieldState();
 }
@@ -21,7 +22,7 @@ class _LanguageFormFieldState extends State<LanguageFormField> {
           icon: Icon(widget.icon),
           onPressed: () => _showLanguagePicker(context),
         ),
-        labelText: 'Languages',
+        labelText: widget.label,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

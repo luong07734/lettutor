@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/view/authentication/components/custom_textfield.dart';
 import 'package:lettutor/view/detail/components/profile_description.dart';
@@ -11,6 +12,7 @@ import 'package:lettutor/view/drawer/components/custom_textfield.dart';
 import 'package:lettutor/view/drawer/components/date_picker_textfield.dart';
 import 'package:lettutor/view/drawer/components/language_picker_textfiled.dart';
 import 'package:lettutor/view/drawer/components/paragraph_textfield.dart';
+import 'package:video_player/video_player.dart';
 
 class RegisterStepper extends StatefulWidget {
   @override
@@ -18,7 +20,7 @@ class RegisterStepper extends StatefulWidget {
 }
 
 class _RegisterStepperState extends State<RegisterStepper> {
-  int currentStep = 0;
+  int _currentStep = 0;
   int _selectedOption = 1; // initial selected option value
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _fullnameController = TextEditingController();
@@ -58,6 +60,24 @@ class _RegisterStepperState extends State<RegisterStepper> {
     });
   }
 
+  // handle video picker
+  VideoPlayerController? _videoPlayerController;
+  File? _video;
+
+  final picker = ImagePicker();
+
+  _pickVideo() async {
+    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
+
+    _video = File(pickedFile!.path);
+
+    _videoPlayerController = VideoPlayerController.file(_video!)
+      ..initialize().then((_) {
+        setState(() {});
+        _videoPlayerController!.play();
+      });
+  }
+
   @override
   void dispose() {
     _fullnameController.dispose();
@@ -69,17 +89,28 @@ class _RegisterStepperState extends State<RegisterStepper> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
-      currentStep: 0,
+      currentStep: _currentStep,
+      onStepTapped: (index) {
+        setState(() {
+          _currentStep = index;
+        });
+      },
       onStepContinue: () {
-        if (_formKey.currentState!.validate()) {
-          setState(() {
-            currentStep++;
-          });
-        }
+        setState(() {
+          if (_currentStep < 2) {
+            _currentStep++;
+          } else {
+            // perform any action on last step continue button press
+          }
+        });
       },
       onStepCancel: () {
         setState(() {
-          currentStep--;
+          if (_currentStep > 0) {
+            _currentStep--;
+          } else {
+            // perform any action on first step cancel button press
+          }
         });
       },
       steps: [
@@ -189,6 +220,7 @@ class _RegisterStepperState extends State<RegisterStepper> {
               LanguageFormField(
                 languages: _languages,
                 icon: Icons.language,
+                label: "Language",
               ),
               SizedBox(height: 8),
               Divider(
@@ -201,7 +233,11 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   controller: _introductionController,
                   hint: "Example: I was a teacher ..."),
               ProfileTitle(text: "My specialities are"),
-              LanguageFormField(languages: _specialities, icon: Icons.bookmark),
+              LanguageFormField(
+                languages: _specialities,
+                icon: Icons.bookmark,
+                label: "Specialities",
+              ),
               ProfileTitle(text: "I am best at teaching students who are"),
               Column(
                 children: [
@@ -237,6 +273,96 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   ),
                 ],
               )
+            ],
+          ),
+        ),
+        Step(
+          isActive: true,
+          title: Text(
+            'Video Introduction',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProfileTitle(text: "Introduce yourself"),
+              ProfileDescription(
+                  text:
+                      "Let students know what they can expect from a lesson with you by recording a video highlighting your teaching style, expertise and personality. Students can be nervous to speak with a foreigner, so it really helps to have a friendly video that introduces yourself and invites students to call you."),
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                thickness: 0.5,
+                color: Colors.grey[400],
+              ),
+              ProfileTitle(text: "Introduction video"),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Container(
+                  width: double.infinity,
+                  color: Colors.blue,
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'A few useful tips:\n1. Find a clean and quiet space\n2.Smile and look at the camera\n3. Dress smart\n4. Speak for 1-3 minutes\n5. Brand yourself and have fun',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              if (_video != null)
+                _videoPlayerController!.value.isInitialized
+                    ? AspectRatio(
+                        aspectRatio: _videoPlayerController!.value.aspectRatio,
+                        child: VideoPlayer(_videoPlayerController!),
+                      )
+                    : Container()
+              else
+                Text(
+                  "Click on Pick Video to select video",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _pickVideo();
+                },
+                child: Text("Pick Video From Gallery"),
+              ),
+            ],
+          ),
+        ),
+        Step(
+          title: Text(
+            'Approval',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          isActive: true,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                AssetsManager.doneImage,
+              ),
+              Text(
+                "You have done all the steps\n Pleasse, wait for the operator's approval",
+                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("Submit"),
+              ),
             ],
           ),
         ),

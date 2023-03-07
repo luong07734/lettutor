@@ -13,6 +13,7 @@ import 'package:lettutor/view/detail/pages/lesson_detail.dart';
 import 'package:lettutor/view/detail/pages/teacher_detail.dart';
 import 'package:lettutor/view/drawer/pages/approval_form.dart';
 import 'package:lettutor/view/drawer/pages/favorite_tutors.dart';
+import 'package:lettutor/view/drawer/pages/stepper.dart';
 import 'package:lettutor/view/main_feature/pages/course_page.dart';
 import 'package:lettutor/view/main_feature/pages/home_page.dart';
 import 'package:lettutor/view/main_feature/pages/tutors_page.dart';
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
     TeacherDetail(),
     HistoryPage(),
     FavoriteTutorsPage(),
+    RegisterStepper(),
   ];
   int _currentIndex = 0;
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
@@ -199,7 +201,12 @@ class _MyAppState extends State<MyApp> {
                   title: Text('Favourite Tutors'),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = 7;
+                    });
+                    _advancedDrawerController.hideDrawer();
+                  },
                   leading: Icon(Icons.co_present),
                   title: Text('Become a Tutor'),
                 ),

@@ -42,6 +42,12 @@ dependencies:
   video_player: ^2.5.2
   flutter_pdfview: ^1.2.5
   path_provider: ^2.0.13
+  image_picker: ^0.8.6+4
+  intl: ^0.18.0
+  intl_phone_number_input: ^0.7.2
+  country_picker: ^2.0.19
+  country_pickers: ^2.0.0
+  country_icons: ^2.0.2
 
 
 dev_dependencies:

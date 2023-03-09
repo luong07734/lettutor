@@ -3,17 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/main.dart';
 import 'package:lettutor/view/authentication/pages/forgot_password.dart';
+import 'package:lettutor/view/authentication/pages/log_in.dart';
 
-class SigninForm extends StatefulWidget {
+class SignupForm extends StatefulWidget {
   @override
-  _SigninFormState createState() => _SigninFormState();
+  _SignupFormState createState() => _SignupFormState();
 }
 
-class _SigninFormState extends State<SigninForm> {
+class _SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
-  String? _email;
-  String? _password;
+  final _userNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +29,33 @@ class _SigninFormState extends State<SigninForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
+            const Text('User name', style: TextStyle(fontSize: 16)),
+            TextFormField(
+              controller: _userNameController,
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter your user name';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                hintText: 'Enter your user name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             const Text('Email', style: TextStyle(fontSize: 16)),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
                 }
                 return null;
-              },
-              onChanged: (value) {
-                _email = value;
               },
               decoration: InputDecoration(
                 hintText: 'Enter your email',
@@ -54,9 +74,7 @@ class _SigninFormState extends State<SigninForm> {
                 }
                 return null;
               },
-              onChanged: (value) {
-                _password = value;
-              },
+              controller: _passwordController,
               decoration: InputDecoration(
                 hintText: 'Enter your password',
                 border: OutlineInputBorder(
@@ -74,33 +92,51 @@ class _SigninFormState extends State<SigninForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ForgotPasswordPage(),
-                  ),
-                );
+            const SizedBox(height: 16),
+            const Text('Confirm Password', style: TextStyle(fontSize: 16)),
+            TextFormField(
+              obscureText: !_confirmPasswordVisible,
+              validator: (value) {
+                if (value != _passwordController.text) {
+                  return 'Passwords do not match';
+                }
+                return null;
               },
-              child: Text(
-                'Forgot Password?',
-                style: TextStyle(
-                    color: Colors.blue[600],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
+              controller: _confirmPasswordController,
+              decoration: InputDecoration(
+                hintText: 'Confirm your password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _confirmPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _confirmPasswordVisible = !_confirmPasswordVisible;
+                    });
+                  },
+                ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Do sign in here
-                    print('Email: $_email');
-                    print('Password: $_password');
+                    // Do something with the form data
+                    final userName = _userNameController.text;
+                    final email = _emailController.text;
+                    final password = _passwordController.text;
+                    print('User Name: $userName');
+                    print('Email: $email');
+                    print('Password: $password');
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => MyApp()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                         (Route<dynamic> route) => false);
                   }
                 },
@@ -109,7 +145,7 @@ class _SigninFormState extends State<SigninForm> {
                   margin: const EdgeInsets.symmetric(horizontal: 25),
                   child: const Center(
                     child: Text(
-                      "SIGN IN",
+                      "SIGN UP",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

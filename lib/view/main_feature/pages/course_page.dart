@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/view/detail/pages/course_detail.dart';
 
 class CoursePage extends StatelessWidget {
   const CoursePage({super.key});
@@ -26,49 +27,58 @@ class CoursePage extends StatelessWidget {
           child: GridView.count(
             crossAxisCount: 2,
             children: List.generate(20, (index) {
-              return GridTile(
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 100,
-                        width: double.infinity,
-                        child: Image.asset(
-                          AssetsManager.courseImage,
-                          fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: (() {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CourseDetail(),
+                      ),
+                    );
+                }),
+                child: GridTile(
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                          width: double.infinity,
+                          child: Image.asset(
+                            AssetsManager.courseImage,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Title $index',
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Title $index',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Subtitle 1',
-                              style: TextStyle(fontSize: 18.0),
+                        Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Subtitle 1',
+                                style: TextStyle(fontSize: 18.0),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Subtitle 2',
-                              style: TextStyle(fontSize: 18.0),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Subtitle 2',
+                                style: TextStyle(fontSize: 18.0),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

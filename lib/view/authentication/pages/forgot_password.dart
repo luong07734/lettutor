@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/authentication/components/custom_button.dart';
+import 'package:lettutor/view/authentication/pages/log_in.dart';
 import '../components/custom_textfield.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -8,25 +9,35 @@ class ForgotPasswordPage extends StatelessWidget {
 
   // text editing controllers
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
-
               // logo
+              const SizedBox(height: 24),
               Image.asset(
-                AssetsManager.appLogoImage,
+                AssetsManager.loginImage,
+                width: 200,
+                height: 200,
               ),
-
-              const SizedBox(height: 50),
+              const SizedBox(height: 36),
+              const Text(
+                "Reset Password",
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
 
               // welcome back, you've been missed!
               Text(
@@ -38,7 +49,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 24),
 
               // username textfield
               CustomTextField(
@@ -48,10 +59,16 @@ class ForgotPasswordPage extends StatelessWidget {
                 icon: const Icon(Icons.email),
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 24),
 
               // sign in button
-              CustomButton(onTap: null, text: 'Send'),
+              CustomButton(
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (Route<dynamic> route) => false);
+                  },
+                  text: 'Send'),
             ],
           ),
         ),

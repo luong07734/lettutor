@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/authentication/components/custom_button.dart';
 import 'package:lettutor/view/authentication/components/log_in_form.dart';
+import 'package:lettutor/view/authentication/pages/sign_up.dart';
 import 'package:lettutor/view/detail/components/profile_title.dart';
 import '../components/custom_textfield.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -108,11 +109,20 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Sign up',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: (() {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SignUpPage(),
+                        ),
+                      );
+                    }),
+                    child: const Text(
+                      'Sign up',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

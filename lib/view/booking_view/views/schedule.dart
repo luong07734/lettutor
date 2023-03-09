@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/view/video_call/pages/video_call.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -110,7 +111,14 @@ class SchedulePage extends StatelessWidget {
                       ),
                       SizedBox(height: 32),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => VideoCallWidget(),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                        },
                         child: Text("Join Meeting"),
                       ),
                     ],

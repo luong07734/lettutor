@@ -24,7 +24,7 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Tutorial',
-      home: MyApp(),
+      home: LoginPage(),
     ),
   );
   // runApp(LessonDetail());
@@ -41,10 +41,9 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   List<Widget> _pages = [
     HomePage(),
-    VideoCallWidget(),
     SchedulePage(),
     TutorsPage(),
-    TeacherDetail(),
+    CoursePage(),
     HistoryPage(),
     FavoriteTutorsPage(),
     RegisterStepper(),
@@ -105,13 +104,6 @@ class _MyAppState extends State<MyApp> {
         body: Container(
           // color: Colors.blueAccent,
           child: _pages[_currentIndex],
-          // TutorsPage(),
-          // CoursePage(),
-          // TeacherDetail(),
-          // CourseDetail(),
-          //  LessonDetail(),
-          // SchedulePage(),
-          // HistoryPage(),
         ),
         // floatingActionButton: const FloatingActionButton(
         //   tooltip: 'Add', // used by assistive technologies
@@ -127,11 +119,11 @@ class _MyAppState extends State<MyApp> {
               size: 30,
               color: Colors.white,
             ),
-            Icon(
-              Icons.message,
-              size: 30,
-              color: Colors.white,
-            ),
+            // Icon(
+            //   Icons.message,
+            //   size: 30,
+            //   color: Colors.white,
+            // ),
             Icon(
               Icons.lock_clock,
               size: 30,
@@ -143,7 +135,7 @@ class _MyAppState extends State<MyApp> {
               color: Colors.white,
             ),
             Icon(
-              Icons.settings,
+              Icons.school,
               size: 30,
               color: Colors.white,
             ),
@@ -182,9 +174,11 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ListTile(
                   onTap: () {
-                    setState(() {
-                      _currentIndex = 5;
-                    });
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const HistoryPage(),
+                      ),
+                    );
                     _advancedDrawerController.hideDrawer();
                   },
                   leading: Icon(Icons.schedule),
@@ -192,9 +186,11 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ListTile(
                   onTap: () {
-                    setState(() {
-                      _currentIndex = 6;
-                    });
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const FavoriteTutorsPage(),
+                      ),
+                    );
                     _advancedDrawerController.hideDrawer();
                   },
                   leading: Icon(Icons.favorite),
@@ -202,9 +198,11 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ListTile(
                   onTap: () {
-                    setState(() {
-                      _currentIndex = 7;
-                    });
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => RegisterStepper(),
+                      ),
+                    );
                     _advancedDrawerController.hideDrawer();
                   },
                   leading: Icon(Icons.co_present),
@@ -216,7 +214,11 @@ class _MyAppState extends State<MyApp> {
                   title: Text('Settings'),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (Route<dynamic> route) => false);
+                  },
                   leading: Icon(Icons.logout),
                   title: Text('Logout'),
                 ),

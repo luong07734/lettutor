@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/authentication/components/custom_button.dart';
+import 'package:lettutor/view/authentication/components/log_in_form.dart';
+import 'package:lettutor/view/detail/components/profile_title.dart';
 import '../components/custom_textfield.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -15,79 +19,41 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
-
               // logo
               Image.asset(
-                AssetsManager.appLogoImage,
+                AssetsManager.loginImage,
+                width: 200,
+                height: 200,
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 12),
 
+              ProfileTitle(text: "Say hello to your English tutors"),
               // welcome back, you've been missed!
-              Text(
-                'Welcome back you\'ve been missed!',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              // username textfield
-              CustomTextField(
-                controller: usernameController,
-                hintText: 'Username',
-                obscureText: false,
-                icon: const Icon(Icons.people),
-              ),
-
-              const SizedBox(height: 10),
-
-              // password textfield
-              CustomTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-                icon: const Icon(Icons.password),
-              ),
-
-              const SizedBox(height: 10),
-
-              // forgot password?
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Text(
+                  'Become fluent faster through one on one video chat lessons tailored to your goals.',
+                  style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
               ),
 
-              const SizedBox(height: 25),
-
-              // sign in button
-              CustomButton(
-                onTap: signUserIn,
-                text: 'Log in'
-              ),
-
-              const SizedBox(height: 50),
-
+              SigninForm(),
+              const SizedBox(height: 24.0),
               // or continue with
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Row(
                   children: [
                     Expanded(
@@ -113,47 +79,37 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 50),
-
               // google + apple sign in buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // IconButton(
-                  //   onPressed: () {
-                  //     // TODO: handle Google sign up
-                  //   },
-                  //   icon: Icon(
-                  //     FontAwesome.google,
-                  //     color: Colors.red,
-                  //   ),
-                  // ),
+                  IconButton(
+                    onPressed: () {
+                      // TODO: handle Facebook sign up
+                    },
+                    icon: const Icon(FontAwesomeIcons.facebook, size: 25.0),
+                  ),
                   const SizedBox(width: 25),
                   IconButton(
                     onPressed: () {
                       // TODO: handle Facebook sign up
                     },
-                    icon: const Icon(Icons.facebook),
+                    icon: const Icon(FontAwesomeIcons.google, size: 25.0),
                   ),
-
-                  // apple button
-                  // SquareTile(imagePath: 'lib/images/apple.png')
                 ],
               ),
-
-              const SizedBox(height: 50),
-
+              const SizedBox(height: 8),
               // not a member? register now
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have account?",
+                    "Not a member yet?",
                     style: TextStyle(color: Colors.grey[700]),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 8),
                   const Text(
-                    'Register now',
+                    'Sign up',
                     style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,

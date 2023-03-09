@@ -64,7 +64,7 @@ class TutorsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: TeacherCard(index),
+                child: TeacherCard(index, context),
               );
             },
           ),

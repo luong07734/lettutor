@@ -8,4 +8,5 @@ class AssetsManager {
   static String scheduleImage = '$imagePath/schedule.png';
   static String historyImage = '$imagePath/history.png';
   static String doneImage = '$imagePath/done.png';
+  static String loginImage = '$imagePath/login_image.png';
 }

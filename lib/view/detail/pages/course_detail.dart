@@ -3,6 +3,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/view/detail/components/profile_description.dart';
 import 'package:lettutor/view/detail/components/profile_title.dart';
+import 'package:lettutor/view/detail/pages/lesson_detail.dart';
 
 class CourseDetail extends StatelessWidget {
   const CourseDetail({super.key});
@@ -185,15 +186,24 @@ class CourseDetail extends StatelessWidget {
                 itemCount:
                     10, // Replace this with the actual number of items you want to display
                 itemBuilder: (BuildContext context, int index) {
-                  return const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      '1. Social Media',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LessonDetail(),
+                        ),
+                      );
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '1. Social Media',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                      textAlign: TextAlign.start,
                     ),
                   );
                 },

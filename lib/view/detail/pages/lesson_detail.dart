@@ -18,6 +18,7 @@ class LessonDetail extends StatefulWidget {
 class _LessonDetailState extends State<LessonDetail> {
   String remotePDFpath = "";
   int _selectedIndex = -1;
+  bool _isLoading = false;
 
   List<String> _titles = [
     '1. Food You Love',
@@ -30,17 +31,20 @@ class _LessonDetailState extends State<LessonDetail> {
   void initState() {
     super.initState();
 
-    createFileOfPdfUrl(
-            "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf")
-        .then((f) {
-      setState(() {
-        remotePDFpath = f.path;
-      });
-    });
+    // createFileOfPdfUrl(
+    //         "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf")
+    //     .then((f) {
+    //   setState(() {
+    //     remotePDFpath = f.path;
+    //   });
+    // });
   }
 
   Future<File> createFileOfPdfUrl(String url) async {
     Completer<File> completer = Completer();
+    setState(() {
+      _isLoading = true;
+    });
     print("Start download file from internet!");
     try {
       // "https://berlin2017.droidcon.cod.newthinking.net/sites/global.droidcon.cod.newthinking.net/files/media/documents/Flutter%20-%2060FPS%20UI%20of%20the%20future%20%20-%20DroidconDE%2017.pdf";
@@ -66,136 +70,155 @@ class _LessonDetailState extends State<LessonDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Builder(
-      builder: (BuildContext context) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Card(
-                elevation: 20,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      child: Image.asset(
-                        AssetsManager.courseImage,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Basic Conversation Topics',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Gain confidence speaking about familiar topics",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'List topics',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: ListView.builder(
-                  itemCount: _titles.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                        createFileOfPdfUrl(
-                                "https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf")
-                            .then((f) {
-                          setState(() {
-                            remotePDFpath = f.path;
-                          });
-                        });
-                        if (remotePDFpath.isNotEmpty) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PDFScreen(path: remotePDFpath),
-                            ),
-                          );
-                        }
-                      },
-                      onHover: (value) {
-                        setState(() {
-                          if (value) {
-                            _selectedIndex = index;
-                          } else {
-                            _selectedIndex = -1;
-                          }
-                        });
-                      },
-                      child: Container(
-                        color: _selectedIndex == index ? Colors.grey : null,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            _titles[index],
-                            style: TextStyle(
-                              color: _selectedIndex == index
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+    return Stack(children: [
+      Scaffold(
+        appBar: AppBar(title: Text('Lesson Detail')),
+        body: Center(child: Builder(
+          builder: (BuildContext context) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Card(
+                    elevation: 20,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          child: Image.asset(
+                            AssetsManager.courseImage,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                    );
-                  },
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Basic Conversation Topics',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Gain confidence speaking about familiar topics",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'List topics',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: ListView.builder(
+                      itemCount: _titles.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              _selectedIndex = index;
+                            });
+                            createFileOfPdfUrl(
+                                    "https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf")
+                                .then((f) {
+                              setState(() {
+                                remotePDFpath = f.path;
+                              });
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              if (remotePDFpath.isNotEmpty) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PDFScreen(path: remotePDFpath),
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                          onHover: (value) {
+                            setState(() {
+                              if (value) {
+                                _selectedIndex = index;
+                              } else {
+                                _selectedIndex = -1;
+                              }
+                            });
+                          },
+                          child: Container(
+                            color: _selectedIndex == index ? Colors.grey : null,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                _titles[index],
+                                style: TextStyle(
+                                  color: _selectedIndex == index
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                // TextButton(
+                //   child: Text("Remote PDF"),
+                //   onPressed: () {
+                //     if (remotePDFpath.isNotEmpty) {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => PDFScreen(path: remotePDFpath),
+                //         ),
+                //       );
+                //     }
+                //   },
+                // ),
+              ],
+            );
+          },
+        )),
+      ),
+      if (_isLoading)
+        IgnorePointer(
+          child: Container(
+            color: Colors.black.withOpacity(0.5),
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-            // TextButton(
-            //   child: Text("Remote PDF"),
-            //   onPressed: () {
-            //     if (remotePDFpath.isNotEmpty) {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => PDFScreen(path: remotePDFpath),
-            //         ),
-            //       );
-            //     }
-            //   },
-            // ),
-          ],
-        );
-      },
-    ));
+          ),
+          ignoring: false, // Set this to true to prevent clicks
+        ),
+    ]);
   }
 }
 

@@ -1,9 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/detail/pages/course_detail.dart';
+import 'package:lettutor/view/main_feature/components/course_card.dart';
 
 class CoursePage extends StatelessWidget {
-  const CoursePage({super.key});
+  CoursePage({super.key});
+  final List<Map<String, String>> _items = [
+    {
+      'title': 'English Conversation 1022222222',
+      'subtitle1':
+          'Even more approachable lessons for absolute person lorem ipsum ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+    {
+      'title': 'English Conversation 102',
+      'subtitle1': 'Even more approachable lessons for absolute ',
+      'subtitle2': 'Intermediate . 10 lessons',
+      'image': 'https://picsum.photos/200/300'
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,66 +94,26 @@ class CoursePage extends StatelessWidget {
           ),
         ),
         Flexible(
-          child: GridView.count(
-            crossAxisCount: 2,
-            children: List.generate(20, (index) {
-              return GestureDetector(
-                onTap: (() {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const CourseDetail(),
-                      ),
-                    );
-                }),
-                child: GridTile(
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: 100,
-                          width: double.infinity,
-                          child: Image.asset(
-                            AssetsManager.courseImage,
-                            fit: BoxFit.cover,
-                          ),
+          child: GridView.builder(
+              itemCount: _items.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 4 / 5,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                    onTap: (() {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const CourseDetail(),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Title $index',
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Subtitle 1',
-                                style: TextStyle(fontSize: 18.0),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Subtitle 2',
-                                style: TextStyle(fontSize: 18.0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
+                      );
+                    }),
+                    child: CourseCard(
+                      index: index,
+                      items: _items,
+                    ));
+              }),
         ),
       ],
     );

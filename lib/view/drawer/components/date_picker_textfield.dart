@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatePickerFormField extends StatefulWidget {
@@ -8,8 +6,8 @@ class DatePickerFormField extends StatefulWidget {
   final TextEditingController controller;
   final String hint;
 
-  DatePickerFormField(
-      {required this.title, required this.controller, required this.hint});
+  const DatePickerFormField(
+      {super.key, required this.title, required this.controller, required this.hint});
 
   @override
   _DatePickerFormFieldState createState() => _DatePickerFormFieldState();
@@ -25,11 +23,12 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
       firstDate: DateTime(1900),
       lastDate: DateTime(2100),
     );
-    if (picked != null && picked != _selectedDate)
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
         widget.controller.text = DateFormat.yMd().format(_selectedDate!);
       });
+    }
   }
 
   @override
@@ -44,7 +43,7 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         suffixIcon: IconButton(
-          icon: Icon(Icons.calendar_today),
+          icon: const Icon(Icons.calendar_today),
           onPressed: () => _selectDate(context),
         ),
       ),

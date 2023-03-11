@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
-import 'package:lettutor/view/authentication/components/custom_button.dart';
-import 'package:lettutor/view/authentication/components/log_in_form.dart';
 import 'package:lettutor/view/authentication/components/sign_up_form.dart';
 import 'package:lettutor/view/authentication/pages/log_in.dart';
-import 'package:lettutor/view/authentication/pages/sign_up.dart';
 import 'package:lettutor/view/detail/components/profile_title.dart';
-import '../components/custom_textfield.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -39,7 +34,7 @@ class SignUpPage extends StatelessWidget {
 
                 const SizedBox(height: 12),
 
-                ProfileTitle(text: "Start learning with LetTutor"),
+                const ProfileTitle(text: "Start learning with LetTutor"),
                 // welcome back, you've been missed!
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),

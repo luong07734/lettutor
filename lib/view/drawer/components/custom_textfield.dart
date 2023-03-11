@@ -6,8 +6,12 @@ class FormTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
 
-  FormTextField(
-      {required this.title, required this.icon, required this.controller, required this.hint});
+  const FormTextField(
+      {super.key,
+      required this.title,
+      required this.icon,
+      required this.controller,
+      required this.hint});
 
   @override
   Widget build(BuildContext context) {

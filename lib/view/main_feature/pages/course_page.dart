@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/detail/pages/course_detail.dart';
 import 'package:lettutor/view/main_feature/components/course_card.dart';
 
@@ -7,70 +6,70 @@ class CoursePage extends StatelessWidget {
   CoursePage({super.key});
   final List<Map<String, String>> _items = [
     {
-      'title': 'English Conversation 1022222222',
+      'title': 'English Conversation 10222 edqweed edeq qedwqdqdw wqdd',
       'subtitle1':
           'Even more approachable lessons for absolute person lorem ipsum ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
     {
       'title': 'English Conversation 102',
       'subtitle1': 'Even more approachable lessons for absolute ',
-      'subtitle2': 'Intermediate . 10 lessons',
+      'subtitle2': 'Intermediate · 10 lessons',
       'image': 'https://picsum.photos/200/300'
     },
   ];
@@ -80,8 +79,8 @@ class CoursePage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(8.0),
-          child: TextField(
+          padding: const EdgeInsets.all(8.0),
+          child: const TextField(
             decoration: InputDecoration(
               hintText: "Search Courses",
               prefixIcon: Icon(Icons.search),
@@ -96,9 +95,9 @@ class CoursePage extends StatelessWidget {
         Flexible(
           child: GridView.builder(
               itemCount: _items.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 4 / 5,
+                childAspectRatio: 3.8 / 5,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(

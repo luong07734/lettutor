@@ -37,7 +37,7 @@ class _VideoCallWidgetState extends State<VideoCallWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[400],
       body: SafeArea(
         child: Stack(
           children: [
@@ -48,8 +48,15 @@ class _VideoCallWidgetState extends State<VideoCallWidget> {
               right: 0,
               top: MediaQuery.of(context).size.height / 3,
               child: CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage(AssetsManager.appLogoImage),
+                radius: 50,
+                child: ClipOval(
+                  child: Image.asset(
+                    AssetsManager.avatarImage,
+                    fit: BoxFit.cover,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
               ),
             ),
             Positioned(

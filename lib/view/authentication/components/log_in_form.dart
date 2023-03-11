@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/main.dart';
 import 'package:lettutor/view/authentication/pages/forgot_password.dart';
 
@@ -100,7 +98,7 @@ class _SigninFormState extends State<SigninForm> {
                     print('Email: $_email');
                     print('Password: $_password');
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => MyApp()),
+                        MaterialPageRoute(builder: (context) => const MyApp()),
                         (Route<dynamic> route) => false);
                   }
                 },

@@ -3,21 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/view/authentication/pages/forgot_password.dart';
 import 'package:lettutor/view/authentication/pages/log_in.dart';
-import 'package:lettutor/view/authentication/pages/sign_up.dart';
 import 'package:lettutor/view/booking_view/views/history.dart';
 import 'package:lettutor/view/booking_view/views/schedule.dart';
-import 'package:lettutor/view/detail/pages/course_detail.dart';
-import 'package:lettutor/view/detail/pages/lesson_detail.dart';
-import 'package:lettutor/view/detail/pages/teacher_detail.dart';
-import 'package:lettutor/view/drawer/pages/approval_form.dart';
 import 'package:lettutor/view/drawer/pages/favorite_tutors.dart';
 import 'package:lettutor/view/drawer/pages/stepper.dart';
 import 'package:lettutor/view/main_feature/pages/course_page.dart';
 import 'package:lettutor/view/main_feature/pages/home_page.dart';
 import 'package:lettutor/view/main_feature/pages/tutors_page.dart';
-import 'package:lettutor/view/video_call/pages/video_call.dart';
 
 void main() {
   runApp(
@@ -39,17 +32,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  List<Widget> _pages = [
-    HomePage(),
-    SchedulePage(),
-    TutorsPage(),
+  final List<Widget> _pages = [
+    const HomePage(),
+    const SchedulePage(),
+    const TutorsPage(),
     CoursePage(),
-    HistoryPage(),
-    FavoriteTutorsPage(),
+    const HistoryPage(),
+    const FavoriteTutorsPage(),
     RegisterStepper(),
   ];
   int _currentIndex = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  //GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override
@@ -72,11 +65,106 @@ class _MyAppState extends State<MyApp> {
         //     blurRadius: 0.0,
         //   ),
         // ],
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      drawer: SafeArea(
+        child: Container(
+          child: ListTileTheme(
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: 128.0,
+                  height: 128.0,
+                  margin: const EdgeInsets.only(
+                    top: 24.0,
+                    bottom: 64.0,
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    color: Colors.black26,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset(
+                    AssetsManager.appLogoImage,
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const HistoryPage(),
+                      ),
+                    );
+                    _advancedDrawerController.hideDrawer();
+                  },
+                  leading: const Icon(Icons.schedule),
+                  title: const Text('Schedule History'),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const FavoriteTutorsPage(),
+                      ),
+                    );
+                    _advancedDrawerController.hideDrawer();
+                  },
+                  leading: const Icon(Icons.favorite),
+                  title: const Text('Favourite Tutors'),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => RegisterStepper(),
+                      ),
+                    );
+                    _advancedDrawerController.hideDrawer();
+                  },
+                  leading: const Icon(Icons.co_present),
+                  title: const Text('Become a Tutor'),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: const Icon(Icons.settings),
+                  title: const Text('Settings'),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (Route<dynamic> route) => false);
+                  },
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                ),
+                const Spacer(),
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.white54,
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 16.0,
+                    ),
+                    child: const Text('Let tutor | Online tutoring system'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
           leading: IconButton(
+            color: ColorsManager.primaryColor,
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
               valueListenable: _advancedDrawerController,
@@ -91,14 +179,30 @@ class _MyAppState extends State<MyApp> {
               },
             ),
           ),
-          title: const Text('Example title'),
-          // actions: const [
-          //   IconButton(
-          //     icon: Icon(Icons.search),
-          //     tooltip: 'Search',
-          //     onPressed: null,
-          //   ),
-          // ],
+          title: const Text(
+            'Let Tutor',
+            style: TextStyle(
+              color: Colors.blue, // set the color of the text
+              fontSize: 24, // set the font size of the text
+              fontWeight: FontWeight.bold, // set the font weight of the text
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: CircleAvatar(
+                radius: 30,
+                child: ClipOval(
+                  child: Image.asset(
+                    AssetsManager.avatarImage,
+                    fit: BoxFit.cover,
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         // body is the majority of the screen.
         body: Container(
@@ -135,7 +239,7 @@ class _MyAppState extends State<MyApp> {
               color: Colors.white,
             ),
             Icon(
-              Icons.school,
+              Icons.book,
               size: 30,
               color: Colors.white,
             ),
@@ -146,98 +250,6 @@ class _MyAppState extends State<MyApp> {
               _currentIndex = index;
             });
           },
-        ),
-      ),
-      drawer: SafeArea(
-        child: Container(
-          child: ListTileTheme(
-            textColor: Colors.white,
-            iconColor: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: 128.0,
-                  height: 128.0,
-                  margin: const EdgeInsets.only(
-                    top: 24.0,
-                    bottom: 64.0,
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    color: Colors.black26,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    AssetsManager.appLogoImage,
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const HistoryPage(),
-                      ),
-                    );
-                    _advancedDrawerController.hideDrawer();
-                  },
-                  leading: Icon(Icons.schedule),
-                  title: Text('Schedule History'),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const FavoriteTutorsPage(),
-                      ),
-                    );
-                    _advancedDrawerController.hideDrawer();
-                  },
-                  leading: Icon(Icons.favorite),
-                  title: Text('Favourite Tutors'),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => RegisterStepper(),
-                      ),
-                    );
-                    _advancedDrawerController.hideDrawer();
-                  },
-                  leading: Icon(Icons.co_present),
-                  title: Text('Become a Tutor'),
-                ),
-                ListTile(
-                  onTap: () {},
-                  leading: Icon(Icons.settings),
-                  title: Text('Settings'),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                        (Route<dynamic> route) => false);
-                  },
-                  leading: Icon(Icons.logout),
-                  title: Text('Logout'),
-                ),
-                Spacer(),
-                DefaultTextStyle(
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white54,
-                  ),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 16.0,
-                    ),
-                    child: Text('Let tutor | Online tutoring system'),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

@@ -50,6 +50,7 @@ dependencies:
   country_icons: ^2.0.2
   flutter_signin_button: ^2.0.0
   font_awesome_flutter: ^9.2.0
+  syncfusion_flutter_pdfviewer: ^19.4.42-beta
 
 
 dev_dependencies:

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/view/authentication/components/custom_button.dart';
 import 'package:lettutor/view/detail/components/comment_card.dart';
 import 'package:lettutor/view/detail/components/profile_description.dart';
 import 'package:lettutor/view/detail/components/profile_title.dart';
 import 'package:lettutor/view/detail/components/rating.dart';
 import 'package:lettutor/view/detail/components/video_player.dart';
-import 'package:lettutor/view/main_feature/components/teacher_card.dart';
-import 'package:video_player/video_player.dart';
 
 class TeacherDetail extends StatelessWidget {
   TeacherDetail({super.key});
@@ -17,15 +14,15 @@ class TeacherDetail extends StatelessWidget {
   List<Widget> buttonList = [
     ElevatedButton(
       onPressed: () {},
-      child: Text('Button 1'),
+      child: const Text('Button 1'),
     ),
     ElevatedButton(
       onPressed: () {},
-      child: Text('Button 2'),
+      child: const Text('Button 2'),
     ),
     ElevatedButton(
       onPressed: () {},
-      child: Text('Button 3'),
+      child: const Text('Button 3'),
     ),
   ];
 
@@ -41,8 +38,8 @@ class TeacherDetail extends StatelessWidget {
               Container(
                 color: Colors.blueAccent,
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: const Text(
                   'Pick your date!',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -51,21 +48,21 @@ class TeacherDetail extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Divider(
+              const Divider(
                 height: 1.0,
                 color: Colors.grey,
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Expanded(
                 child: ListView.builder(
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      title: Text(
+                      title: const Text(
                         'Fri, 29 April 2022, 08:00 PM',
                         textAlign: TextAlign.center,
                       ),
-                      leading: Icon(Icons.date_range),
+                      leading: const Icon(Icons.date_range),
                       onTap: () {
                         // Handle button press
                         Navigator.pop(context);
@@ -108,7 +105,7 @@ class TeacherDetail extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 4),
+                      padding: const EdgeInsets.only(left: 4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -213,14 +210,14 @@ class TeacherDetail extends StatelessWidget {
                 ),
               ),
             ),
-            ProfileTitle(text: "Languages"),
+            const ProfileTitle(text: "Languages"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Wrap(
                 spacing: 4.0,
                 children: List.generate(3, (chipIndex) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 4.0),
                     child: Chip(
                       label: Text('English'),
                       backgroundColor: Colors.blueAccent,
@@ -249,28 +246,28 @@ class TeacherDetail extends StatelessWidget {
             //     );
             //   },
             // ),
-            ProfileTitle(text: "Education"),
-            ProfileDescription(
+            const ProfileTitle(text: "Education"),
+            const ProfileDescription(
                 text:
                     "Bachelor Of Elementary education at Stratford International School"),
-            ProfileTitle(text: "Experience"),
-            ProfileDescription(
+            const ProfileTitle(text: "Experience"),
+            const ProfileDescription(
                 text:
                     "I have 3 years teaching experience both kids and adult as a classroom teacher adn as an ESL Teacher in Vietnam in public schools and centers."),
-            ProfileTitle(text: "Interests"),
-            ProfileDescription(
+            const ProfileTitle(text: "Interests"),
+            const ProfileDescription(
                 text:
                     "Traveling, reading, watching movies, learn foreign language"),
-            ProfileTitle(text: "Profession"),
-            ProfileDescription(text: "Teacher"),
-            ProfileTitle(text: "Specialities"),
+            const ProfileTitle(text: "Profession"),
+            const ProfileDescription(text: "Teacher"),
+            const ProfileTitle(text: "Specialities"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Wrap(
                 spacing: 4.0,
                 children: List.generate(3, (chipIndex) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 4.0),
                     child: Chip(
                       label: Text('English'),
                       backgroundColor: Colors.blueAccent,
@@ -279,14 +276,13 @@ class TeacherDetail extends StatelessWidget {
                 }),
               ),
             ),
-            ProfileTitle(text: "Course"),
-            ProfileTitle(text: "Rating and Comment"),
+            const ProfileTitle(text: "Rating and Comment"),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
-                return CommentCard();
+                return const CommentCard();
               },
             ),
           ],

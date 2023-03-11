@@ -5,8 +5,8 @@ class ParagraphTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
 
-  ParagraphTextField(
-      {required this.title, required this.controller, required this.hint});
+  const ParagraphTextField(
+      {super.key, required this.title, required this.controller, required this.hint});
 
   @override
   Widget build(BuildContext context) {

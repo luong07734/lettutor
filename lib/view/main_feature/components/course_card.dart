@@ -4,38 +4,13 @@ import 'package:lettutor/constants/asset_manager.dart';
 class CourseCard extends StatelessWidget {
   final int index;
   final List<Map<String, String>> items;
-  CourseCard({super.key, required this.index, required this.items});
+  const CourseCard({super.key, required this.index, required this.items});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: GridTile(
-        footer: GridTileBar(
-          title: Text(
-            items[index]['subtitle1']!,
-            style: TextStyle(
-              color: Colors.black87,
-            ),
-            maxLines: 2,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  items[index]['subtitle2']!,
-                  style: TextStyle(
-                    color: Colors.blue[500],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         child: Card(
           elevation: 4, // adjust the elevation to control the shadow depth
           shape: RoundedRectangleBorder(
@@ -46,7 +21,7 @@ class CourseCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
@@ -67,11 +42,40 @@ class CourseCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   items[index]['title']!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  items[index]['subtitle1']!,
+                  style: const TextStyle(
+                    color: Colors.black87,
+                  ),
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      items[index]['subtitle2']!,
+                      style: TextStyle(
+                        color: Colors.blue[500],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

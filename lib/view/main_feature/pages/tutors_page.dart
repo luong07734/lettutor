@@ -1,27 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/view/main_feature/components/custom_chip.dart';
 import 'package:lettutor/view/main_feature/components/teacher_card.dart';
 
 import '../../../constants/fake_data.dart';
 
-class TutorsPage extends StatelessWidget {
+class TutorsPage extends StatefulWidget {
   const TutorsPage({super.key});
 
+  @override
+  State<TutorsPage> createState() => _TutorsPageState();
+}
+
+class _TutorsPageState extends State<TutorsPage> {
+  //final bool _showOptions = false;
+  final TextEditingController _textEditingController = TextEditingController();
+  final List<String> _searchOptions = [
+    'By Name',
+    'By Country',
+  ];
+  String _selectedOption = '';
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: TextField(
             decoration: InputDecoration(
-              hintText: "Search Tutors",
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20.0),
+                hintText: "Search Tutors $_selectedOption",
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
                 ),
-              ),
-            ),
+                suffixIcon: IconButton(
+                  onPressed: () async {
+                    // Display a popup menu of search options
+                    String? selectedOption = await showMenu(
+                      context: context,
+                      position:
+                          const RelativeRect.fromLTRB(1000.0, 0, 0.0, 1000.0),
+                      items: _searchOptions.map((option) {
+                        return PopupMenuItem(
+                          value: option,
+                          child: Text(option),
+                        );
+                      }).toList(),
+                    );
+
+                    if (selectedOption != null) {
+                      setState(() {
+                        _selectedOption = selectedOption;
+                      });
+                    }
+                  },
+                  icon: const Icon(Icons.filter_list),
+                )),
           ),
         ),
         Flexible(
@@ -32,16 +67,10 @@ class TutorsPage extends StatelessWidget {
             itemCount: chipTitles.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Chip(
-                  label: Text(
-                    chipTitles[index],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  backgroundColor: chipColors[index % chipColors.length],
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: CustomChip(
+                  label: chipTitles[index],
+                  clickable: true,
                 ),
               );
             },

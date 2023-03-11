@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RatingWidget extends StatelessWidget {
   final String text;
 
-  RatingWidget(this.text);
+  RatingWidget(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,10 @@ class RatingWidget extends StatelessWidget {
                 ? Icons.star
                 : (i - rating < 1 ? Icons.star_half : Icons.star_border),
             color: i < rating
-                ? Colors.yellow
-                : (i - rating < 1 ? Colors.yellow : Colors.grey[300]),
+                ? Colors.yellow[600]
+                : (i - rating < 1 ? Colors.yellow[600] : Colors.grey[300]),
           ),
-        SizedBox(width: 8.0),
+        const SizedBox(width: 8.0),
         Text(text),
       ],
     );

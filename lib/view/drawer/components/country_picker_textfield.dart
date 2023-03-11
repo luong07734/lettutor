@@ -1,14 +1,16 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:country_icons/country_icons.dart';
 
 class FlagTextFormField extends StatefulWidget {
   final String title;
   final TextEditingController controller;
   final String hint;
 
-  FlagTextFormField(
-      {required this.title, required this.controller, required this.hint});
+  const FlagTextFormField(
+      {super.key,
+      required this.title,
+      required this.controller,
+      required this.hint});
   @override
   _FlagTextFormFieldState createState() => _FlagTextFormFieldState();
 }
@@ -35,7 +37,7 @@ class _FlagTextFormFieldState extends State<FlagTextFormField> {
               },
             );
           },
-          child: Icon(Icons.flag_outlined),
+          child: const Icon(Icons.flag_outlined),
         ),
         labelText: widget.title,
         border: OutlineInputBorder(

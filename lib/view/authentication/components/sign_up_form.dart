@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/main.dart';
-import 'package:lettutor/view/authentication/pages/forgot_password.dart';
 import 'package:lettutor/view/authentication/pages/log_in.dart';
 
 class SignupForm extends StatefulWidget {

@@ -8,10 +8,10 @@ class ProfileTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.blue, // set the color of the text
           fontSize: 20, // set the font size of the text
           fontWeight: FontWeight.bold, // set the font weight of the text

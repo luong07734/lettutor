@@ -9,7 +9,7 @@ class CommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 10,
-      margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -18,14 +18,14 @@ class CommentCard extends StatelessWidget {
             CircleAvatar(
               backgroundImage: AssetImage(AssetsManager.avatarImage),
             ),
-            SizedBox(width: 16.0),
+            const SizedBox(width: 16.0),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "LE KY LUONG",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -34,24 +34,24 @@ class CommentCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   RatingWidget("4.5"),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
-                  Text(
+                  const Text(
                     "He is a great tracher who I have studied. I am very admire her. Luvvvvvv",
                     textAlign: TextAlign.start,
                     maxLines: 4,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
-                  Text(
+                  const Text(
                     "Mon, 2 Aug 2021, 02:06",
                     style: TextStyle(
                       fontWeight: FontWeight.w100,

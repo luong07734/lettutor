@@ -8,10 +8,10 @@ class ProfileDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.grey,
           fontSize: 16.0, // adjust the font size as needed
         ),

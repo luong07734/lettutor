@@ -5,7 +5,7 @@ class LanguageFormField extends StatefulWidget {
   final IconData icon;
   final String label;
 
-  LanguageFormField({required this.languages, required this.icon, required this.label});
+  const LanguageFormField({super.key, required this.languages, required this.icon, required this.label});
   @override
   _LanguageFormFieldState createState() => _LanguageFormFieldState();
 }
@@ -26,7 +26,7 @@ class _LanguageFormFieldState extends State<LanguageFormField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       ),
       readOnly: true,
       onTap: () => _showLanguagePicker(context),
@@ -45,7 +45,7 @@ class _LanguageFormFieldState extends State<LanguageFormField> {
             child: ListTile(
               title: Text(language),
               trailing: _selectedLanguages.contains(language)
-                  ? Icon(Icons.check, color: Colors.blue)
+                  ? const Icon(Icons.check, color: Colors.blue)
                   : null,
             ),
           ),
@@ -54,7 +54,7 @@ class _LanguageFormFieldState extends State<LanguageFormField> {
 
     String? selectedLanguage = await showMenu<String>(
       context: context,
-      position: RelativeRect.fromLTRB(0, 0, 0, 0),
+      position: const RelativeRect.fromLTRB(0, 0, 0, 0),
       items: _popupMenuItems,
       elevation: 8.0,
     );

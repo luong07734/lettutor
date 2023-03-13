@@ -51,6 +51,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   font_awesome_flutter: ^9.2.0
   syncfusion_flutter_pdfviewer: ^19.4.42-beta
+  camera: ^0.10.3+2
 
 
 dev_dependencies:

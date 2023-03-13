@@ -54,5 +54,9 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Lettutor access your Gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow Lettutor to access camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow Lettutor to access Microphone</string>
 </dict>
 </plist>

@@ -188,6 +188,24 @@ class _VideoCallWidgetState extends State<VideoCallWidget> {
                 ),
               ),
             ),
+            Positioned(
+              top: MediaQuery.of(context).size.height / 2 - 50,
+              left: MediaQuery.of(context).size.width / 2 - 100,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                width: 200,
+                height: 100,
+                child: Center(
+                  child: Text(
+                    '17:41:48 until lesson starts (Fri, 30 Sep 22 18:30)',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

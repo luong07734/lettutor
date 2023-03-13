@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/view/authentication/components/custom_button.dart';
 import 'package:lettutor/view/detail/components/comment_card.dart';
 import 'package:lettutor/view/detail/components/profile_description.dart';
 import 'package:lettutor/view/detail/components/profile_title.dart';
 import 'package:lettutor/view/detail/components/rating.dart';
 import 'package:lettutor/view/detail/components/video_player.dart';
+import 'package:lettutor/view/main_feature/components/custom_chip.dart';
 
 class TeacherDetail extends StatelessWidget {
   TeacherDetail({super.key});
@@ -38,7 +40,8 @@ class TeacherDetail extends StatelessWidget {
               Container(
                 color: Colors.blueAccent,
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: const Text(
                   'Pick your date!',
                   style: TextStyle(
@@ -211,41 +214,39 @@ class TeacherDetail extends StatelessWidget {
               ),
             ),
             const ProfileTitle(text: "Languages"),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            //   child: Wrap(
+            //     spacing: 4.0,
+            //     children: List.generate(3, (chipIndex) {
+            //       return const Padding(
+            //         padding: EdgeInsets.only(top: 4.0),
+            //         child: CustomChip(label: "English", clickable: false),
+            //       );
+            //     }),
+            //   ),
+            // ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Wrap(
-                spacing: 4.0,
-                children: List.generate(3, (chipIndex) {
-                  return const Padding(
-                    padding: EdgeInsets.only(top: 4.0),
-                    child: Chip(
-                      label: Text('English'),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                  );
-                }),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: SizedBox(
+                height: 40,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: chipTitles.length,
+                  itemBuilder: (context, subIndex) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: CustomChip(
+                        label: chipTitles[subIndex],
+                        clickable: false,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   scrollDirection: Axis.horizontal,
-            //   itemCount: chipTitles.length,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     return Padding(
-            //       padding: EdgeInsets.symmetric(horizontal: 8.0),
-            //       child: Chip(
-            //         label: Text(
-            //           chipTitles[index],
-            //           style: TextStyle(
-            //             color: Colors.white,
-            //             fontWeight: FontWeight.bold,
-            //           ),
-            //         ),
-            //         backgroundColor: chipColors[index % chipColors.length],
-            //       ),
-            //     );
-            //   },
-            // ),
             const ProfileTitle(text: "Education"),
             const ProfileDescription(
                 text:
@@ -261,19 +262,38 @@ class TeacherDetail extends StatelessWidget {
             const ProfileTitle(text: "Profession"),
             const ProfileDescription(text: "Teacher"),
             const ProfileTitle(text: "Specialities"),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            //   child: Wrap(
+            //     spacing: 4.0,
+            //     children: List.generate(3, (chipIndex) {
+            //       return const Padding(
+            //         padding: EdgeInsets.only(top: 4.0),
+            //         child:
+            //             CustomChip(label: "English for kids", clickable: false),
+            //       );
+            //     }),
+            //   ),
+            // ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Wrap(
-                spacing: 4.0,
-                children: List.generate(3, (chipIndex) {
-                  return const Padding(
-                    padding: EdgeInsets.only(top: 4.0),
-                    child: Chip(
-                      label: Text('English'),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                  );
-                }),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: SizedBox(
+                height: 40,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: chipTitles.length,
+                  itemBuilder: (context, subIndex) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: CustomChip(
+                        label: chipTitles[subIndex],
+                        clickable: false,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
             const ProfileTitle(text: "Rating and Comment"),

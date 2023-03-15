@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/view/authentication/pages/log_in.dart';
-import 'package:lettutor/view/booking_view/views/history.dart';
-import 'package:lettutor/view/booking_view/views/schedule.dart';
-import 'package:lettutor/view/drawer/pages/favorite_tutors.dart';
-import 'package:lettutor/view/drawer/pages/stepper.dart';
-import 'package:lettutor/view/main_feature/pages/course_page.dart';
-import 'package:lettutor/view/main_feature/pages/home_page.dart';
-import 'package:lettutor/view/main_feature/pages/tutors_page.dart';
+import 'package:lettutor/view/screens/log_in/log_in.dart';
+import 'package:lettutor/view/screens/history/history.dart';
+import 'package:lettutor/view/screens/schedule/schedule.dart';
+import 'package:lettutor/view/screens/favorite_tutors/favorite_tutors.dart';
+import 'package:lettutor/view/screens/tutor_register/stepper.dart';
+import 'package:lettutor/view/screens/courses/course_page.dart';
+import 'package:lettutor/view/screens/home/home_page.dart';
+import 'package:lettutor/view/screens/tutors/tutors_page.dart';
 
 void main() {
   runApp(

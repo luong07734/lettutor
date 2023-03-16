@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/video_call/video_call.dart';
 
 class ScheduleCard extends StatelessWidget {
@@ -69,12 +70,15 @@ class ScheduleCard extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => VideoCallWidget(),
-                    fullscreenDialog: true,
-                  ),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => VideoCallWidget(),
+                //     fullscreenDialog: true,
+                //   ),
+                // );
+                {
+                  Navigator.pushNamed(context, Routers.VideoCall);
+                }
               },
               child: const Text("Join Meeting"),
             ),

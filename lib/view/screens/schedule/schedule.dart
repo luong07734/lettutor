@@ -3,6 +3,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
 
 class SchedulePage extends StatelessWidget {
+  static String routeName = "/schedule";
   const SchedulePage({super.key});
   
 

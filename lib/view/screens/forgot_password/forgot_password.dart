@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import '../../widgets/view_items/textfields/custom_textfield.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
+  static String routeName = "/forgot_password";
   ForgotPasswordPage({super.key});
 
   // text editing controllers
@@ -64,9 +66,8 @@ class ForgotPasswordPage extends StatelessWidget {
               // sign in button
               CustomButton(
                   onTap: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                        (Route<dynamic> route) => false);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context, Routers.LogIn, (route) => false);
                   },
                   text: 'Send'),
             ],

@@ -3,6 +3,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'dart:async';
 
 class VideoCallWidget extends StatefulWidget {
+  static String routeName = "/video_call";
   @override
   _VideoCallWidgetState createState() => _VideoCallWidgetState();
 }

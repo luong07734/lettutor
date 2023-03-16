@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 
 class HistoryPage extends StatelessWidget {
+  static String routeName = "/history";
   const HistoryPage({super.key});
 
   @override

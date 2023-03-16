@@ -14,6 +14,7 @@ import 'package:lettutor/view/widgets/view_items/textfields/paragraph_textfield.
 import 'package:video_player/video_player.dart';
 
 class RegisterStepper extends StatefulWidget {
+  static String routeName = "/become_teacher";
   @override
   _RegisterStepperState createState() => _RegisterStepperState();
 }

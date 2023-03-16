@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/main.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/forgot_password/forgot_password.dart';
 
 class SigninForm extends StatefulWidget {
@@ -75,11 +76,7 @@ class _SigninFormState extends State<SigninForm> {
             const SizedBox(height: 24),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ForgotPasswordPage(),
-                  ),
-                );
+                Navigator.pushNamed(context, Routers.ForgotPassword);
               },
               child: Text(
                 'Forgot Password?',
@@ -97,6 +94,7 @@ class _SigninFormState extends State<SigninForm> {
                     // Do sign in here
                     print('Email: $_email');
                     print('Password: $_password');
+                    //TO DO: change to named navigator
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => const MyApp()),
                         (Route<dynamic> route) => false);

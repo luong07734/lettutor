@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/rating/rating.dart';
 import 'package:lettutor/view/screens/tutor_detail/teacher_detail.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
@@ -9,11 +10,10 @@ import '../../../constants/fake_data.dart';
 GestureDetector TeacherCard(int index, BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => TeacherDetail(),
-        ),
-      );
+      {
+        Navigator.pushNamed(context, Routers.TeacherDetail);
+      }
+      ;
     },
     child: Padding(
       padding: const EdgeInsets.all(4.0),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/screens/history/history.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
@@ -13,11 +14,15 @@ import 'package:lettutor/view/screens/home/home_page.dart';
 import 'package:lettutor/view/screens/tutors/tutors_page.dart';
 
 void main() {
+  bool isLoggedIn = false;
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Tutorial',
-      home: LoginPage(),
+      // home: LoginPage(),
+      // routes: routes,
+      onGenerateRoute: Routers.generateRoute,
+      initialRoute: isLoggedIn ? Routers.Home : Routers.LogIn,
     ),
   );
   // runApp(LessonDetail());
@@ -92,11 +97,7 @@ class _MyAppState extends State<MyApp> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const HistoryPage(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, Routers.History);
                   _advancedDrawerController.hideDrawer();
                 },
                 leading: const Icon(Icons.schedule),
@@ -104,11 +105,7 @@ class _MyAppState extends State<MyApp> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const FavoriteTutorsPage(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, Routers.Favorite);
                   _advancedDrawerController.hideDrawer();
                 },
                 leading: const Icon(Icons.favorite),
@@ -116,11 +113,7 @@ class _MyAppState extends State<MyApp> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => RegisterStepper(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, Routers.BecomeTutor);
                   _advancedDrawerController.hideDrawer();
                 },
                 leading: const Icon(Icons.co_present),
@@ -133,9 +126,11 @@ class _MyAppState extends State<MyApp> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      (Route<dynamic> route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Routers.LogIn, (route) => false);
+                  // Navigator.of(context).pushAndRemoveUntil(
+                  //     MaterialPageRoute(builder: (context) => LoginPage()),
+                  //     (Route<dynamic> route) => false);
                 },
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),

@@ -4,8 +4,8 @@ import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import '../../../constants/fake_data.dart';
 
 class HomePage extends StatelessWidget {
+  static String routeName = "/";
   const HomePage({Key? key}) : super(key: key);
-  
 
   @override
   Widget build(BuildContext context) {

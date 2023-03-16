@@ -7,6 +7,7 @@ import 'package:lettutor/view/screens/history/history.dart';
 import 'package:lettutor/view/screens/home/home_page.dart';
 import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
+import 'package:lettutor/view/screens/not_found/not_found.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
 import 'package:lettutor/view/screens/sign_up/sign_up.dart';
 import 'package:lettutor/view/screens/tutor_detail/teacher_detail.dart';
@@ -16,26 +17,132 @@ import 'package:lettutor/view/screens/video_call/video_call.dart';
 
 final Map<String, WidgetBuilder> routes = {
   // bottom navigation
-  '/': (BuildContext context) => HomePage(),
-  '/schedule': (BuildContext context) => SchedulePage(),
-  '/tutors': (BuildContext context) => TutorsPage(),
-  '/courses': (BuildContext context) => CoursePage(),
+  HomePage.routeName: (BuildContext context) => HomePage(),
+  SchedulePage.routeName: (BuildContext context) => SchedulePage(),
+  TutorsPage.routeName: (BuildContext context) => TutorsPage(),
+  CoursePage.routeName: (BuildContext context) => CoursePage(),
 
   // drawer
-  '/history': (BuildContext context) => HistoryPage(),
-  '/favorite': (BuildContext context) => FavoriteTutorsPage(),
-  '/become_teacher': (BuildContext context) => RegisterStepper(),
+  HistoryPage.routeName: (BuildContext context) => HistoryPage(),
+  FavoriteTutorsPage.routeName: (BuildContext context) => FavoriteTutorsPage(),
+  RegisterStepper.routeName: (BuildContext context) => RegisterStepper(),
 
   // video call
-  '/video_call': (BuildContext context) => VideoCallWidget(),
+  VideoCallWidget.routeName: (BuildContext context) => VideoCallWidget(),
 
   //detail
-  '/course_detail': (BuildContext context) => CourseDetail(),
-  '/tutor_detail': (BuildContext context) => TeacherDetail(),
+  CourseDetailPage.routeName: (BuildContext context) => CourseDetailPage(),
+  TeacherDetailPage.routeName: (BuildContext context) => TeacherDetailPage(),
   // '/lesson_detail': (BuildContext context) => CourseTopicPDFViewer(),
 
   // authorization
-  '/log_in': (BuildContext context) => LoginPage(),
-  '/sign_up': (BuildContext context) => SignUpPage(),
-  '/forgot_password': (BuildContext context) => ForgotPasswordPage(),
+  LoginPage.routeName: (BuildContext context) => LoginPage(),
+  SignUpPage.routeName: (BuildContext context) => SignUpPage(),
+  ForgotPasswordPage.routeName: (BuildContext context) => ForgotPasswordPage(),
 };
+
+class Routers {
+  static const String Home = '/';
+  static const String Schedule = '/schedule';
+  static const String Tutors = '/tutors';
+  static const String Courses = '/courses';
+
+  static const String History = '/history';
+  static const String Favorite = '/favorite';
+  static const String BecomeTutor = '/become_tutor';
+
+  static const String VideoCall = '/video_call';
+
+  static const String CourseDetail = '/courses/course_detail';
+  static const String TeacherDetail = '/tutors/teacher-detail';
+  static const String PDFView = '/pdf_view';
+
+  static const String LogIn = '/log_in';
+  static const String SignUp = '/sign_up';
+  static const String ForgotPassword = '/forgot_password';
+
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case Home:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const HomePage(),
+        );
+      case LogIn:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => LoginPage(),
+        );
+      case SignUp:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => SignUpPage(),
+        );
+      case ForgotPassword:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ForgotPasswordPage(),
+        );
+      case Schedule:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const SchedulePage(),
+        );
+      case Tutors:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const TutorsPage(),
+        );
+      case Courses:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => CoursePage(),
+        );
+      case Tutors:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const TutorsPage(),
+        );
+      case History:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const HistoryPage(),
+        );
+      case Favorite:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const FavoriteTutorsPage(),
+        );
+      case BecomeTutor:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => RegisterStepper(),
+        );
+      case VideoCall:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => VideoCallWidget(),
+            fullscreenDialog: true);
+      case CourseDetail:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => CourseDetailPage(),
+        );
+      case TeacherDetail:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => TeacherDetailPage(),
+        );
+      case PDFView:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) =>  CourseTopicPDFViewer(),
+        );
+
+      default:
+        return MaterialPageRoute(
+          builder: (_) => const NotFoundPage(),
+        );
+    }
+  }
+}

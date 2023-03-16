@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 
 class SignupForm extends StatefulWidget {
@@ -131,9 +132,8 @@ class _SignupFormState extends State<SignupForm> {
                     print('User Name: $userName');
                     print('Email: $email');
                     print('Password: $password');
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                        (Route<dynamic> route) => false);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context, Routers.LogIn, (route) => false);
                   }
                 },
                 child: Container(

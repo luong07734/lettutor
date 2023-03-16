@@ -5,6 +5,7 @@ import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import '../../../constants/fake_data.dart';
 
 class TutorsPage extends StatefulWidget {
+  static String routeName = "/tutors";
   const TutorsPage({super.key});
 
   @override

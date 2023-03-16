@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseTopicPDFViewer extends StatefulWidget {
-  const CourseTopicPDFViewer({Key? key, required this.url, required this.title})
-      : super(key: key);
-  final String url;
-  final String title;
+  const CourseTopicPDFViewer({Key? key}) : super(key: key);
 
   @override
   State<CourseTopicPDFViewer> createState() => _CourseTopicPDFViewerState();
@@ -23,6 +20,8 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -34,7 +33,8 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
         title: Container(
           margin: const EdgeInsets.only(left: 10),
           child: Text(
-            widget.title,
+            // widget.title,
+            args["title"]!,
             style: const TextStyle(color: Colors.white),
           ),
         ),
@@ -69,7 +69,7 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
             ),
             Expanded(
               child: SfPdfViewer.network(
-                widget.url,
+                args["url"]!,
                 canShowScrollHead: true,
                 canShowScrollStatus: true,
               ),

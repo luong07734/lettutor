@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/course_detail/course_detail.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
 
 class CoursePage extends StatelessWidget {
+  static String routeName = "/courses";
   CoursePage({super.key});
   final List<Map<String, String>> _items = [
     {
@@ -102,11 +104,7 @@ class CoursePage extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                     onTap: (() {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const CourseDetail(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, Routers.CourseDetail);
                     }),
                     child: CourseCard(
                       index: index,

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
 // import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-class CourseDetail extends StatefulWidget {
-  const CourseDetail({super.key});
+class CourseDetailPage extends StatefulWidget {
+  static String routeName = "/course_detail";
+  const CourseDetailPage({super.key});
 
   @override
-  State<CourseDetail> createState() => _CourseDetailState();
+  State<CourseDetailPage> createState() => _CourseDetailPageState();
 }
 
-class _CourseDetailState extends State<CourseDetail> {
+class _CourseDetailPageState extends State<CourseDetailPage> {
   String remotePDFpath = "";
   int _selectedIndex = -1;
 
@@ -25,7 +27,6 @@ class _CourseDetailState extends State<CourseDetail> {
     '5. Having Fun in Your Freetime',
   ];
   // final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
-
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +200,7 @@ class _CourseDetailState extends State<CourseDetail> {
               ),
 
               const ProfileTitle(text: "List Topics"),
-              
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ListView.builder(
@@ -213,15 +214,20 @@ class _CourseDetailState extends State<CourseDetail> {
                           _selectedIndex = index;
                         });
 
-                        
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const CourseTopicPDFViewer(
-                                url:
-                                    "https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf",
-                                title: "PDF VIEW"),
-                          ),
-                        );
+                        Navigator.pushNamed(context, Routers.PDFView,
+                            arguments: {
+                              'url':
+                                  'https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf',
+                              'title': 'PDF VIEW',
+                            });
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const CourseTopicPDFViewer(
+                        //         url:
+                        //             "https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf",
+                        //         title: "PDF VIEW"),
+                        //   ),
+                        // );
                       },
                       onHover: (value) {
                         setState(() {
@@ -260,7 +266,6 @@ class _CourseDetailState extends State<CourseDetail> {
           ),
         ),
       ),
-  
     ]);
   }
 }

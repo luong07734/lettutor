@@ -10,8 +10,9 @@ import 'package:lettutor/view/widgets/view_items/rating/rating.dart';
 import 'package:lettutor/view/screens/tutor_detail/components/video_player.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
 
-class TeacherDetail extends StatelessWidget {
-  TeacherDetail({super.key});
+class TeacherDetailPage extends StatelessWidget {
+  static String routeName = "/teacher_detail";
+  TeacherDetailPage({super.key});
 
   List<Widget> buttonList = [
     ElevatedButton(

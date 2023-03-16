@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/components/log_in_form.dart';
 import 'package:lettutor/view/screens/sign_up/sign_up.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatelessWidget {
+  static String routeName = "/log_in";
   LoginPage({super.key});
 
   // text editing controllers
@@ -108,11 +110,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(width: 8),
                   GestureDetector(
                     onTap: (() {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SignUpPage(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, Routers.SignUp);
                     }),
                     child: const Text(
                       'Sign up',

@@ -3,6 +3,7 @@ import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 
 class FavoriteTutorsPage extends StatelessWidget {
+  static String routeName = "/favorite";
   const FavoriteTutorsPage({super.key});
 
   @override

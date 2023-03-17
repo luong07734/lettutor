@@ -4,6 +4,6 @@ A new Flutter project.
 
 Live online tutoring platform
 
-
-- [Link for widget tree - download and open on browser to view](https://drive.google.com/drive/u/0/folders/1o_uc6aJHNQK52hwBS51_VwvUzru1H7CT)
+Milestone 1: Mockup UI
+- [Link for widget tree](https://app.diagrams.net/#G1qHq7zY6ar5UrWbpdZZY0jWP6N7nKVBZX)
 

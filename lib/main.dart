@@ -1,115 +1,256 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/view/screens/log_in/log_in.dart';
+import 'package:lettutor/view/screens/history/history.dart';
+import 'package:lettutor/view/screens/schedule/schedule.dart';
+import 'package:lettutor/view/screens/favorite_tutors/favorite_tutors.dart';
+import 'package:lettutor/view/screens/tutor_register/stepper.dart';
+import 'package:lettutor/view/screens/courses/course_page.dart';
+import 'package:lettutor/view/screens/home/home_page.dart';
+import 'package:lettutor/view/screens/tutors/tutors_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  bool isLoggedIn = false;
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Tutorial',
+      // home: LoginPage(),
+      // routes: routes,
+      onGenerateRoute: Routers.generateRoute,
+      initialRoute: isLoggedIn ? Routers.Home : Routers.LogIn,
+    ),
+  );
+  // runApp(LessonDetail());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final List<Widget> _pages = [
+    const HomePage(),
+    const SchedulePage(),
+    const TutorsPage(),
+    CoursePage(),
+    // const HistoryPage(),
+    // const FavoriteTutorsPage(),
+    // RegisterStepper(),
+  ];
+  int _currentIndex = 0;
+  //GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  final _advancedDrawerController = AdvancedDrawerController();
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return AdvancedDrawer(
+      backdropColor: Colors.blueGrey,
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      animateChildDecoration: true,
+      rtlOpening: false,
+      // openScale: 1.0,
+      disabledGestures: false,
+      childDecoration: const BoxDecoration(
+        // NOTICE: Uncomment if you want to add shadow behind the page.
+        // Keep in mind that it may cause animation jerks.
+        // boxShadow: <BoxShadow>[
+        //   BoxShadow(
+        //     color: Colors.black12,
+        //     blurRadius: 0.0,
+        //   ),
+        // ],
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      drawer: SafeArea(
+        child: ListTileTheme(
+          textColor: Colors.white,
+          iconColor: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: 128.0,
+                height: 128.0,
+                margin: const EdgeInsets.only(
+                  top: 24.0,
+                  bottom: 64.0,
+                ),
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  color: Colors.black26,
+                  shape: BoxShape.circle,
+                ),
+                child: Image.asset(
+                  AssetsManager.appLogoImage,
+                ),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, Routers.History);
+                  _advancedDrawerController.hideDrawer();
+                },
+                leading: const Icon(Icons.schedule),
+                title: const Text('Schedule History'),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, Routers.Favorite);
+                  _advancedDrawerController.hideDrawer();
+                },
+                leading: const Icon(Icons.favorite),
+                title: const Text('Favourite Tutors'),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, Routers.BecomeTutor);
+                  _advancedDrawerController.hideDrawer();
+                },
+                leading: const Icon(Icons.co_present),
+                title: const Text('Become a Tutor'),
+              ),
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Icons.settings),
+                title: const Text('Settings'),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Routers.LogIn, (route) => false);
+                  // Navigator.of(context).pushAndRemoveUntil(
+                  //     MaterialPageRoute(builder: (context) => LoginPage()),
+                  //     (Route<dynamic> route) => false);
+                },
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
+              ),
+              const Spacer(),
+              DefaultTextStyle(
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.white54,
+                ),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 16.0,
+                  ),
+                  child: const Text('Let tutor | Online tutoring system'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            color: ColorsManager.primaryColor,
+            onPressed: _handleMenuButtonPressed,
+            icon: ValueListenableBuilder<AdvancedDrawerValue>(
+              valueListenable: _advancedDrawerController,
+              builder: (_, value, __) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  child: Icon(
+                    value.visible ? Icons.clear : Icons.menu,
+                    key: ValueKey<bool>(value.visible),
+                  ),
+                );
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+          ),
+          title: const Text(
+            'Let Tutor',
+            style: TextStyle(
+              color: Colors.blue, // set the color of the text
+              fontSize: 24, // set the font size of the text
+              fontWeight: FontWeight.bold, // set the font weight of the text
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: CircleAvatar(
+                radius: 30,
+                child: ClipOval(
+                  child: Image.asset(
+                    AssetsManager.avatarImage,
+                    fit: BoxFit.cover,
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
+        // body is the majority of the screen.
+        body: Container(
+          // color: Colors.blueAccent,
+          child: _pages[_currentIndex],
+        ),
+        // floatingActionButton: const FloatingActionButton(
+        //   tooltip: 'Add', // used by assistive technologies
+        //   onPressed: null,
+        //   child: Icon(Icons.add),
+        // ),
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Colors.white,
+          color: Colors.blueAccent,
+          items: const <Widget>[
+            Icon(
+              Icons.home,
+              size: 30,
+              color: Colors.white,
+            ),
+            // Icon(
+            //   Icons.message,
+            //   size: 30,
+            //   color: Colors.white,
+            // ),
+            Icon(
+              Icons.lock_clock,
+              size: 30,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.people,
+              size: 30,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.book,
+              size: 30,
+              color: Colors.white,
+            ),
+          ],
+          onTap: (index) {
+            //Handle button tap
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _handleMenuButtonPressed() {
+    // NOTICE: Manage Advanced Drawer state through the Controller.
+    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
+    _advancedDrawerController.showDrawer();
   }
 }

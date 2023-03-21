@@ -5,6 +5,7 @@ import 'package:lettutor/view/screens/sign_up/components/sign_up_form.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class SignUpPage extends StatelessWidget {
   static String routeName = "/sign_up";
@@ -36,12 +37,12 @@ class SignUpPage extends StatelessWidget {
 
                 const SizedBox(height: 12),
 
-                const ProfileTitle(text: "Start learning with LetTutor"),
+                ProfileTitle(text: AppLocalizations.of(context)!.startLearning),
                 // welcome back, you've been missed!
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Text(
-                    'Become fluent faster through one on one video chat lessons tailored to your goals.',
+                    AppLocalizations.of(context)!.becomeFluent,
                     style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 16,
@@ -66,7 +67,7 @@ class SignUpPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
-                          'Or continue with',
+                          AppLocalizations.of(context)!.orContinueWith,
                           style: TextStyle(color: Colors.grey[700]),
                         ),
                       ),
@@ -105,7 +106,7 @@ class SignUpPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account?",
+                      AppLocalizations.of(context)!.alreadyAccount,
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 8),
@@ -113,8 +114,8 @@ class SignUpPage extends StatelessWidget {
                       onTap: (() {
                         Navigator.pushNamed(context, Routers.LogIn);
                       }),
-                      child: const Text(
-                        'Log in',
+                      child:  Text(
+                        AppLocalizations.of(context)!.logIn,
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,

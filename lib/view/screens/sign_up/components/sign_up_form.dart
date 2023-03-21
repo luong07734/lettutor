@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class SignupForm extends StatefulWidget {
   @override
@@ -26,7 +27,8 @@ class _SignupFormState extends State<SignupForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
-            const Text('User name', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.username,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               controller: _userNameController,
               keyboardType: TextInputType.name,
@@ -44,7 +46,8 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Email', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.email,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
@@ -62,7 +65,8 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Password', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.password,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               obscureText: !_passwordVisible,
               validator: (value) {
@@ -90,7 +94,8 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Confirm Password', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.confirmPassword,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               obscureText: !_confirmPasswordVisible,
               validator: (value) {
@@ -133,16 +138,16 @@ class _SignupFormState extends State<SignupForm> {
                     print('Email: $email');
                     print('Password: $password');
                     Navigator.pushNamedAndRemoveUntil(
-                      context, Routers.LogIn, (route) => false);
+                        context, Routers.LogIn, (route) => false);
                   }
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      "SIGN UP",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.signUpCapital,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

@@ -9,25 +9,11 @@ import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:lettutor/view/widgets/view_items/rating/rating.dart';
 import 'package:lettutor/view/screens/tutor_detail/components/video_player.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class TeacherDetailPage extends StatelessWidget {
   static String routeName = "/teacher_detail";
   TeacherDetailPage({super.key});
-
-  List<Widget> buttonList = [
-    ElevatedButton(
-      onPressed: () {},
-      child: const Text('Button 1'),
-    ),
-    ElevatedButton(
-      onPressed: () {},
-      child: const Text('Button 2'),
-    ),
-    ElevatedButton(
-      onPressed: () {},
-      child: const Text('Button 3'),
-    ),
-  ];
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -86,7 +72,7 @@ class TeacherDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Teacher Detail'),
+        title: Text('Teacher Detail'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -147,7 +133,7 @@ class TeacherDetailPage extends StatelessWidget {
                       TextButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.favorite_border),
-                        label: const Text('Like'),
+                        label: Text(AppLocalizations.of(context)!.like),
                       ),
                     ],
                   ),
@@ -158,7 +144,7 @@ class TeacherDetailPage extends StatelessWidget {
                 onTap: () {
                   _showModalBottomSheet(context);
                 },
-                text: 'Booking'),
+                text: AppLocalizations.of(context)!.booking),
             const SizedBox(
               height: 10,
             ),
@@ -176,7 +162,7 @@ class TeacherDetailPage extends StatelessWidget {
                       Icon(Icons.message, color: ColorsManager.primaryColor),
                       const SizedBox(height: 8.0),
                       Text(
-                        'Message',
+                        AppLocalizations.of(context)!.message,
                         style: TextStyle(color: ColorsManager.primaryColor),
                       ),
                     ],
@@ -192,7 +178,7 @@ class TeacherDetailPage extends StatelessWidget {
                       Icon(Icons.report, color: ColorsManager.primaryColor),
                       const SizedBox(height: 8.0),
                       Text(
-                        'Report',
+                        AppLocalizations.of(context)!.report,
                         style: TextStyle(color: ColorsManager.primaryColor),
                       ),
                     ],
@@ -214,7 +200,7 @@ class TeacherDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            const ProfileTitle(text: "Languages"),
+            ProfileTitle(text: AppLocalizations.of(context)!.languages),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
             //   child: Wrap(
@@ -248,21 +234,21 @@ class TeacherDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            const ProfileTitle(text: "Education"),
+            ProfileTitle(text: AppLocalizations.of(context)!.education),
             const ProfileDescription(
                 text:
                     "Bachelor Of Elementary education at Stratford International School"),
-            const ProfileTitle(text: "Experience"),
+            ProfileTitle(text: AppLocalizations.of(context)!.experience),
             const ProfileDescription(
                 text:
                     "I have 3 years teaching experience both kids and adult as a classroom teacher adn as an ESL Teacher in Vietnam in public schools and centers."),
-            const ProfileTitle(text: "Interests"),
+            ProfileTitle(text: AppLocalizations.of(context)!.interest),
             const ProfileDescription(
                 text:
                     "Traveling, reading, watching movies, learn foreign language"),
-            const ProfileTitle(text: "Profession"),
+            ProfileTitle(text: AppLocalizations.of(context)!.profession),
             const ProfileDescription(text: "Teacher"),
-            const ProfileTitle(text: "Specialities"),
+            ProfileTitle(text: AppLocalizations.of(context)!.specialities),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
             //   child: Wrap(
@@ -297,7 +283,7 @@ class TeacherDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            const ProfileTitle(text: "Rating and Comment"),
+            ProfileTitle(text: AppLocalizations.of(context)!.rating),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

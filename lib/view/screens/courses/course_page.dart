@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/ultilities/routes.dart';
-import 'package:lettutor/view/screens/course_detail/course_detail.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class CoursePage extends StatelessWidget {
   static String routeName = "/courses";
@@ -82,9 +82,9 @@ class CoursePage extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(8.0),
-          child: const TextField(
+          child: TextField(
             decoration: InputDecoration(
-              hintText: "Search Courses",
+              hintText: AppLocalizations.of(context)!.searchCourses,
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(

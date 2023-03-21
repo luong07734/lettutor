@@ -9,6 +9,7 @@ import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/screens/not_found/not_found.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
+import 'package:lettutor/view/screens/settings/settings.dart';
 import 'package:lettutor/view/screens/sign_up/sign_up.dart';
 import 'package:lettutor/view/screens/tutor_detail/teacher_detail.dart';
 import 'package:lettutor/view/screens/tutor_register/stepper.dart';
@@ -60,6 +61,8 @@ class Routers {
   static const String LogIn = '/log_in';
   static const String SignUp = '/sign_up';
   static const String ForgotPassword = '/forgot_password';
+
+  static const String Settings = '/settings';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -136,7 +139,13 @@ class Routers {
       case PDFView:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) =>  CourseTopicPDFViewer(),
+          builder: (_) => CourseTopicPDFViewer(),
+        );
+
+      case Settings:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => SettingsPage(),
         );
 
       default:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 
 import '../../../constants/fake_data.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class HomePage extends StatelessWidget {
   static String routeName = "/";
@@ -22,8 +23,8 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment:
                   MainAxisAlignment.center, // canh giữa các phần tử
               children: [
-                const Text(
-                  'Welcome to LetTutor!',
+                Text(
+                  AppLocalizations.of(context)!.welcome,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24.0,
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    child: const Text('Book a lesson'),
+                    child: Text(AppLocalizations.of(context)!.bookLesson),
                   ),
                 ),
               ],
@@ -59,9 +60,9 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  'Recommended Tutors',
+                  AppLocalizations.of(context)!.recommendTutors,
                   style: TextStyle(
                     fontWeight: FontWeight.bold, // Chữ in đậm
                     fontSize: 16.0, // Cỡ chữ 16
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'See all >',
+                  AppLocalizations.of(context)!.seeAll,
                   style: TextStyle(color: Colors.blueAccent),
                 ),
               ],

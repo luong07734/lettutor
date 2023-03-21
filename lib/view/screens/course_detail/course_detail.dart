@@ -5,6 +5,7 @@ import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 // import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseDetailPage extends StatefulWidget {
@@ -88,7 +89,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                   ),
                 ),
               ),
-              const ProfileTitle(text: "Overview"),
+              ProfileTitle(text: AppLocalizations.of(context)!.overview),
               Row(
                 children: [
                   Padding(
@@ -104,8 +105,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       ),
                     ),
                   ),
-                  const Text(
-                    'Why take this course?',
+                  Text(
+                    AppLocalizations.of(context)!.courseWhy,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -138,8 +139,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       ),
                     ),
                   ),
-                  const Text(
-                    'What will you be able to do?',
+                  Text(
+                    AppLocalizations.of(context)!.courseWhat,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -158,7 +159,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
               const SizedBox(
                 height: 10,
               ),
-              const ProfileTitle(text: "Experience Level"),
+              ProfileTitle(text: AppLocalizations.of(context)!.experienceLevel),
               Row(
                 children: [
                   Padding(
@@ -178,7 +179,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                   ),
                 ],
               ),
-              const ProfileTitle(text: "Course Length"),
+              ProfileTitle(text: AppLocalizations.of(context)!.courseLength),
               Row(
                 children: [
                   Padding(
@@ -199,7 +200,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                 ],
               ),
 
-              const ProfileTitle(text: "List Topics"),
+              ProfileTitle(text: AppLocalizations.of(context)!.listTopics),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),

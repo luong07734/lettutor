@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/main.dart';
 import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/view/screens/components/drawer-navigation-bar.dart';
 import 'package:lettutor/view/screens/forgot_password/forgot_password.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class SigninForm extends StatefulWidget {
   @override
@@ -24,7 +26,8 @@ class _SigninFormState extends State<SigninForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
-            const Text('Email', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.email,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
@@ -44,7 +47,8 @@ class _SigninFormState extends State<SigninForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Password', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.password,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               obscureText: !_passwordVisible,
               validator: (value) {
@@ -79,7 +83,7 @@ class _SigninFormState extends State<SigninForm> {
                 Navigator.pushNamed(context, Routers.ForgotPassword);
               },
               child: Text(
-                'Forgot Password?',
+                AppLocalizations.of(context)!.forgotPassword,
                 style: TextStyle(
                     color: Colors.blue[600],
                     fontWeight: FontWeight.bold,
@@ -96,16 +100,18 @@ class _SigninFormState extends State<SigninForm> {
                     print('Password: $_password');
                     //TO DO: change to named navigator
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => const MyApp()),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const HomeDrawerAndNavigationBar()),
                         (Route<dynamic> route) => false);
                   }
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      "SIGN IN",
+                      AppLocalizations.of(context)!.signIn,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

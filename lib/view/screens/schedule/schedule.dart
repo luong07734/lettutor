@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class SchedulePage extends StatelessWidget {
   static String routeName = "/schedule";
   const SchedulePage({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,11 @@ class SchedulePage extends StatelessWidget {
               height: 100,
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: Text(
-              "Schedule",
-              style: TextStyle(
+              AppLocalizations.of(context)!.schedule,
+              style: const TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -42,10 +42,10 @@ class SchedulePage extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "Here is a lisst of the sessions you have bookeed. \nYou can track when the meeeting starts, join the meeting with one click or can cancel the meeting before 2 hours.",
+                  AppLocalizations.of(context)!.scheduleDescription,
                   textAlign: TextAlign.start,
                 ),
               ),

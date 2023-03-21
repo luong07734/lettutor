@@ -5,6 +5,7 @@ import 'package:lettutor/view/screens/log_in/components/log_in_form.dart';
 import 'package:lettutor/view/screens/sign_up/sign_up.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class LoginPage extends StatelessWidget {
   static String routeName = "/log_in";
@@ -35,12 +36,12 @@ class LoginPage extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              ProfileTitle(text: "Say hello to your English tutors"),
+              ProfileTitle(text: AppLocalizations.of(context)!.sayHello),
               // welcome back, you've been missed!
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: Text(
-                  'Become fluent faster through one on one video chat lessons tailored to your goals.',
+                  AppLocalizations.of(context)!.becomeFluent,
                   style: TextStyle(
                       color: Colors.grey[700],
                       fontSize: 16,
@@ -65,7 +66,7 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
-                        'Or continue with',
+                        AppLocalizations.of(context)!.orContinueWith,
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                     ),
@@ -104,7 +105,7 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Not a member yet?",
+                    AppLocalizations.of(context)!.notMember,
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                   const SizedBox(width: 8),
@@ -112,8 +113,8 @@ class LoginPage extends StatelessWidget {
                     onTap: (() {
                       Navigator.pushNamed(context, Routers.SignUp);
                     }),
-                    child: const Text(
-                      'Sign up',
+                    child:  Text(
+                      AppLocalizations.of(context)!.signUp,
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,

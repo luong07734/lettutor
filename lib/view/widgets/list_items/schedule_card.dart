@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/ultilities/routes.dart';
-import 'package:lettutor/view/screens/video_call/video_call.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class ScheduleCard extends StatelessWidget {
   const ScheduleCard({
@@ -58,10 +58,11 @@ class ScheduleCard extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.cancel, color: Colors.red),
                       SizedBox(width: 8),
-                      Text('Cancel', style: TextStyle(color: Colors.red)),
+                      Text(AppLocalizations.of(context)!.cancel,
+                          style: TextStyle(color: Colors.red)),
                     ],
                   ),
                 ),
@@ -80,7 +81,7 @@ class ScheduleCard extends StatelessWidget {
                   Navigator.pushNamed(context, Routers.VideoCall);
                 }
               },
-              child: const Text("Join Meeting"),
+              child: Text(AppLocalizations.of(context)!.joinMeeting),
             ),
           ],
         ),

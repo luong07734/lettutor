@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/ultilities/language.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +55,12 @@ class _SettingLanguageDropdownButtonState
               //       : Assets.assetsIconsVn,
               //   width: 17,
               // ),
+              Image.asset(
+                value == "English"
+                    ? AssetsManager.ukFlagImage
+                    : AssetsManager.vnFlagImage,
+                width: 16,
+              ),
               const SizedBox(
                 width: 8,
               ),

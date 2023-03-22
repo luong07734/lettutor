@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/view/screens/settings/components/language_dropdown_button.dart';
 import 'package:lettutor/view/screens/settings/components/settings_button.dart';
+import 'package:lettutor/view/screens/settings/components/theme_dropdown_button.dart';
 
 List<Map<String, dynamic>> _languageOptions = [
   {
@@ -36,16 +37,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: const Icon(
                   Icons.language_rounded,
                 ),
-                title: "settings",
+                title: "Language",
                 child: const SettingLanguageDropdownButton()),
-            // SettingsButton(
-            //     onPress: null,
-            //     icon: const Icon(
-            //       Icons.light_sharp,
-
-            //     ),
-            //     title: "settings",
-            //     child: const SettingThemeDropdownButton()),
+            SettingsButton(
+                onPress: () {
+                  print("press");
+                },
+                icon: const Icon(
+                  Icons.light_sharp,
+                ),
+                title: "Theme",
+                child: const SettingThemeDropdownButton()),
           ],
         ));
   }

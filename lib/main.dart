@@ -6,6 +6,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/ultilities/language.dart';
 import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/ultilities/theme.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/screens/history/history.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
@@ -21,6 +22,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<LanguageProfile>(create: (_) => LanguageProfile()),
+      ChangeNotifierProvider<ThemeProfile>(create: (_) => ThemeProfile()),
     ],
     child: const MyApp(),
   ));
@@ -48,11 +50,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     LanguageProfile languageProfile = Provider.of<LanguageProfile>(context);
+    ThemeProfile themeModel = Provider.of<ThemeProfile>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Let Tutor',
       // home: LoginPage(),
       // routes: routes,
+      theme: themeModel.themeMode,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: languageProfile.locale,

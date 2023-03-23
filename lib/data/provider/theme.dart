@@ -34,15 +34,15 @@ class ThemeProfile extends ChangeNotifier {
     bool? isDark = false;
     if (isDark == true) {
       _themeMode = themeDataDark;
-      // _typeName = kStringDarkTheme;
+      _typeName = "Dark";
       // _themeModeType = ThemeMode.dark;
     } else if (isDark == false) {
       _themeMode = themeDataLight;
-      // _typeName = kStringLightTheme;
+      _typeName = "Light";
       // _themeModeType = ThemeMode.dark;
     } else {
       _themeMode = themeDataLight;
-      // _typeName = kStringLightTheme;
+      _typeName = "Light";
       // _themeModeType = ThemeMode.system;
     }
     notifyListeners();
@@ -50,7 +50,7 @@ class ThemeProfile extends ChangeNotifier {
 
   void setDarkTheme() async {
     _themeMode = themeDataDark;
-    // _typeName = kStringDarkTheme;
+    _typeName = "Dark";
     // _themeModeType = ThemeMode.dark;
     // await _prefHelper?.changeBrightnessToDark(true);
     notifyListeners();
@@ -58,7 +58,7 @@ class ThemeProfile extends ChangeNotifier {
 
   void setLightTheme() async {
     _themeMode = themeDataLight;
-    // _typeName = kStringLightTheme;
+    _typeName = "Light";
     // _themeModeType = ThemeMode.light;
     // await _prefHelper?.changeBrightnessToDark(false);
     notifyListeners();

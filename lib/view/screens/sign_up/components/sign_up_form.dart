@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/data/provider/authentication.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class SignupForm extends StatefulWidget {
   @override
@@ -16,9 +18,13 @@ class _SignupFormState extends State<SignupForm> {
   final _confirmPasswordController = TextEditingController();
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
+  bool isLoading = false;
+  List<String> errors = [];
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authenticationProvider =
+        context.read<AuthenticationProvider>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Form(
@@ -126,36 +132,66 @@ class _SignupFormState extends State<SignupForm> {
             ),
             const SizedBox(height: 30),
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Do sign in here
-                    // Do something with the form data
-                    final userName = _userNameController.text;
-                    final email = _emailController.text;
-                    final password = _passwordController.text;
-                    print('User Name: $userName');
-                    print('Email: $email');
-                    print('Password: $password');
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Routers.LogIn, (route) => false);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.signUpCapital,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+              child: isLoading
+                  ? CircularProgressIndicator(
+                      valueColor: const AlwaysStoppedAnimation(Colors.blue),
+                      backgroundColor: Colors.grey[200],
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Do sign in here
+                          // Do something with the form data
+                          final userName = _userNameController.text;
+                          final email = _emailController.text;
+                          final password = _passwordController.text;
+                          print('User Name: $userName');
+                          print('Email: $email');
+                          print('Password: $password');
+
+                          setState(() {
+                            isLoading = true;
+                          });
+                          authenticationProvider
+                              .signUp(email, password)
+                              .then((value) {
+                            if (value) {
+                              print(value.toString());
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Dang ki thanh cong"),
+                              ));
+                              // Navigator.pop(context);
+                              print("dang ki thanh cong");
+                            } else {
+                              // addError(S.current.email_is_already_in_use);
+                              print("bi loi");
+                              Text("email has been use");
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+
+                          // Navigator.pushNamedAndRemoveUntil(
+                          //     context, Routers.LogIn, (route) => false);
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.signUpCapital,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

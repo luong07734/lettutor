@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
-import 'package:lettutor/ultilities/language.dart';
+import 'package:lettutor/data/provider/language.dart';
 import 'package:provider/provider.dart';
 
 class SettingLanguageDropdownButton extends StatefulWidget {

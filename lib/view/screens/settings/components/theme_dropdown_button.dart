@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/ultilities/theme.dart';
+import 'package:lettutor/data/provider/theme.dart';
 import 'package:provider/provider.dart';
 
 class SettingThemeDropdownButton extends StatefulWidget {
@@ -17,7 +17,11 @@ class _SettingThemeDropdownButtonState
   @override
   Widget build(BuildContext context) {
     final ThemeProfile themeProfile = Provider.of<ThemeProfile>(context);
-
+    if (themeProfile.typeName == "Light") {
+      _selectedTheme = "Light";
+    } else {
+      _selectedTheme = "Dark";
+    }
     return DropdownButton(
       icon: Container(),
       underline: Container(),

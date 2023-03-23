@@ -4,9 +4,10 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/ultilities/language.dart';
+import 'package:lettutor/data/provider/authentication.dart';
+import 'package:lettutor/data/provider/language.dart';
 import 'package:lettutor/ultilities/routes.dart';
-import 'package:lettutor/ultilities/theme.dart';
+import 'package:lettutor/data/provider/theme.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/screens/history/history.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
@@ -23,6 +24,7 @@ void main() {
     providers: [
       ChangeNotifierProvider<LanguageProfile>(create: (_) => LanguageProfile()),
       ChangeNotifierProvider<ThemeProfile>(create: (_) => ThemeProfile()),
+      ChangeNotifierProvider<AuthenticationProvider>(create: (_) => AuthenticationProvider()),
     ],
     child: const MyApp(),
   ));

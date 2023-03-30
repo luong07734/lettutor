@@ -14,4 +14,8 @@ class Endpoints {
   static const String loginByGoogle = "/auth/google";
   static const String register = "/auth/register";
   static const String login = "/auth/login";
+
+  // tutors
+  static const String tutorList = "/tutor/more";
+
 }

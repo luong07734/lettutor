@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:lettutor/data/network/constants/http_endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:lettutor/data/network/exceptions/network_exceptions.dart';
+import 'package:lettutor/data/shared_preference/shared_preference.dart';
 
 class RestClient {
   static RestClient? _instance;
@@ -18,7 +19,8 @@ class RestClient {
   final JsonDecoder _decoder = JsonDecoder();
 
   // Get:-----------------------------------------------------------------------
-  Future<dynamic> get(String path) {
+  Future<dynamic> get(String path,
+      {Map<String, String>? headers, Map<String, String>? params}) {
     return http.get(Uri.https(Endpoints.baseUrl, path)).then(_createResponse);
   }
 
@@ -75,5 +77,13 @@ class RestClient {
     }
 
     return _decoder.convert(res);
+  }
+
+  // get access token
+
+  Future<String?> getAccessToken() async {
+    SharedPreference sharedPref = SharedPreference.instance;
+    String? accessToken = await sharedPref.accessToken;
+    return accessToken;
   }
 }

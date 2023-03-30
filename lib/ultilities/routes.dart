@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/view/screens/components/drawer-navigation-bar.dart';
 import 'package:lettutor/view/screens/course_detail/course_detail.dart';
 import 'package:lettutor/view/screens/courses/course_page.dart';
 import 'package:lettutor/view/screens/favorite_tutors/favorite_tutors.dart';
@@ -69,7 +70,7 @@ class Routers {
       case Home:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const HomePage(),
+          builder: (_) => const HomeDrawerAndNavigationBar(),
         );
       case LogIn:
         return MaterialPageRoute(

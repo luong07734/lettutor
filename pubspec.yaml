@@ -59,9 +59,12 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.20
   google_sign_in: ^6.0.2
+  json_annotation: ^4.8.0
 
 
 dev_dependencies:
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.1
   flutter_test:
     sdk: flutter
 

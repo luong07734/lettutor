@@ -25,6 +25,16 @@ class SharedPreference {
     return _sharedPreference.setString(SharedPreferenceKeys.accessToken, accessToken);
   }
 
+  Future<bool> removeAccessToken() async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.remove(SharedPreferenceKeys.accessToken);
+  }
+
+  Future<String?> get refreshToken async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.getString(SharedPreferenceKeys.refreshToken);
+  }
+
   Future<bool> saveRefreshToken(String refreshToken) async {
     SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
     return _sharedPreference.setString(SharedPreferenceKeys.refreshToken, refreshToken);
@@ -32,7 +42,6 @@ class SharedPreference {
 
   Future<bool> removeRefreshToken() async {
     SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
-
     return _sharedPreference.remove(SharedPreferenceKeys.refreshToken);
   }
 }

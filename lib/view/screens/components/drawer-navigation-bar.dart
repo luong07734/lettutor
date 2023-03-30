@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 import 'package:lettutor/view/screens/courses/course_page.dart';
@@ -114,6 +115,9 @@ class _HomeDrawerAndNavigationBarState
               ),
               ListTile(
                 onTap: () {
+                  final prefs = SharedPreference.instance;
+                  prefs.removeAccessToken();
+                  prefs.removeRefreshToken();
                   Navigator.pushNamedAndRemoveUntil(
                       context, Routers.LogIn, (route) => false);
                   // Navigator.of(context).pushAndRemoveUntil(

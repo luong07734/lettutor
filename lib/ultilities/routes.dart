@@ -17,34 +17,35 @@ import 'package:lettutor/view/screens/tutor_register/stepper.dart';
 import 'package:lettutor/view/screens/tutors/tutors_page.dart';
 import 'package:lettutor/view/screens/video_call/video_call.dart';
 
-final Map<String, WidgetBuilder> routes = {
-  // bottom navigation
-  HomePage.routeName: (BuildContext context) => HomePage(),
-  SchedulePage.routeName: (BuildContext context) => SchedulePage(),
-  TutorsPage.routeName: (BuildContext context) => TutorsPage(),
-  CoursePage.routeName: (BuildContext context) => CoursePage(),
+// final Map<String, WidgetBuilder> routes = {
+//   // bottom navigation
+//   // HomePage.routeName: (BuildContext context) => HomePage(),
+//   // SchedulePage.routeName: (BuildContext context) => SchedulePage(),
+//   // TutorsPage.routeName: (BuildContext context) => TutorsPage(),
+//   // CoursePage.routeName: (BuildContext context) => CoursePage(),
 
-  // drawer
-  HistoryPage.routeName: (BuildContext context) => HistoryPage(),
-  FavoriteTutorsPage.routeName: (BuildContext context) => FavoriteTutorsPage(),
-  RegisterStepper.routeName: (BuildContext context) => RegisterStepper(),
+//   // drawer
+//   HistoryPage.routeName: (BuildContext context) => HistoryPage(),
+//   FavoriteTutorsPage.routeName: (BuildContext context) => FavoriteTutorsPage(),
+//   RegisterStepper.routeName: (BuildContext context) => RegisterStepper(),
 
-  // video call
-  VideoCallWidget.routeName: (BuildContext context) => VideoCallWidget(),
+//   // video call
+//   VideoCallWidget.routeName: (BuildContext context) => VideoCallWidget(),
 
-  //detail
-  CourseDetailPage.routeName: (BuildContext context) => CourseDetailPage(),
-  TeacherDetailPage.routeName: (BuildContext context) => TeacherDetailPage(),
-  // '/lesson_detail': (BuildContext context) => CourseTopicPDFViewer(),
+//   //detail
+//   CourseDetailPage.routeName: (BuildContext context) => CourseDetailPage(),
+//   TeacherDetailPage.routeName: (BuildContext context) => TeacherDetailPage(),
+//   // '/lesson_detail': (BuildContext context) => CourseTopicPDFViewer(),
 
-  // authorization
-  LoginPage.routeName: (BuildContext context) => LoginPage(),
-  SignUpPage.routeName: (BuildContext context) => SignUpPage(),
-  ForgotPasswordPage.routeName: (BuildContext context) => ForgotPasswordPage(),
-};
+//   // authorization
+//   LoginPage.routeName: (BuildContext context) => LoginPage(),
+//   SignUpPage.routeName: (BuildContext context) => SignUpPage(),
+//   ForgotPasswordPage.routeName: (BuildContext context) => ForgotPasswordPage(),
+// };
 
 class Routers {
-  static const String Home = '/';
+  static const String Default = "/";
+  static const String Home = '/home';
   static const String Schedule = '/schedule';
   static const String Tutors = '/tutors';
   static const String Courses = '/courses';
@@ -67,6 +68,11 @@ class Routers {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Default:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const SettingsPage(),
+        );
       case Home:
         return MaterialPageRoute(
           settings: settings,

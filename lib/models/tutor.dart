@@ -18,7 +18,7 @@ class Info {
     this.country,
     this.phone,
     this.language,
-    this.birthday,
+    // this.birthday,
     this.requestPassword,
     this.isActivated,
     this.isPhoneActivated,
@@ -26,8 +26,8 @@ class Info {
     this.timezone,
     this.phoneAuth,
     this.isPhoneAuthActivated,
-    this.createdAt,
-    this.updatedAt,
+    // this.createdAt,
+    // this.updatedAt,
     this.deletedAt,
   });
 
@@ -42,7 +42,7 @@ class Info {
   String? country;
   String? phone;
   dynamic language;
-  DateTime? birthday;
+  // DateTime? birthday;
   bool? requestPassword;
   bool? isActivated;
   bool? isPhoneActivated;
@@ -50,8 +50,8 @@ class Info {
   int? timezone;
   dynamic phoneAuth;
   bool? isPhoneAuthActivated;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
   dynamic deletedAt;
 
   factory Info.fromJson(Map<String, dynamic> json) => _$InfoFromJson(json);
@@ -65,16 +65,16 @@ class FavoriteTutor {
     this.id,
     this.firstId,
     this.secondId,
-    this.createdAt,
-    this.updatedAt,
+    // this.createdAt,
+    // this.updatedAt,
     this.secondInfo,
   });
 
   String? id;
   String? firstId;
   String? secondId;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
   Info? secondInfo;
 
   factory FavoriteTutor.fromJson(Map<String, dynamic> json) =>
@@ -92,8 +92,8 @@ class Feedback {
     this.secondId,
     this.rating,
     this.content,
-    this.createdAt,
-    this.updatedAt,
+    // this.createdAt,
+    // this.updatedAt,
     this.firstInfo,
   });
 
@@ -103,8 +103,8 @@ class Feedback {
   String? secondId;
   int? rating;
   String? content;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
   Info? firstInfo;
 
   factory Feedback.fromJson(Map<String, dynamic> json) =>
@@ -126,7 +126,7 @@ class TutorRowItem {
     this.country,
     this.phone,
     this.language,
-    this.birthday,
+    // this.birthday,
     this.requestPassword,
     this.isActivated,
     this.isPhoneActivated,
@@ -134,26 +134,26 @@ class TutorRowItem {
     this.timezone,
     this.phoneAuth,
     this.isPhoneAuthActivated,
-    this.createdAt,
-    this.updatedAt,
+    // this.createdAt,
+    // this.updatedAt,
     this.deletedAt,
     this.feedbacks,
-    // this.id,
-    // this.userId,
-    // this.video,
-    // this.bio,
-    // this.education,
-    // this.experience,
-    // this.profession,
-    // this.accent,
-    // this.targetStudent,
-    // this.interests,
-    // this.languages,
-    // this.specialties,
-    // this.resume,
-    // this.isNative,
-    // this.price,
-    // this.isOnline,
+    this.id,
+    this.userId,
+    this.video,
+    this.bio,
+    this.education,
+    this.experience,
+    this.profession,
+    this.accent,
+    this.targetStudent,
+    this.interests,
+    this.languages,
+    this.specialties,
+    this.resume,
+    this.isNative,
+    this.price,
+    this.isOnline,
   });
 
   // late bool isFavorite;
@@ -168,7 +168,7 @@ class TutorRowItem {
   String? country;
   String? phone;
   dynamic language;
-  DateTime? birthday;
+  // DateTime? birthday;
   bool? requestPassword;
   bool? isActivated;
   dynamic isPhoneActivated;
@@ -176,26 +176,26 @@ class TutorRowItem {
   int? timezone;
   dynamic phoneAuth;
   bool? isPhoneAuthActivated;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
   dynamic deletedAt;
   List<Feedback>? feedbacks;
-  // String? id;
-  // String? userId;
-  // String? video;
-  // String? bio;
-  // String? education;
-  // String? experience;
-  // String? profession;
-  // dynamic accent;
-  // String? targetStudent;
-  // String? interests;
-  // String? languages;
-  // String? specialties;
-  // dynamic resume;
-  // dynamic isNative;
-  // int? price;
-  // bool? isOnline;
+  String? id;
+  String? userId;
+  String? video;
+  String? bio;
+  String? education;
+  String? experience;
+  String? profession;
+  dynamic accent;
+  String? targetStudent;
+  String? interests;
+  String? languages;
+  String? specialties;
+  dynamic resume;
+  dynamic isNative;
+  int? price;
+  bool? isOnline;
 
   factory TutorRowItem.fromJson(Map<String, dynamic> json) =>
       _$TutorRowItemFromJson(json);
@@ -216,4 +216,20 @@ class Tutors {
   factory Tutors.fromJson(Map<String, dynamic> json) => _$TutorsFromJson(json);
 
   Map<String, dynamic> toJson() => _$TutorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class TutorPerPage {
+  TutorPerPage({
+    required this.tutors,
+    required this.favouriteTutors,
+  });
+
+  Tutors tutors;
+  List<FavoriteTutor>? favouriteTutors;
+
+  factory TutorPerPage.fromJson(Map<String, dynamic> json) =>
+      _$TutorPerPageFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TutorPerPageToJson(this);
 }

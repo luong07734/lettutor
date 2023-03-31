@@ -25,7 +25,8 @@ class FavoriteTutorsPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: TeacherCard(index, context),
+            // child: TeacherCard(index, context),
+            child: Container(),
           );
         },
       ),

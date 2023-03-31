@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/rating/rating.dart';
 import 'package:lettutor/view/screens/tutor_detail/teacher_detail.dart';
@@ -7,7 +9,31 @@ import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
 import '../../../constants/asset_manager.dart';
 import '../../../constants/fake_data.dart';
 
-GestureDetector TeacherCard(int index, BuildContext context) {
+GestureDetector TeacherCard(
+    int index, BuildContext context, TutorRowItem tutor) {
+  final List<String> specialities = tutor.specialties!.split(",");
+
+  String toUpperCase(String word) {
+    List<String> words = word.split('-');
+    String result = words.map((word) {
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(' ');
+    return result;
+  }
+
+  double calRating() {
+    int sum = 0;
+    if (tutor.feedbacks!.length == 0) {
+      return -1;
+    }
+    for (int i = 0; i < tutor.feedbacks!.length; ++i) {
+      sum += tutor.feedbacks![i].rating!;
+    }
+    double result =
+        double.parse((sum / tutor.feedbacks!.length).toStringAsFixed(1));
+    return result;
+  }
+
   return GestureDetector(
     onTap: () {
       {
@@ -26,13 +52,21 @@ GestureDetector TeacherCard(int index, BuildContext context) {
         child: Column(
           children: [
             ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(AssetsManager.avatarImage),
-              ),
-              title: Text(myData[index]['name'].toString()),
+              leading: (tutor.avatar == null || tutor.avatar!.contains("icon-avatar-default.png"))
+                  ? CircleAvatar(
+                      backgroundImage: AssetImage(
+                        AssetsManager.userAvatarImage,
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundImage: NetworkImage(tutor.avatar!),
+                    ),
+              title: Text(tutor.name.toString()),
               subtitle: Row(
                 children: [
-                  RatingWidget(myData[index]['rating'].toString()),
+                  calRating() == -1
+                      ? Text("No reviews yet")
+                      : RatingWidget(calRating().toString()),
                 ],
               ),
               trailing: TextButton.icon(
@@ -49,12 +83,12 @@ GestureDetector TeacherCard(int index, BuildContext context) {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: chipTitles.length,
+                  itemCount: specialities.length,
                   itemBuilder: (context, subIndex) {
                     return Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: CustomChip(
-                        label: chipTitles[subIndex],
+                        label: toUpperCase(specialities[subIndex]),
                         clickable: false,
                       ),
                     );
@@ -65,7 +99,7 @@ GestureDetector TeacherCard(int index, BuildContext context) {
             Container(
               padding: const EdgeInsets.all(16),
               child: Text(
-                myData[index]['description'].toString(),
+                tutor.bio.toString(),
                 textAlign: TextAlign.start,
                 maxLines: 4,
                 softWrap: true,

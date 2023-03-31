@@ -9,6 +9,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/data/provider/authentication.dart';
 import 'package:lettutor/data/provider/language.dart';
+import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/data/provider/theme.dart';
@@ -68,29 +69,34 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     LanguageProfile languageProfile = Provider.of<LanguageProfile>(context);
     ThemeProfile themeModel = Provider.of<ThemeProfile>(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Let Tutor',
-      // home: LoginPage(),
-      // routes: routes,
-      theme: themeModel.themeMode,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: languageProfile.locale,
-      onGenerateRoute: Routers.generateRoute,
-      initialRoute: (widget.token != null && widget.token!.isNotEmpty)
-          ? Routers.Home
-          : Routers.LogIn,
-      onGenerateInitialRoutes: (String initialRouteName) {
-        return [
-          MaterialPageRoute(
-            builder: (context) =>
-                (widget.token != null && widget.token!.isNotEmpty)
-                    ? HomeDrawerAndNavigationBar()
-                    : LoginPage(),
-          )
-        ];
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TutorProvider>(create: (_) => TutorProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Let Tutor',
+        // home: LoginPage(),
+        // routes: routes,
+        theme: themeModel.themeMode,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: languageProfile.locale,
+        onGenerateRoute: Routers.generateRoute,
+        initialRoute: (widget.token != null && widget.token!.isNotEmpty)
+            ? Routers.Home
+            : Routers.LogIn,
+        onGenerateInitialRoutes: (String initialRouteName) {
+          return [
+            MaterialPageRoute(
+              builder: (context) =>
+                  (widget.token != null && widget.token!.isNotEmpty)
+                      ? HomeDrawerAndNavigationBar()
+                      : LoginPage(),
+            )
+          ];
+        },
+      ),
     );
   }
 }

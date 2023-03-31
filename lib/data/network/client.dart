@@ -16,12 +16,12 @@ class RestClient {
   RestClient._();
 
   // instantiate json decoder for json serialization
-  final JsonDecoder _decoder = JsonDecoder();
+  final JsonDecoder _decoder = const JsonDecoder();
 
   // Get:-----------------------------------------------------------------------
   Future<dynamic> get(String path,
-      {Map<String, String>? headers, Map<String, String>? params}) {
-    return http.get(Uri.https(Endpoints.baseUrl, path)).then(_createResponse);
+      {Map<String, String>? headers, Map<String, String>? params}) async {
+    return http.get(Uri.https(Endpoints.baseUrl, path, params),  headers: headers).then(_createResponse);
   }
 
   // Post:----------------------------------------------------------------------
@@ -72,6 +72,8 @@ class RestClient {
     final int statusCode = response.statusCode;
 
     if (statusCode < 200 || statusCode > 400) {
+      print("${statusCode}");
+      print("${res}");
       throw NetworkException(
           message: 'Error fetching data from server', statusCode: statusCode);
     }

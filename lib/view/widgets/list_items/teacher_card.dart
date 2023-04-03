@@ -37,7 +37,9 @@ GestureDetector TeacherCard(
   return GestureDetector(
     onTap: () {
       {
-        Navigator.pushNamed(context, Routers.TeacherDetail);
+        Navigator.pushNamed(context, Routers.TeacherDetail, arguments: {
+          'tutor': tutor,
+        });
       }
       ;
     },
@@ -52,7 +54,8 @@ GestureDetector TeacherCard(
         child: Column(
           children: [
             ListTile(
-              leading: (tutor.avatar == null || tutor.avatar!.contains("icon-avatar-default.png"))
+              leading: (tutor.avatar == null ||
+                      tutor.avatar!.contains("icon-avatar-default.png"))
                   ? CircleAvatar(
                       backgroundImage: AssetImage(
                         AssetsManager.userAvatarImage,

@@ -25,6 +25,7 @@ Info _$InfoFromJson(Map<String, dynamic> json) => Info(
       timezone: json['timezone'] as int?,
       phoneAuth: json['phoneAuth'],
       isPhoneAuthActivated: json['isPhoneAuthActivated'] as bool?,
+      createdAt: json['createdAt'] as String?,
       deletedAt: json['deletedAt'],
     );
 
@@ -47,6 +48,7 @@ Map<String, dynamic> _$InfoToJson(Info instance) => <String, dynamic>{
       'timezone': instance.timezone,
       'phoneAuth': instance.phoneAuth,
       'isPhoneAuthActivated': instance.isPhoneAuthActivated,
+      'createdAt': instance.createdAt,
       'deletedAt': instance.deletedAt,
     };
 
@@ -55,6 +57,7 @@ FavoriteTutor _$FavoriteTutorFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       firstId: json['firstId'] as String?,
       secondId: json['secondId'] as String?,
+      createdAt: json['createdAt'] as String?,
       secondInfo: json['secondInfo'] == null
           ? null
           : Info.fromJson(json['secondInfo'] as Map<String, dynamic>),
@@ -65,28 +68,31 @@ Map<String, dynamic> _$FavoriteTutorToJson(FavoriteTutor instance) =>
       'id': instance.id,
       'firstId': instance.firstId,
       'secondId': instance.secondId,
+      'createdAt': instance.createdAt,
       'secondInfo': instance.secondInfo?.toJson(),
     };
 
-Feedback _$FeedbackFromJson(Map<String, dynamic> json) => Feedback(
+FeedBack _$FeedBackFromJson(Map<String, dynamic> json) => FeedBack(
       id: json['id'] as String?,
       bookingId: json['bookingId'] as String?,
       firstId: json['firstId'] as String?,
       secondId: json['secondId'] as String?,
       rating: json['rating'] as int?,
       content: json['content'] as String?,
+      createdAt: json['createdAt'] as String?,
       firstInfo: json['firstInfo'] == null
           ? null
           : Info.fromJson(json['firstInfo'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$FeedbackToJson(Feedback instance) => <String, dynamic>{
+Map<String, dynamic> _$FeedBackToJson(FeedBack instance) => <String, dynamic>{
       'id': instance.id,
       'bookingId': instance.bookingId,
       'firstId': instance.firstId,
       'secondId': instance.secondId,
       'rating': instance.rating,
       'content': instance.content,
+      'createdAt': instance.createdAt,
       'firstInfo': instance.firstInfo?.toJson(),
     };
 
@@ -110,7 +116,7 @@ TutorRowItem _$TutorRowItemFromJson(Map<String, dynamic> json) => TutorRowItem(
       isPhoneAuthActivated: json['isPhoneAuthActivated'] as bool?,
       deletedAt: json['deletedAt'],
       feedbacks: (json['feedbacks'] as List<dynamic>?)
-          ?.map((e) => Feedback.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => FeedBack.fromJson(e as Map<String, dynamic>))
           .toList(),
       id: json['id'] as String?,
       userId: json['userId'] as String?,

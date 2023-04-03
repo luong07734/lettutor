@@ -30,6 +30,7 @@ class TutorApis {
         });
 
     print("sau khi goi api chi tiet tutor");
+    print(response);
     return response;
   }
 }

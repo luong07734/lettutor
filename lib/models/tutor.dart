@@ -26,7 +26,7 @@ class Info {
     this.timezone,
     this.phoneAuth,
     this.isPhoneAuthActivated,
-    // this.createdAt,
+    this.createdAt,
     // this.updatedAt,
     this.deletedAt,
   });
@@ -50,7 +50,7 @@ class Info {
   int? timezone;
   dynamic phoneAuth;
   bool? isPhoneAuthActivated;
-  // DateTime? createdAt;
+  String? createdAt;
   // DateTime? updatedAt;
   dynamic deletedAt;
 
@@ -65,7 +65,7 @@ class FavoriteTutor {
     this.id,
     this.firstId,
     this.secondId,
-    // this.createdAt,
+    this.createdAt,
     // this.updatedAt,
     this.secondInfo,
   });
@@ -73,7 +73,7 @@ class FavoriteTutor {
   String? id;
   String? firstId;
   String? secondId;
-  // DateTime? createdAt;
+  String? createdAt;
   // DateTime? updatedAt;
   Info? secondInfo;
 
@@ -84,15 +84,15 @@ class FavoriteTutor {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Feedback {
-  Feedback({
+class FeedBack {
+  FeedBack({
     this.id,
     this.bookingId,
     this.firstId,
     this.secondId,
     this.rating,
     this.content,
-    // this.createdAt,
+    this.createdAt,
     // this.updatedAt,
     this.firstInfo,
   });
@@ -103,14 +103,14 @@ class Feedback {
   String? secondId;
   int? rating;
   String? content;
-  // DateTime? createdAt;
+  String? createdAt;
   // DateTime? updatedAt;
   Info? firstInfo;
 
-  factory Feedback.fromJson(Map<String, dynamic> json) =>
-      _$FeedbackFromJson(json);
+  factory FeedBack.fromJson(Map<String, dynamic> json) =>
+      _$FeedBackFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FeedbackToJson(this);
+  Map<String, dynamic> toJson() => _$FeedBackToJson(this);
 }
 
 @JsonSerializable()
@@ -179,7 +179,7 @@ class TutorRowItem {
   // DateTime? createdAt;
   // DateTime? updatedAt;
   dynamic deletedAt;
-  List<Feedback>? feedbacks;
+  List<FeedBack>? feedbacks;
   String? id;
   String? userId;
   String? video;

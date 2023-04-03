@@ -19,4 +19,6 @@ class Endpoints {
   static const String tutorList = "/tutor/more";
   static const String tutorDetail = "/tutor";
 
+  // course
+  static const String courseList = "/course";
 }

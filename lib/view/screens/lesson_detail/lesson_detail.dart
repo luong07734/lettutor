@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/models/course.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseTopicPDFViewer extends StatefulWidget {
@@ -9,19 +10,33 @@ class CourseTopicPDFViewer extends StatefulWidget {
 }
 
 class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
-  final int _selectedIndex = -1;
-  final List<String> _titles = [
-    '1. Food You Love',
-    '2. Your Job',
-    '3. Playing and Watching Sports',
-    '4. The Best Pets',
-    '5. Having Fun in Your Freetime',
-  ];
   bool isExpanded = false;
+  var currentIndex = -1;
+  List<Topic>? topicsList;
+  late UniqueKey _pdfKey;
+
+  @override
+  void initState() {
+    super.initState();
+    _pdfKey = UniqueKey();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    List<Topic> topics = args["topics"]!;
+    var index = args["index"]!;
+
+    setState(() {
+      currentIndex = index;
+      topicsList = topics;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -34,7 +49,7 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
           margin: const EdgeInsets.only(left: 10),
           child: Text(
             // widget.title,
-            args["title"]!,
+            topicsList![currentIndex].name!,
             style: const TextStyle(color: Colors.white),
           ),
         ),
@@ -43,7 +58,7 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
         child: Column(
           children: [
             ExpansionTile(
-              title: const Text('My List'),
+              title: const Text('Topic List'),
               leading: const Icon(Icons.list),
               trailing: isExpanded
                   ? const Icon(Icons.expand_less)
@@ -53,23 +68,26 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
                   isExpanded = expanding;
                 });
               },
-              children: _titles.map((item) {
+              children: topicsList!.map((item) {
                 return GestureDetector(
                   onTap: () {
-                    print(_titles.indexOf(item));
+                    print(topicsList!.indexOf(item));
                     setState(() {
                       isExpanded = false;
+                      currentIndex = topicsList!.indexOf(item);
+                      _pdfKey = UniqueKey();
                     });
                   },
                   child: ListTile(
-                    title: Text(item),
+                    title: Text(item.name!),
                   ),
                 );
               }).toList(),
             ),
             Expanded(
               child: SfPdfViewer.network(
-                args["url"]!,
+                topicsList![currentIndex].nameFile!,
+                key: _pdfKey,
                 canShowScrollHead: true,
                 canShowScrollStatus: true,
               ),

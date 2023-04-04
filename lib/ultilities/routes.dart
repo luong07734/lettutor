@@ -9,6 +9,7 @@ import 'package:lettutor/view/screens/home/home_page.dart';
 import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/screens/not_found/not_found.dart';
+import 'package:lettutor/view/screens/profile/profile.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
 import 'package:lettutor/view/screens/settings/settings.dart';
 import 'package:lettutor/view/screens/sign_up/sign_up.dart';
@@ -65,6 +66,8 @@ class Routers {
   static const String ForgotPassword = '/forgot_password';
 
   static const String Settings = '/settings';
+
+  static const String Profile = '/profile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -153,6 +156,12 @@ class Routers {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => SettingsPage(),
+        );
+
+      case Profile:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ProfileScreen(),
         );
 
       default:

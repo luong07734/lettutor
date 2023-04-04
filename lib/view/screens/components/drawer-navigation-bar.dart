@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/data/provider/authentication.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
@@ -10,6 +11,8 @@ import 'package:lettutor/view/screens/courses/course_page.dart';
 import 'package:lettutor/view/screens/home/home_page.dart';
 import 'package:lettutor/view/screens/schedule/schedule.dart';
 import 'package:lettutor/view/screens/tutors/tutors_page.dart';
+import 'package:provider/provider.dart';
+import 'package:lettutor/models/user.dart';
 
 class HomeDrawerAndNavigationBar extends StatefulWidget {
   const HomeDrawerAndNavigationBar({super.key});
@@ -36,7 +39,15 @@ class _HomeDrawerAndNavigationBarState
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override
+  void initState() {
+    super.initState();
+    // context.read<AuthenticationProvider>().loadUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authProvider =
+        Provider.of<AuthenticationProvider>(context);
     return AdvancedDrawer(
       backdropColor: Colors.blueGrey,
       controller: _advancedDrawerController,
@@ -175,14 +186,21 @@ class _HomeDrawerAndNavigationBarState
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: CircleAvatar(
-                radius: 30,
-                child: ClipOval(
-                  child: Image.asset(
-                    AssetsManager.avatarImage,
-                    fit: BoxFit.cover,
-                    width: 40,
-                    height: 40,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routers.Profile);
+                },
+                child: CircleAvatar(
+                  radius: 30,
+                  child: ClipOval(
+                    child: authProvider.currentLoggedUser == null
+                        ? Image.asset(AssetsManager.avatarImage)
+                        : Image.network(
+                            authProvider.currentLoggedUser!.avatar!,
+                            fit: BoxFit.cover,
+                            width: 40,
+                            height: 40,
+                          ),
                   ),
                 ),
               ),

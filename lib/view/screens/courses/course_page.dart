@@ -14,6 +14,8 @@ class CoursePage extends StatefulWidget {
 
 class _CoursePageState extends State<CoursePage> {
   final _scrollController = ScrollController();
+  final _searchController = TextEditingController(); // Add this line
+  String _searchQuery = '';
   @override
   void initState() {
     super.initState();
@@ -25,6 +27,13 @@ class _CoursePageState extends State<CoursePage> {
 
     // listen to scroll events to detect when user reaches end of list
     _scrollController.addListener(_onScroll);
+
+    // add listener for text field changes
+    _searchController.addListener(() {
+      setState(() {
+        _searchQuery = _searchController.text.toLowerCase();
+      });
+    });
   }
 
   @override
@@ -49,6 +58,7 @@ class _CoursePageState extends State<CoursePage> {
         Container(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            controller: _searchController, // Add this line
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.searchCourses,
               prefixIcon: Icon(Icons.search),
@@ -67,17 +77,24 @@ class _CoursePageState extends State<CoursePage> {
               // show loading indicator while data is being fetched
               return CircularProgressIndicator();
             } else {
+              final filteredCourses = courseProvider.courses
+                  .where((course) =>
+                      course.name!.toLowerCase().contains(_searchQuery))
+                  .toList();
               return GridView.builder(
                   controller: _scrollController,
-                  itemCount: courseProvider.courses.length +
-                      (courseProvider.hasMoreItems ? 2 : 0),
+                  itemCount: filteredCourses.length +
+                      ((courseProvider.hasMoreItems &&
+                              filteredCourses.length >= 4)
+                          ? 2
+                          : 0),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 3.8 / 5,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    if (index < courseProvider.courses.length) {
-                      final course = courseProvider.courses[index];
+                    if (index < filteredCourses.length) {
+                      final course = filteredCourses[index];
                       return GestureDetector(
                           onTap: (() {
                             Navigator.pushNamed(context, Routers.CourseDetail,

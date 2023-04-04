@@ -12,6 +12,7 @@ import 'package:lettutor/data/provider/course_provider.dart';
 import 'package:lettutor/data/provider/language.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
+import 'package:lettutor/models/user.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/data/provider/theme.dart';
 import 'package:lettutor/view/screens/components/drawer-navigation-bar.dart';
@@ -32,6 +33,8 @@ Future main() async {
   final prefs = SharedPreference.instance;
   String? accessToken = await prefs.accessToken ?? "";
   String? refreshToken = await prefs.refreshToken ?? "";
+  UserProfile? user = await prefs.currentLoggedUser;
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<LanguageProfile>(create: (_) => LanguageProfile()),
@@ -39,13 +42,14 @@ Future main() async {
       ChangeNotifierProvider<AuthenticationProvider>(
           create: (_) => AuthenticationProvider()),
     ],
-    child: MyApp(token: accessToken),
+    child: MyApp(token: accessToken, user: user),
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({required this.token, Key? key});
+  const MyApp({required this.token, required this.user, Key? key});
   final String? token;
+  final UserProfile? user;
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -85,14 +89,14 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: AppLocalizations.supportedLocales,
         locale: languageProfile.locale,
         onGenerateRoute: Routers.generateRoute,
-        initialRoute: (widget.token != null && widget.token!.isNotEmpty)
+        initialRoute: (widget.token != null && widget.token!.isNotEmpty && widget.user != null)
             ? Routers.Home
             : Routers.LogIn,
         onGenerateInitialRoutes: (String initialRouteName) {
           return [
             MaterialPageRoute(
               builder: (context) =>
-                  (widget.token != null && widget.token!.isNotEmpty)
+                  (widget.token != null && widget.token!.isNotEmpty && widget.user != null)
                       ? HomeDrawerAndNavigationBar()
                       : LoginPage(),
             )

@@ -23,7 +23,7 @@ GestureDetector TeacherCard(
 
   double calRating() {
     int sum = 0;
-    if (tutor.feedbacks!.length == 0) {
+    if (tutor.feedbacks == null || tutor.feedbacks!.length == 0) {
       return -1;
     }
     for (int i = 0; i < tutor.feedbacks!.length; ++i) {
@@ -67,9 +67,11 @@ GestureDetector TeacherCard(
               title: Text(tutor.name.toString()),
               subtitle: Row(
                 children: [
-                  calRating() == -1
+                  tutor.rating == null
                       ? Text("No reviews yet")
-                      : RatingWidget(calRating().toString()),
+                      : RatingWidget(double.parse(tutor.rating.toString())
+                          .toStringAsFixed(1)
+                          .toString()),
                 ],
               ),
               trailing: TextButton.icon(
@@ -93,6 +95,8 @@ GestureDetector TeacherCard(
                       child: CustomChip(
                         label: toUpperCase(specialities[subIndex]),
                         clickable: false,
+                        index: -1,
+                        selected: true,
                       ),
                     );
                   },

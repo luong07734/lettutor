@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/data/provider/course_provider.dart';
+import 'package:lettutor/data/provider/tutor_provider.dart';
+import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/view/widgets/list_items/course_card.dart';
 import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/fake_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
-class HomePage extends StatelessWidget {
-  static String routeName = "/";
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({required this.moveAtIndex, Key? key}) : super(key: key);
+
+  final Function(int index) moveAtIndex;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<TutorProvider>().reset();
+    context.read<TutorProvider>().loadTutorsInPage();
+    context.read<CourseProvider>().reset();
+    context.read<CourseProvider>().loadCoursesInPage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +89,14 @@ class HomePage extends StatelessWidget {
                     decoration: TextDecoration.underline, // Gạch chân
                   ),
                 ),
-                Text(
-                  AppLocalizations.of(context)!.seeAll,
-                  style: TextStyle(color: Colors.blueAccent),
+                GestureDetector(
+                  onTap: () {
+                    widget.moveAtIndex(2);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.seeAll,
+                    style: TextStyle(color: Colors.blueAccent),
+                  ),
                 ),
               ],
             ),
@@ -79,27 +104,121 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: myData
-                .length, // myData là một mảng các đối tượng dữ liệu của bạn
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1), // Màu bóng đổ
-                      spreadRadius: 1, // Bán kính của bóng đổ
-                      blurRadius: 1, // Độ mờ của bóng đổ
-                      offset: const Offset(0, 1), // Độ dịch chuyển của bóng đổ
-                    ),
-                  ],
+          Container(
+            height: 250,
+            width: double.infinity,
+            child:
+                Consumer<TutorProvider>(builder: (context, tutorProvider, _) {
+              if (tutorProvider.tutors.isEmpty) {
+                // show loading indicator while data is being fetched
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: tutorProvider.tutors.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final tutor = tutorProvider.tutors[index];
+                    return Container(
+                      width: 350,
+                      height: 250,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                            spreadRadius: 1, // Bán kính của bóng đổ
+                            blurRadius: 1, // Độ mờ của bóng đổ
+                            offset: const Offset(
+                                0, 1), // Độ dịch chuyển của bóng đổ
+                          ),
+                        ],
+                      ),
+                      child: TeacherCard(index, context, tutor),
+                    );
+                  },
+                );
+              }
+            }),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Recommend courses",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, // Chữ in đậm
+                    fontSize: 16.0, // Cỡ chữ 16
+                    decoration: TextDecoration.underline, // Gạch chân
+                  ),
                 ),
-                // child: TeacherCard(index, context,),
-                child: Container(),
-              );
-            },
+                GestureDetector(
+                  onTap: () {
+                    widget.moveAtIndex(3);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.seeAll,
+                    style: TextStyle(color: Colors.blueAccent),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 250,
+            width: double.infinity,
+            child:
+                Consumer<CourseProvider>(builder: (context, courseProvider, _) {
+              if (courseProvider.courses.isEmpty) {
+                // show loading indicator while data is being fetched
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: courseProvider.courses.length,
+                    // gridDelegate:
+                    //     const SliverGridDelegateWithFixedCrossAxisCount(
+                    //   crossAxisCount: 2,
+                    //   childAspectRatio: 3.8 / 5,
+                    // ),
+                    itemBuilder: (BuildContext context, int index) {
+                      final course = courseProvider.courses[index];
+                      return Container(
+                        width: 190,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                              spreadRadius: 1, // Bán kính của bóng đổ
+                              blurRadius: 1, // Độ mờ của bóng đổ
+                              offset: const Offset(
+                                  0, 1), // Độ dịch chuyển của bóng đổ
+                            ),
+                          ],
+                        ),
+                        child: GestureDetector(
+                            onTap: (() {
+                              Navigator.pushNamed(context, Routers.CourseDetail,
+                                  arguments: {
+                                    'course': course,
+                                  });
+                            }),
+                            child: CourseCard(
+                              index: index,
+                              course: course,
+                            )),
+                      );
+                    });
+              }
+            }),
           )
         ],
       ),

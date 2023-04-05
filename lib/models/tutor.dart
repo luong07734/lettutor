@@ -151,6 +151,7 @@ class TutorRowItem {
     this.languages,
     this.specialties,
     this.resume,
+    this.rating,
     this.isNative,
     this.price,
     this.isOnline,
@@ -193,6 +194,7 @@ class TutorRowItem {
   String? languages;
   String? specialties;
   dynamic resume;
+  double? rating;
   dynamic isNative;
   int? price;
   bool? isOnline;

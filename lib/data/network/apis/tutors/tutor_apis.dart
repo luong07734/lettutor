@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:lettutor/constants/filter.dart';
 import 'package:lettutor/data/network/client.dart';
 import 'package:lettutor/data/network/constants/http_endpoints.dart';
 
@@ -31,6 +32,29 @@ class TutorApis {
 
     print("sau khi goi api chi tiet tutor");
     print(response);
+    return response;
+  }
+
+  Future<dynamic> searchTutor(
+    String keySearch, {
+    int? page,
+    int perPage = 12,
+    List<String>? specialties,
+  }) async {
+    print("page ${page}");
+    print("specs ${specialties}");
+    final response = await _restClient.post(Endpoints.tutorSearch, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, body: {
+      "page": page,
+      "perPage": perPage,
+      "filters": {
+        "specialties": specialties ?? [],
+      },
+      "search": keySearch
+    });
+
     return response;
   }
 }

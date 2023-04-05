@@ -206,10 +206,10 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            RatingWidget(
-                                double.parse(tutorDetail!.rating.toString())
-                                    .toStringAsFixed(1)
-                                    .toString()),
+                             RatingWidget(
+                                    double.parse(tutorRowItem!.rating.toString())
+                                        .toStringAsFixed(1)
+                                        .toString()),
                             TextButton.icon(
                               onPressed: () {
                                 setState(() {
@@ -326,6 +326,8 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                               label: toUpperCase(tutorRowItem!.languages!
                                   .split(",")[subIndex]),
                               clickable: false,
+                              index: -1,
+                              selected: true,
                             ),
                           );
                         },
@@ -358,6 +360,8 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                               label: toUpperCase(tutorRowItem!.specialties!
                                   .split(",")[subIndex]),
                               clickable: false,
+                              index: -1,
+                              selected: true,
                             ),
                           );
                         },
@@ -367,7 +371,7 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                   ProfileTitle(text: AppLocalizations.of(context)!.rating),
                   (tutorRowItem!.feedbacks == null ||
                           tutorRowItem!.feedbacks!.length == 0)
-                      ? ProfileTitle(text: "No reviews")
+                      ? ProfileDescription(text: "No reviews")
                       : ListView.builder(
                           reverse: true,
                           shrinkWrap: true,

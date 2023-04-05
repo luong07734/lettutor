@@ -25,22 +25,31 @@ class HomeDrawerAndNavigationBar extends StatefulWidget {
 class _HomeDrawerAndNavigationBarState
     extends State<HomeDrawerAndNavigationBar> {
   // This widget is the root of your application.
-  final List<Widget> _pages = [
-    const HomePage(),
-    const SchedulePage(),
-    const TutorsPage(),
-    CoursePage(),
-    // const HistoryPage(),
-    // const FavoriteTutorsPage(),
-    // RegisterStepper(),
-  ];
+  List<Widget> _pages = [];
   int _currentIndex = 0;
   //GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final _advancedDrawerController = AdvancedDrawerController();
+  final GlobalKey<CurvedNavigationBarState> _navBarKey = GlobalKey();
+
+  void handleSelection(int index) {
+    setState(() {
+      _currentIndex = index;
+      _navBarKey.currentState?.setPage(index);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    _pages = [
+      HomePage(moveAtIndex: handleSelection),
+      const SchedulePage(),
+      const TutorsPage(),
+      CoursePage(),
+      // const HistoryPage(),
+      // const FavoriteTutorsPage(),
+      // RegisterStepper(),
+    ];
     // context.read<AuthenticationProvider>().loadUser();
   }
 
@@ -218,6 +227,7 @@ class _HomeDrawerAndNavigationBarState
         //   child: Icon(Icons.add),
         // ),
         bottomNavigationBar: CurvedNavigationBar(
+          key: _navBarKey,
           backgroundColor: Colors.white,
           color: Colors.blueAccent,
           items: const <Widget>[

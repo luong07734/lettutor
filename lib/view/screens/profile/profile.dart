@@ -103,7 +103,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             : profile.currentLoggedUser!.testPreparations!;
         _selectedTestPreps = profile.currentLoggedUser!.testPreparations == null
             ? []
-            : profile.currentLoggedUser!.testPreparations!.map((e) => e.name).toList();
+            : profile.currentLoggedUser!.testPreparations!
+                .map((e) => e.name)
+                .toList();
         // initTopics = _selectedTopics;
       });
     });
@@ -113,6 +115,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final image = await ImagePicker().pickImage(source: source);
     setState(() {
       _imageFile = File(image!.path);
+      AuthenticationProvider profile =
+          Provider.of<AuthenticationProvider>(context, listen: false);
+      profile.avatarImage = File(image.path);
     });
   }
 
@@ -217,16 +222,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 16),
                       FormTextField(
-                          title: "Full name",
-                          icon: Icons.person,
-                          controller: _fullNameController,
-                          hint: "Enter your full name"),
+                        title: "Full name",
+                        icon: Icons.person,
+                        controller: _fullNameController,
+                        hint: "Enter your full name",
+                        enabled: true,
+                      ),
                       const SizedBox(height: 16),
                       FormTextField(
-                          title: "Phone Number",
-                          icon: Icons.phone,
-                          controller: _phoneNumberController,
-                          hint: "Enter your Phone Number"),
+                        title: "Phone Number",
+                        icon: Icons.phone,
+                        controller: _phoneNumberController,
+                        hint: "Enter your Phone Number",
+                        enabled: false,
+                      ),
                       const SizedBox(height: 16),
                       DatePickerFormField(
                         title: 'Date of Birth',
@@ -322,10 +331,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             print(profile.tempCurrentUser!.testPreparations);
                             // profile.tempCurrentUser!.testPreparations =
                             //     _selectedTopics.cast<LearnTopic>();
-                             profile.tempCurrentUser!.testPreparations =
-                                _selectedTestPreps.map((name) => testPreperations.firstWhere((learnTopic) => learnTopic!.name == name)).cast<LearnTopic>().toList();
+                            profile.tempCurrentUser!.testPreparations =
+                                _selectedTestPreps
+                                    .map((name) => testPreperations.firstWhere(
+                                        (learnTopic) =>
+                                            learnTopic!.name == name))
+                                    .cast<LearnTopic>()
+                                    .toList();
 
-                            profile.updateProfile();
+                            profile.updateProfile(context);
                           }
                         },
                         child: const Text("Save Changes"),

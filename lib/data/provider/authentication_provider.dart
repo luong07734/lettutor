@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:lettutor/data/network/apis/authentication/authentication_apis.dart';
 import 'package:lettutor/data/network/apis/users/user_apis.dart';
@@ -11,6 +13,7 @@ class AuthenticationProvider extends ChangeNotifier {
   UserProfile? currentLoggedUser;
   UserProfile? tempCurrentUser;
   final SharedPreference _prefHelper = SharedPreference.instance;
+  File? avatarImage;
 
   AuthenticationProvider() {
     _loadUser();
@@ -69,49 +72,63 @@ class AuthenticationProvider extends ChangeNotifier {
     return false;
   }
 
-  // void updateProfile() {
-  //   if (_imageFile != null) {
-  //     _userApi.updateAvatar(_imageFile!).then((value) {
-  //       _userApi.updateUserInformation(backupProfile).then((value) {
-  //         if (value["user"] != null) {
-  //           profile = Profile.fromMap(value["user"]);
-  //           backupProfile = Profile.fromMap(value["user"]);
-  //           analyticsUpdate("update_profile", true);
-  //         } else {
-  //           analyticsUpdate("update_profile", false);
-  //         }
-  //         notifyListeners();
-  //       });
-  //       if (value) {
-  //         _imageFile = null;
-  //       } else {
-  //         analyticsUpdate("update_avatar", false);
-  //       }
-  //     });
-  //   } else {
-  //     _userApi.updateUserInformation(backupProfile).then((value) {
-  //       if (value["user"] != null) {
-  //         profile = Profile.fromMap(value["user"]);
-  //         backupProfile = Profile.fromMap(value["user"]);
-  //       } else {}
-  //       notifyListeners();
-  //     });
-  //   }
-  // }
-
-  void updateProfile() {
+  void updateProfile(BuildContext context) {
     print("update user");
-    _userApi.updateUserInformation(tempCurrentUser!).then((value) {
-      if (value["user"] != null) {
-        currentLoggedUser = UserProfile.fromJson(value["user"]);
-        tempCurrentUser = UserProfile.fromJson(value["user"]);
-        notifyListeners();
+    if (avatarImage != null) {
+      _userApi.updateAvatar(avatarImage!).then((outterValue) {
+        _userApi.updateUserInformation(tempCurrentUser!).then((value) {
+          if (value["user"] != null) {
+            currentLoggedUser = UserProfile.fromJson(value["user"]);
+            tempCurrentUser = UserProfile.fromJson(value["user"]);
 
-        // analyticsUpdate("update_profile", true);
-      } else {
-        print("not success");
-      }
-    });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Profile updated successfully!'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ));
+
+            // analyticsUpdate("update_profile", true);
+          } else {
+            print("not success");
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Profile update failed!'),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+          notifyListeners();
+        });
+        if (outterValue) {
+          avatarImage = null;
+        } else {
+          // do nothing
+        }
+      });
+    } else {
+      _userApi.updateUserInformation(tempCurrentUser!).then((value) {
+        if (value["user"] != null) {
+          currentLoggedUser = UserProfile.fromJson(value["user"]);
+          tempCurrentUser = UserProfile.fromJson(value["user"]);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Profile updated successfully!'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+          ));
+          notifyListeners();
+        } else {
+          print("not success");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Profile update failed!'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      });
+    }
     print("update user xong");
   }
 

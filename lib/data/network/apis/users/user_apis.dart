@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:intl/intl.dart';
 import 'package:lettutor/data/network/client.dart';
 import 'package:lettutor/data/network/constants/http_endpoints.dart';
 import 'package:lettutor/models/user.dart';
+import 'package:http/http.dart' as http;
 
 class UserApis {
   final RestClient _restClient = RestClient.instance;
@@ -40,5 +42,27 @@ class UserApis {
     print(response);
 
     return response;
+  }
+
+Future<bool> updateAvatar(File image) async {
+    String? token = await _restClient.getAccessToken();
+    final request = http.MultipartRequest("POST",
+        Uri.parse("https://" + Endpoints.baseUrl + Endpoints.uploadAvatar));
+
+    print("Image" + image.path);
+    print("https://" + Endpoints.baseUrl + Endpoints.uploadAvatar);
+
+    final img = await http.MultipartFile.fromPath("avatar", image.path);
+    print(img);
+    request.files.add(img);
+    request.headers.addAll({'Authorization': 'Bearer $token'});
+    print(request);
+    http.StreamedResponse response = await request.send();
+    print("Respone: " + response.toString());
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

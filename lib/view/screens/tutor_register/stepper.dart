@@ -177,10 +177,12 @@ class _RegisterStepperState extends State<RegisterStepper> {
                       ),
                 const SizedBox(height: 16),
                 FormTextField(
-                    title: "Full name",
-                    icon: Icons.person,
-                    controller: _fullnameController,
-                    hint: "Enter your full name"),
+                  title: "Full name",
+                  icon: Icons.person,
+                  controller: _fullnameController,
+                  hint: "Enter your full name",
+                  enabled: true,
+                ),
                 const SizedBox(height: 16),
                 DatePickerFormField(
                   title: 'Date of Birth',
@@ -240,7 +242,8 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   icon: Icons.bookmark,
                   label: "Specialities",
                 ),
-                const ProfileTitle(text: "I am best at teaching students who are"),
+                const ProfileTitle(
+                    text: "I am best at teaching students who are"),
                 Column(
                   children: [
                     RadioListTile(

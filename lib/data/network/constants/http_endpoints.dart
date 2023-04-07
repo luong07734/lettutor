@@ -25,4 +25,5 @@ class Endpoints {
 
   // users
   static const String userInfo = "/user/info";
+  static const String uploadAvatar = "/user/uploadAvatar";
 }

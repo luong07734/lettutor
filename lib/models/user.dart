@@ -41,7 +41,7 @@ class UserProfile {
   String? phone;
   List<String>? roles;
   dynamic language;
-  DateTime? birthday;
+  String? birthday;
   bool? isActivated;
   // dynamic tutorInfo;
   WalletInfo? walletInfo;

@@ -7,7 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/data/provider/authentication.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/data/provider/course_provider.dart';
 import 'package:lettutor/data/provider/language.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
@@ -74,10 +74,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     LanguageProfile languageProfile = Provider.of<LanguageProfile>(context);
     ThemeProfile themeModel = Provider.of<ThemeProfile>(context);
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TutorProvider>(create: (_) => TutorProvider()),
         ChangeNotifierProvider<CourseProvider>(create: (_) => CourseProvider()),
+        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

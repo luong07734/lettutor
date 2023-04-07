@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/data/provider/authentication.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
@@ -138,6 +138,8 @@ class _HomeDrawerAndNavigationBarState
                   final prefs = SharedPreference.instance;
                   prefs.removeAccessToken();
                   prefs.removeRefreshToken();
+                  prefs.removeCurrentLoggedUser();
+
                   Navigator.pushNamedAndRemoveUntil(
                       context, Routers.LogIn, (route) => false);
                   // Navigator.of(context).pushAndRemoveUntil(
@@ -202,8 +204,10 @@ class _HomeDrawerAndNavigationBarState
                 child: CircleAvatar(
                   radius: 30,
                   child: ClipOval(
-                    child: authProvider.currentLoggedUser == null
-                        ? Image.asset(AssetsManager.avatarImage)
+                    child: authProvider.currentLoggedUser == null ||
+                            authProvider.currentLoggedUser!.avatar!
+                                .contains("icon-avatar-default.png")
+                        ? Image.asset(AssetsManager.userAvatarImage)
                         : Image.network(
                             authProvider.currentLoggedUser!.avatar!,
                             fit: BoxFit.cover,

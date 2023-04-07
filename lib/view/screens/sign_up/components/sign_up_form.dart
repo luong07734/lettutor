@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/data/provider/authentication.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';

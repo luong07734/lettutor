@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/data/provider/authentication.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/main.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/components/drawer-navigation-bar.dart';

@@ -61,6 +61,8 @@ dependencies:
   google_sign_in: ^6.0.2
   json_annotation: ^4.8.0
   flutter_svg: ^1.0.3
+  multi_select_flutter: ^4.1.3
+  multiselect: ^0.1.0
 
 
 dev_dependencies:

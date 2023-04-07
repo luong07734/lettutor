@@ -1,0 +1,9 @@
+final List<String> levelOptions = [
+  "BEGINNER",
+  "HIGHER_BEGINNER",
+  "PRE_INTERMEDIATE",
+  "INTERMEDIATE",
+  "UPPER_INTERMEDIATE",
+  "ADVANCED",
+  "PROFICIENCY"
+];

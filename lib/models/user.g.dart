@@ -16,9 +16,7 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
       language: json['language'],
-      birthday: json['birthday'] == null
-          ? null
-          : DateTime.parse(json['birthday'] as String),
+      birthday: json['birthday'] as String?,
       isActivated: json['isActivated'] as bool?,
       walletInfo: json['walletInfo'] == null
           ? null
@@ -48,7 +46,7 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'phone': instance.phone,
       'roles': instance.roles,
       'language': instance.language,
-      'birthday': instance.birthday?.toIso8601String(),
+      'birthday': instance.birthday,
       'isActivated': instance.isActivated,
       'walletInfo': instance.walletInfo?.toJson(),
       'courses': instance.courses,

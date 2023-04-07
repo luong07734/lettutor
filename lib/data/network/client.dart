@@ -46,12 +46,13 @@ class RestClient {
     return http
         .put(
           Uri.https(Endpoints.baseUrl, path),
-          body: body,
+          body: jsonEncode(body),
           headers: headers,
           encoding: encoding,
         )
         .then(_createResponse);
   }
+
 
   // Delete:----------------------------------------------------------------------
   Future<dynamic> delete(String path,

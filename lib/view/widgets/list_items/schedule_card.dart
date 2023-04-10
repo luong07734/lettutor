@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/models/schedule.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
-class ScheduleCard extends StatelessWidget {
-  const ScheduleCard({
-    Key? key,
-  }) : super(key: key);
+class ScheduleCard extends StatefulWidget {
+  final ScheduleRowItem schedule;
+  final bool isHistoryCard;
+  const ScheduleCard(
+      {Key? key, required this.schedule, required this.isHistoryCard})
+      : super(key: key);
 
+  @override
+  State<ScheduleCard> createState() => _ScheduleCardState();
+}
+
+class _ScheduleCardState extends State<ScheduleCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,8 +31,8 @@ class ScheduleCard extends StatelessWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text("Sat, 30 April 2022",
+              children: [
+                Text(widget.schedule.scheduleDetailInfo!.scheduleInfo!.date!,
                     style:
                         TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
@@ -34,55 +42,86 @@ class ScheduleCard extends StatelessWidget {
             ),
             Card(
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(AssetsManager.avatarImage),
-                ),
-                title: const Text("Keegan",
+                leading: (widget.schedule.scheduleDetailInfo!.scheduleInfo!
+                                .tutorInfo!.avatar ==
+                            null ||
+                        widget.schedule.scheduleDetailInfo!.scheduleInfo!
+                            .tutorInfo!.avatar!
+                            .contains("icon-avatar-default.png"))
+                    ? CircleAvatar(
+                        backgroundImage: AssetImage(
+                          AssetsManager.userAvatarImage,
+                        ),
+                      )
+                    : CircleAvatar(
+                        backgroundImage: NetworkImage(widget
+                            .schedule
+                            .scheduleDetailInfo!
+                            .scheduleInfo!
+                            .tutorInfo!
+                            .avatar!),
+                      ),
+                title: Text(
+                    widget.schedule.scheduleDetailInfo!.scheduleInfo!.tutorInfo!
+                        .name!,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                subtitle: const Text("FR"),
+                subtitle: Text(widget.schedule.scheduleDetailInfo!.scheduleInfo!
+                    .tutorInfo!.country!),
               ),
             ),
             const SizedBox(height: 8),
             Card(
               child: ListTile(
-                title: const Text("Lesson Time: 8:00 PM - 11:30 PM"),
-                trailing: ElevatedButton(
-                  onPressed: () {
-                    // handle button press
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    backgroundColor: Colors.white,
-                    side: const BorderSide(width: 1, color: Colors.red),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.cancel, color: Colors.red),
-                      SizedBox(width: 8),
-                      Text(AppLocalizations.of(context)!.cancel,
-                          style: TextStyle(color: Colors.red)),
-                    ],
-                  ),
-                ),
+                title: Text(DateTime.fromMillisecondsSinceEpoch(widget.schedule
+                            .scheduleDetailInfo!.scheduleInfo!.startTimestamp!)
+                        .toLocal()
+                        .toString()
+                        .substring(11, 16) +
+                    " - " +
+                    DateTime.fromMillisecondsSinceEpoch(widget.schedule
+                            .scheduleDetailInfo!.scheduleInfo!.endTimestamp!)
+                        .toLocal()
+                        .toString()
+                        .substring(11, 16)),
+                trailing: widget.isHistoryCard
+                    ? Text("")
+                    : ElevatedButton(
+                        onPressed: () {
+                          // handle button press
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(width: 1, color: Colors.red),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.cancel, color: Colors.red),
+                            SizedBox(width: 8),
+                            Text(AppLocalizations.of(context)!.cancel,
+                                style: TextStyle(color: Colors.red)),
+                          ],
+                        ),
+                      ),
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => VideoCallWidget(),
-                //     fullscreenDialog: true,
-                //   ),
-                // );
-                {
-                  Navigator.pushNamed(context, Routers.VideoCall);
-                }
-              },
-              child: Text(AppLocalizations.of(context)!.joinMeeting),
-            ),
+            widget.isHistoryCard
+                ? Card(
+                    child: ListTile(
+                      title: Text("No review from tutors "),
+                    ),
+                  )
+                : ElevatedButton(
+                    onPressed: () {
+                      {
+                        Navigator.pushNamed(context, Routers.VideoCall);
+                      }
+                    },
+                    child: Text(AppLocalizations.of(context)!.joinMeeting),
+                  ),
           ],
         ),
       ),

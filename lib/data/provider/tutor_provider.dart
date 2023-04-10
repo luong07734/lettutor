@@ -15,7 +15,7 @@ class TutorProvider extends ChangeNotifier {
   String keySearch = "";
 
   List<TutorRowItem> get tutors => _tutors;
-   List<FavoriteTutor> get favorites => _favorites;
+  List<FavoriteTutor> get favorites => _favorites;
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
   List<String> get specialities => _specialities;
@@ -25,7 +25,8 @@ class TutorProvider extends ChangeNotifier {
     bool isFavorite = false;
     print(_favorites);
     for (int i = 0; i < _favorites.length; i++) {
-      if (_favorites[i].secondInfo!.id == tutor.userId) {
+      if (_favorites[i].secondId == tutor.userId) {
+        print(i);
         isFavorite = true;
       }
     }
@@ -62,7 +63,7 @@ class TutorProvider extends ChangeNotifier {
     });
   }
 
-  void updateFavorite( String tutorId) {
+  void updateFavorite(String tutorId) {
     _tutorApis.addATutorToFavouriteList(tutorId);
     _tutorApis.getTutorList(page).then((tutors) {
       TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);

@@ -7,9 +7,20 @@ import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
-class FavoriteTutorsPage extends StatelessWidget {
-  static String routeName = "/favorite";
+
+// TODO: add provider for favorite tutor
+class FavoriteTutorsPage extends StatefulWidget {
   const FavoriteTutorsPage({super.key});
+
+  @override
+  State<FavoriteTutorsPage> createState() => _FavoriteTutorsPageState();
+}
+
+class _FavoriteTutorsPageState extends State<FavoriteTutorsPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +36,7 @@ class FavoriteTutorsPage extends StatelessWidget {
                   TutorRowItem? tutor;
                   for (int i = 0; i < tutorProvider.tutors.length; ++i) {
                     if (tutorProvider.tutors[i].userId ==
-                        favoriteTutor.secondInfo!.id!) {
+                        favoriteTutor.secondId) {
                       tutor = tutorProvider.tutors[i];
                     }
                   }

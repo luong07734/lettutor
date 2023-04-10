@@ -208,15 +208,15 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            RatingWidget(
-                                double.parse(tutorRowItem!.rating.toString())
+                            tutorDetail!.rating == null
+                                ? Text("No rating")
+                                : RatingWidget(tutorDetail!.rating!
                                     .toStringAsFixed(1)
                                     .toString()),
                             TextButton.icon(
                               onPressed: () {
                                 setState(() {
                                   isFavorite = !isFavorite!;
-                                  // TODO: change favorite
                                 });
                                 context
                                     .read<TutorProvider>()

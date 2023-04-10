@@ -9,7 +9,9 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/data/provider/course_provider.dart';
+import 'package:lettutor/data/provider/history_provider.dart';
 import 'package:lettutor/data/provider/language.dart';
+import 'package:lettutor/data/provider/schedule_provider.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/models/user.dart';
@@ -79,7 +81,8 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<TutorProvider>(create: (_) => TutorProvider()),
         ChangeNotifierProvider<CourseProvider>(create: (_) => CourseProvider()),
-        
+        ChangeNotifierProvider<ScheduleProvider>(create: (_) => ScheduleProvider()),
+        ChangeNotifierProvider<HistoryProvider>(create: (_) => HistoryProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

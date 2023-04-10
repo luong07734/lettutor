@@ -261,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          suffixIcon: Icon(Icons.upgrade),
+                          // suffixIcon: Icon(Icons.upgrade),
                           labelText: "Level",
                           // floatingLabelBehavior: Floating LabelBehavior.always,
                         ),
@@ -300,6 +300,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //       _selectedTopics = values;
                       //     }),
                       DropDownMultiSelect(
+                        decoration: InputDecoration(
+                          hintText: "Select Your Test Preparation",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          // suffixIcon: Icon(Icons.upgrade),
+                          labelText: "Test Preparation",
+                          // floatingLabelBehavior: Floating LabelBehavior.always,
+                        ),
                         onChanged: (List<String> x) {
                           setState(() {
                             _selectedTestPreps = x;

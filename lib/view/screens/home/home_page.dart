@@ -4,6 +4,7 @@ import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
 import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
+import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/fake_data.dart';
@@ -132,7 +133,23 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      child: TeacherCard(index, context, tutor),
+                      child:
+                          // TeacherCard(index, context, tutor),
+                          GestureDetector(
+                        onTap: () {
+                          {
+                            Navigator.pushNamed(context, Routers.TeacherDetail,
+                                arguments: {
+                                  'tutor': tutor,
+                                });
+                          }
+                          ;
+                        },
+                        child: TutorCard(
+                          tutor: tutor,
+                          isFavorite: tutorProvider.isFavorite(tutor),
+                        ),
+                      ),
                     );
                   },
                 );

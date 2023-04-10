@@ -46,11 +46,8 @@ class _HomeDrawerAndNavigationBarState
       const SchedulePage(),
       const TutorsPage(),
       CoursePage(),
-      // const HistoryPage(),
-      // const FavoriteTutorsPage(),
-      // RegisterStepper(),
     ];
-    // context.read<AuthenticationProvider>().loadUser();
+
   }
 
   @override

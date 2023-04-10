@@ -74,7 +74,8 @@ GestureDetector TeacherCard(
                           .toString()),
                 ],
               ),
-              trailing: TextButton.icon(
+              trailing: 
+              TextButton.icon(
                 onPressed: () {},
                 icon: const Icon(Icons.favorite_border),
                 label: const Text('Like'),

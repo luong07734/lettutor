@@ -3,6 +3,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/data/network/apis/tutors/tutor_apis.dart';
+import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/models/tutor_detail.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
@@ -13,6 +14,7 @@ import 'package:lettutor/view/widgets/view_items/rating/rating.dart';
 import 'package:lettutor/view/screens/tutor_detail/components/video_player.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class TeacherDetailPage extends StatefulWidget {
   TeacherDetailPage({super.key});
@@ -206,16 +208,19 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                             RatingWidget(
-                                    double.parse(tutorRowItem!.rating.toString())
-                                        .toStringAsFixed(1)
-                                        .toString()),
+                            RatingWidget(
+                                double.parse(tutorRowItem!.rating.toString())
+                                    .toStringAsFixed(1)
+                                    .toString()),
                             TextButton.icon(
                               onPressed: () {
                                 setState(() {
                                   isFavorite = !isFavorite!;
                                   // TODO: change favorite
                                 });
+                                context
+                                    .read<TutorProvider>()
+                                    .updateFavorite(tutorRowItem!.userId!);
                               },
                               icon: isFavorite!
                                   ? const Icon(Icons.favorite_outlined,

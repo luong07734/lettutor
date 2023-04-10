@@ -7,6 +7,7 @@ class TutorProvider extends ChangeNotifier {
   final TutorApis _tutorApis = TutorApis();
   List<TutorRowItem> _tutors = [];
   List<TutorRowItem> _baseTutors = [];
+  List<FavoriteTutor> _favorites = [];
   int _page = 1;
   int _searchPage = 1;
   bool _hasMoreItems = true;
@@ -14,10 +15,24 @@ class TutorProvider extends ChangeNotifier {
   String keySearch = "";
 
   List<TutorRowItem> get tutors => _tutors;
+   List<FavoriteTutor> get favorites => _favorites;
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
   List<String> get specialities => _specialities;
   int get searchPage => _searchPage;
+
+  bool isFavorite(TutorRowItem tutor) {
+    bool isFavorite = false;
+    print(_favorites);
+    for (int i = 0; i < _favorites.length; i++) {
+      if (_favorites[i].secondInfo!.id == tutor.userId) {
+        isFavorite = true;
+      }
+    }
+
+    print(isFavorite);
+    return isFavorite;
+  }
 
   void loadTutorsInPage({int page = 1}) {
     _page = page;
@@ -30,6 +45,12 @@ class TutorProvider extends ChangeNotifier {
         TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
         _tutors += _tutorsPerPage.tutors.rows;
         _baseTutors += _tutorsPerPage.tutors.rows;
+
+        _favorites = _tutorsPerPage.favoriteTutor == null
+            ? []
+            : _tutorsPerPage.favoriteTutor!;
+        print("favorites ${_favorites}");
+
         print("length of tutors: ${_tutors.length}");
         if (_tutors.length > oldLength) {
           _hasMoreItems = true;
@@ -39,6 +60,17 @@ class TutorProvider extends ChangeNotifier {
       } else {}
       notifyListeners();
     });
+  }
+
+  void updateFavorite( String tutorId) {
+    _tutorApis.addATutorToFavouriteList(tutorId);
+    _tutorApis.getTutorList(page).then((tutors) {
+      TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
+      _favorites = _tutorsPerPage.favoriteTutor == null
+          ? []
+          : _tutorsPerPage.favoriteTutor!;
+    });
+    notifyListeners();
   }
 
   void search(String value, int page, bool isScrolled) {

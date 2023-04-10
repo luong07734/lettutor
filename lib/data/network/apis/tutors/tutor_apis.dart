@@ -51,8 +51,26 @@ class TutorApis {
       "perPage": perPage,
       "filters": {
         "specialties": specialties ?? [],
+        // "nationality":{
+        //   "isNative" : true,
+        //   "isVietnamese": true
+        // }
       },
       "search": keySearch
+    });
+
+    return response;
+  }
+
+
+
+  Future<dynamic> addATutorToFavouriteList(String tutorId) async {
+    final response =
+        await _restClient.post(Endpoints.addFavoriteTutors, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, body: {
+      'tutorId': tutorId
     });
 
     return response;

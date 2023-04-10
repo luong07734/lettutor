@@ -1,8 +1,11 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/filter.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
 import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
+import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
 class TutorsPage extends StatefulWidget {
@@ -19,10 +22,11 @@ class _TutorsPageState extends State<TutorsPage> {
   final _searchController = TextEditingController(); // Add this line
   // String _searchQuery = '';
   final List<String> _searchOptions = [
-    'By Name',
-    'By Country',
+    'Foreign Tutors',
+    'Vietnamese Tutors',
+    'Native English Tutor',
   ];
-  String _selectedSearchOption = 'By Name';
+  String _selectedSearchOption = 'Vietnamese Tutors';
 
   // handle load data
   final _scrollController = ScrollController();
@@ -45,7 +49,8 @@ class _TutorsPageState extends State<TutorsPage> {
         // _searchQuery = _searchController.text.toLowerCase();
         context.read<TutorProvider>().search(
             _searchController.text.toLowerCase(),
-            context.read<TutorProvider>().searchPage, false);
+            context.read<TutorProvider>().searchPage,
+            false);
       });
     });
   }
@@ -108,7 +113,7 @@ class _TutorsPageState extends State<TutorsPage> {
                       });
                     }
                   },
-                  icon: const Icon(Icons.filter_list),
+                  icon: const Icon(Icons.flag_circle),
                 )),
           ),
         ),
@@ -125,7 +130,10 @@ class _TutorsPageState extends State<TutorsPage> {
                   label: specialitiesList.values.elementAt(index),
                   clickable: true,
                   index: index,
-                  selected: context.read<TutorProvider>().specialities.contains(specialitiesList.keys.elementAt(index)),
+                  selected: context
+                      .read<TutorProvider>()
+                      .specialities
+                      .contains(specialitiesList.keys.elementAt(index)),
                 ),
               );
             },
@@ -163,7 +171,23 @@ class _TutorsPageState extends State<TutorsPage> {
                                 ),
                               ],
                             ),
-                            child: TeacherCard(index, context, tutor),
+                            // child: TeacherCard(index, context, tutor),
+                            child: GestureDetector(
+                              onTap: () {
+                                {
+                                  Navigator.pushNamed(
+                                      context, Routers.TeacherDetail,
+                                      arguments: {
+                                        'tutor': tutor,
+                                      });
+                                }
+                                ;
+                              },
+                              child: TutorCard(
+                                tutor: tutor,
+                                isFavorite: tutorProvider.isFavorite(tutor),
+                              ),
+                            ),
                           );
                         } else {
                           // show loading indicator at end of list

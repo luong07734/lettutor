@@ -132,23 +132,6 @@ class AuthenticationProvider extends ChangeNotifier {
     print("update user xong");
   }
 
-  void loadUser() {
-    print("load user");
-    _userApi.getUserInformation().then((value) {
-      if (value["user"] != null) {
-        final prefs = SharedPreference.instance;
-        currentLoggedUser = UserProfile.fromJson(value["user"]);
-        tempCurrentUser = UserProfile.fromJson(value["user"]);
-        prefs.saveCurrentLoggedUser(currentLoggedUser!);
-        print("call user ok");
-        notifyListeners();
-      } else {
-        print("cannot get user");
-      }
-    });
-    print("load user xong");
-  }
-
   Future<bool> loadUser1() async {
     print("load user");
     final value = await _userApi.getUserInformation();

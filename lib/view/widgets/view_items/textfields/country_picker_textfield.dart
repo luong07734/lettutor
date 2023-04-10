@@ -27,6 +27,7 @@ class _FlagTextFormFieldState extends State<FlagTextFormField> {
         suffixIcon: GestureDetector(
           onTap: () {
             showCountryPicker(
+              // exclude: <String>['VN', 'MF'],
               context: context,
               showPhoneCode: false,
               onSelect: (Country country) {

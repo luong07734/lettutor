@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'tutor.g.dart';
 
 // base
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Info {
   Info({
     this.id,
@@ -113,7 +113,7 @@ class FeedBack {
   Map<String, dynamic> toJson() => _$FeedBackToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class TutorRowItem {
   TutorRowItem({
     this.level,
@@ -224,11 +224,11 @@ class Tutors {
 class TutorPerPage {
   TutorPerPage({
     required this.tutors,
-    required this.favouriteTutors,
+    required this.favoriteTutor,
   });
 
   Tutors tutors;
-  List<FavoriteTutor>? favouriteTutors;
+  List<FavoriteTutor>? favoriteTutor;
 
   factory TutorPerPage.fromJson(Map<String, dynamic> json) =>
       _$TutorPerPageFromJson(json);

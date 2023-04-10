@@ -19,6 +19,7 @@ class Endpoints {
   static const String tutorList = "/tutor/more";
   static const String tutorDetail = "/tutor";
   static const String tutorSearch = "/tutor/search";
+  static const String addFavoriteTutors = "/user/manageFavoriteTutor";
 
   // courses
   static const String courseList = "/course";

@@ -157,7 +157,7 @@ Map<String, dynamic> _$TutorRowItemToJson(TutorRowItem instance) =>
       'phoneAuth': instance.phoneAuth,
       'isPhoneAuthActivated': instance.isPhoneAuthActivated,
       'deletedAt': instance.deletedAt,
-      'feedbacks': instance.feedbacks,
+      'feedbacks': instance.feedbacks?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'userId': instance.userId,
       'video': instance.video,
@@ -191,7 +191,7 @@ Map<String, dynamic> _$TutorsToJson(Tutors instance) => <String, dynamic>{
 
 TutorPerPage _$TutorPerPageFromJson(Map<String, dynamic> json) => TutorPerPage(
       tutors: Tutors.fromJson(json['tutors'] as Map<String, dynamic>),
-      favouriteTutors: (json['favouriteTutors'] as List<dynamic>?)
+      favoriteTutor: (json['favoriteTutor'] as List<dynamic>?)
           ?.map((e) => FavoriteTutor.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -199,6 +199,5 @@ TutorPerPage _$TutorPerPageFromJson(Map<String, dynamic> json) => TutorPerPage(
 Map<String, dynamic> _$TutorPerPageToJson(TutorPerPage instance) =>
     <String, dynamic>{
       'tutors': instance.tutors.toJson(),
-      'favouriteTutors':
-          instance.favouriteTutors?.map((e) => e.toJson()).toList(),
+      'favoriteTutor': instance.favoriteTutor?.map((e) => e.toJson()).toList(),
     };

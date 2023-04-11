@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/view/screens/booking/booking_page.dart';
 import 'package:lettutor/view/screens/components/drawer-navigation-bar.dart';
 import 'package:lettutor/view/screens/course_detail/course_detail.dart';
 import 'package:lettutor/view/screens/courses/course_page.dart';
@@ -68,6 +69,7 @@ class Routers {
   static const String Settings = '/settings';
 
   static const String Profile = '/profile';
+  static const String Booking = '/booking';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -163,7 +165,11 @@ class Routers {
           settings: settings,
           builder: (_) => ProfileScreen(),
         );
-
+      case Booking:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => BookingPage(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => const NotFoundPage(),

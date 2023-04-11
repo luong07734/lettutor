@@ -49,4 +49,29 @@ class ScheduleApis {
 
     return response;
   }
+
+  Future<dynamic> getSchedule(
+      String tutorId, int startTimestamp, int endTimestamp) async {
+    final response = await _restClient.get(Endpoints.schedule, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, params: {
+      'tutorId': tutorId.toString(),
+      'startTimestamp': startTimestamp.toString(),
+      'endTimestamp': endTimestamp.toString()
+    });
+
+    return response;
+  }
+
+  Future<dynamic> getScheduleByTutorID(String tutorID) async {
+    final response = await _restClient.post(Endpoints.scheduleByID, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, body: {
+      'tutorId': tutorID
+    });
+
+    return response;
+  }
 }

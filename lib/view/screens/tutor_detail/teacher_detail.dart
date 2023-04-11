@@ -6,6 +6,7 @@ import 'package:lettutor/data/network/apis/tutors/tutor_apis.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/models/tutor_detail.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
 import 'package:lettutor/view/widgets/list_items/comment_card.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
@@ -239,9 +240,12 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                     ],
                   ),
                   CustomButton(
-                      onTap: () {
-                        _showModalBottomSheet(context);
-                      },
+                      onTap: (() {
+                        Navigator.pushNamed(context, Routers.Booking,
+                            arguments: {
+                              'tutorId': tutorRowItem!.userId!,
+                            });
+                      }),
                       text: AppLocalizations.of(context)!.booking),
                   const SizedBox(
                     height: 10,

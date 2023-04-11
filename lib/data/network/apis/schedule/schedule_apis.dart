@@ -74,4 +74,17 @@ class ScheduleApis {
 
     return response;
   }
+
+  Future<dynamic> bookAClass(List<String> scheduleDetailIds,
+      [String note = ""]) async {
+    final response = await _restClient.post(Endpoints.bookAClass, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, body: {
+      'scheduleDetailIds': scheduleDetailIds,
+      'note': note
+    });
+
+    return response;
+  }
 }

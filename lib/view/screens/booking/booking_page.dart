@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/data/network/apis/schedule/schedule_apis.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/models/tutor_schedule.dart';
+import 'package:lettutor/view/screens/booking/components/booking_modal.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -15,6 +16,27 @@ class _BookingPageState extends State<BookingPage> {
   // late TutorProvider tutorProvider;
   final ScheduleApis _scheduleApis = ScheduleApis();
   List<ScheduleOfTutor> _teacherSchedule = [];
+  String? tutorId;
+
+  Future<bool> bookingTeacher(String scheduleId, String tutorId) async {
+    setState(() {
+                          isLoading = true;
+                        });
+    var res = await _scheduleApis.bookAClass([scheduleId]);
+    if (res["data"] == null) {
+      setState(() {
+                          isLoading = false;
+                        });
+      return false;
+    }
+    _loadTutorSchedule(tutorId).then((value) {
+        setState(() {
+          _teacherSchedule = value;
+          isLoading = false;
+        });
+      });
+    return true;
+  }
 
   @override
   void didChangeDependencies() {
@@ -22,10 +44,10 @@ class _BookingPageState extends State<BookingPage> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    String? tutorId = args["tutorId"];
+    tutorId = args["tutorId"];
     print(args['tutorId']);
     if (tutorId != null) {
-      _loadTutorSchedule(tutorId).then((value) {
+      _loadTutorSchedule(tutorId!).then((value) {
         setState(() {
           _teacherSchedule = value;
           isLoading = false;
@@ -87,6 +109,45 @@ class _BookingPageState extends State<BookingPage> {
                         calendarTapDetails.appointments![0];
                     // Do something with the appointment details
                     print("click ${appointmentDetails}");
+                    if(appointmentDetails.color == Colors.blue){
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return BookingModal(
+                          bookingTime: appointmentDetails.startTime
+                                  .toString()
+                                  .substring(0, 16) +
+                              " - " +
+                              appointmentDetails.endTime
+                                  .toString()
+                                  .substring(0, 16),
+                          onBook: (notes) {
+                            // Call API to book a meeting with the given notes
+                            bookingTeacher(appointmentDetails.notes!, tutorId!).then((value) {
+                               setState(() {
+                            isLoading = false;
+                          });
+                          if (value) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Booking successfully!'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Booking failed!'),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 2),
+              ),
+            );
+                          }
+                         
+                        });
+                          },
+                        );
+                      },
+                    );}
                   } else {
                     print("click");
                   }
@@ -123,8 +184,21 @@ class _BookingPageState extends State<BookingPage> {
           endTime: DateTime.fromMillisecondsSinceEpoch(
                   _teacherSchedule[i].endTimestamp!)
               .toLocal(),
-          subject: 'Book',
-          color: Colors.blue));
+          subject: DateTime.fromMillisecondsSinceEpoch(
+                      _teacherSchedule[i].startTimestamp!)
+                  .toLocal()
+                  .toString()
+                  .substring(11, 16) +
+              " - " +
+              DateTime.fromMillisecondsSinceEpoch(_teacherSchedule[i].endTimestamp!)
+                  .toLocal()
+                  .toString()
+                  .substring(11, 16),
+          notes: _teacherSchedule[i].scheduleDetails![0].id,
+          color: _teacherSchedule[i].isBooked == true ? Colors.green:  ( DateTime.now().isAfter(DateTime.fromMillisecondsSinceEpoch(
+                  _teacherSchedule[i].endTimestamp!)
+              .toLocal()))? Colors.grey: Colors.blue));
+            
     }
 
     return _DataSource(appointments);

@@ -136,7 +136,7 @@ class Routers {
       case VideoCall:
         return MaterialPageRoute(
             settings: settings,
-            builder: (_) => VideoCallWidget(),
+            builder: (_) => VideoCallPage(),
             fullscreenDialog: true);
       case CourseDetail:
         return MaterialPageRoute(

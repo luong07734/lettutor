@@ -14,7 +14,7 @@ class ScheduleProvider extends ChangeNotifier {
 
   void loadScheduleData({int page = 1}) {
     _page = page;
-    _scheduleApis.getBookedClassesFull(page).then((value) {
+    _scheduleApis.getBookedClasses(page, DateTime.now().subtract(Duration(minutes: 30)).millisecondsSinceEpoch).then((value) {
        print("getting...");
       int oldLength = _schedules.length;
       if (value["data"] != null) {

@@ -15,7 +15,7 @@ class HistoryProvider extends ChangeNotifier{
 
   void loadHistoryData({int page = 1}) {
     _page = page;
-    _scheduleApis.getBookedClasses(page, DateTime.now().millisecondsSinceEpoch).then((value) {
+    _scheduleApis.getHistory(page, DateTime.now().millisecondsSinceEpoch).then((value) {
        print("getting...");
       int oldLength = _history.length;
       if (value["data"] != null) {

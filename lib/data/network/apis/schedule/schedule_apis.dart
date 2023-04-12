@@ -13,10 +13,28 @@ class ScheduleApis {
     return response;
   }
 
-  Future<dynamic> getBookedClassesFull(int page,
+  // Future<dynamic> getBookedClassesFull(int page,
+  //     [int perPage = 6,
+  //     String orderBy = 'meeting',
+  //     String sortBy = 'desc']) async {
+  //   final response =
+  //       await _restClient.get(Endpoints.getBookedClasses, headers: {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+  //   }, params: {
+  //     'page': page.toString(),
+  //     'perPage': perPage.toString(),
+  //     'orderBy': orderBy,
+  //     'sortBy': sortBy
+  //   });
+
+  //   return response;
+  // }
+
+  Future<dynamic> getBookedClasses(int page, int dateTimeGte,
       [int perPage = 6,
       String orderBy = 'meeting',
-      String sortBy = 'desc']) async {
+      String sortBy = 'asc']) async {
     final response =
         await _restClient.get(Endpoints.getBookedClasses, headers: {
       'Content-Type': 'application/json',
@@ -24,6 +42,7 @@ class ScheduleApis {
     }, params: {
       'page': page.toString(),
       'perPage': perPage.toString(),
+      'dateTimeGte': dateTimeGte.toString(),
       'orderBy': orderBy,
       'sortBy': sortBy
     });
@@ -31,7 +50,7 @@ class ScheduleApis {
     return response;
   }
 
-  Future<dynamic> getBookedClasses(int page, int dateTimeLte,
+  Future<dynamic> getHistory(int page, int dateTimeLte,
       [int perPage = 6,
       String orderBy = 'meeting',
       String sortBy = 'desc']) async {

@@ -7,15 +7,23 @@ class ScheduleProvider extends ChangeNotifier {
   List<ScheduleRowItem> _schedules = [];
   int _page = 1;
   bool _hasMoreItems = true;
+  int _totalStudyTime = 0;
 
   List<ScheduleRowItem> get schedules => _schedules;
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
+  int get totalStudyTime => _totalStudyTime;
+
+  ScheduleProvider() {
+    _loadTotalStudyTime();
+  }
 
   void loadScheduleData({int page = 1}) {
     _page = page;
-    _scheduleApis.getBookedClasses(page, DateTime.now().subtract(Duration(minutes: 30)).millisecondsSinceEpoch).then((value) {
-       print("getting...");
+    _scheduleApis
+        .getBookedClasses(page, DateTime.now().millisecondsSinceEpoch)
+        .then((value) {
+      print("getting...");
       int oldLength = _schedules.length;
       if (value["data"] != null) {
         print("load dc schedule");
@@ -38,13 +46,24 @@ class ScheduleProvider extends ChangeNotifier {
     _page = 1;
   }
 
-    cancelSchedule(String scheduleDetailId) async {
-
-    var value = await _scheduleApis.cancelAbookedClass([scheduleDetailId]);
-    if (value["statusCode"] == null) {
+  cancelSchedule(String scheduleDetailId) async {
+    var value = await _scheduleApis.cancelAbookedClass(scheduleDetailId);
+    if (value["message"] == "Cancel booking successful") {
+      print("if");
       _schedules.removeWhere(
-          (schedule) => schedule.scheduleDetailId == scheduleDetailId);
-      notifyListeners();
+          (schedule) => schedule.id! == scheduleDetailId);
+    } else {
+      print("else");
     }
+    notifyListeners();
+  }
+
+  _loadTotalStudyTime() {
+    _scheduleApis.geTotalStudyTime().then((value) {
+      if (value["total"] != null) {
+        _totalStudyTime = value["total"];
+      } else {}
+      notifyListeners();
+    });
   }
 }

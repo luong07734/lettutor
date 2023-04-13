@@ -33,6 +33,9 @@ class Endpoints {
   static const String scheduleByID = "/schedule";
   static const String getBookedClasses = "/booking/list/student";
   static const String bookAClass = "/booking";
-  static const String cancelBookAClass = "/booking";
+  static const String cancelBookAClass = "/booking/schedule-detail";
   static const String updateStudentRequest = "/booking/student-request";
+
+  // call
+  static const String totalCall = "/call/total";
 }

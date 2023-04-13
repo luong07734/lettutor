@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/data/provider/schedule_provider.dart';
 import 'package:lettutor/models/schedule.dart';
 import 'package:lettutor/ultilities/meeting.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleCard extends StatefulWidget {
   final ScheduleRowItem schedule;
@@ -19,6 +21,7 @@ class ScheduleCard extends StatefulWidget {
 class _ScheduleCardState extends State<ScheduleCard> {
   @override
   Widget build(BuildContext context) {
+    ScheduleProvider scheduleProvider = Provider.of<ScheduleProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -89,6 +92,25 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     ? Text("")
                     : ElevatedButton(
                         onPressed: () {
+                          if (DateTime.fromMillisecondsSinceEpoch(widget
+                                      .schedule
+                                      .scheduleDetailInfo!
+                                      .scheduleInfo!
+                                      .startTimestamp!)
+                                  .difference(DateTime.now())
+                                  .inHours >
+                              2) {
+                            scheduleProvider.cancelSchedule(
+                                widget.schedule.id!);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Cancel sucesssfully"),
+                            ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Only cancel the meeting before 2 hours"),
+                            ));
+                          }
                           // handle button press
                         },
                         style: ElevatedButton.styleFrom(

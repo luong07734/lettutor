@@ -108,16 +108,24 @@ class ScheduleApis {
   }
 
   Future<dynamic> cancelAbookedClass(
-    List<String> scheduleDetailIds,
+    String scheduleDetailId,
   ) async {
     final response =
         await _restClient.delete(Endpoints.cancelBookAClass, headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
     }, body: {
-      'scheduleDetailIds': scheduleDetailIds,
+      'scheduleDetailId': scheduleDetailId,
+      'cancelInfo': {"cancelReasonId": 4}
     });
+    print(response);
+    return response;
+  }
 
+  Future<dynamic> geTotalStudyTime() async {
+    final response = await _restClient.get(Endpoints.totalCall, headers: {
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    });
     return response;
   }
 }

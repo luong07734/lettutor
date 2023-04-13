@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/data/provider/course_provider.dart';
+import 'package:lettutor/data/provider/schedule_provider.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/view/screens/home/components/upcoming_lessson.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
 import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
@@ -27,6 +29,8 @@ class _HomePageState extends State<HomePage> {
     context.read<TutorProvider>().loadTutorsInPage();
     context.read<CourseProvider>().reset();
     context.read<CourseProvider>().loadCoursesInPage();
+    context.read<ScheduleProvider>().reset();
+    context.read<ScheduleProvider>().loadScheduleData();
   }
 
   @override
@@ -34,46 +38,53 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            color: Colors.blueAccent, // màu nền của container
-            width: double
-                .infinity, // chiều rộng của container bằng toàn bộ màn hình
-            padding: const EdgeInsets.symmetric(
-                vertical: 40.0), // khoảng cách giữa các phần tử trong container
-            child: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // canh giữa các phần tử
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.welcome,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                    height: 20.0), // khoảng cách giữa tiêu đề và nút bấm
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Code to be executed when the button is pressed
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.blue,
-                      backgroundColor: Colors.white,
-                      elevation: 4,
-                      textStyle: const TextStyle(
-                        fontSize: 16,
+          Provider.of<ScheduleProvider>(context).schedules.isNotEmpty
+              ? UpcomingLessonBanner(
+                  schedule: Provider.of<ScheduleProvider>(context).schedules[0],
+                  totalStudyTime:
+                      Provider.of<ScheduleProvider>(context).totalStudyTime,
+                )
+              : Container(
+                  color: Colors.blueAccent, // màu nền của container
+                  width: double
+                      .infinity, // chiều rộng của container bằng toàn bộ màn hình
+                  padding: const EdgeInsets.symmetric(
+                      vertical:
+                          40.0), // khoảng cách giữa các phần tử trong container
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // canh giữa các phần tử
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.welcome,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    child: Text(AppLocalizations.of(context)!.bookLesson),
+                      const SizedBox(
+                          height: 20.0), // khoảng cách giữa tiêu đề và nút bấm
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            widget.moveAtIndex(2);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.blue,
+                            backgroundColor: Colors.white,
+                            elevation: 4,
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          child: Text(AppLocalizations.of(context)!.bookLesson),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
           const SizedBox(
             height: 20,
           ),

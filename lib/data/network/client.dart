@@ -60,7 +60,7 @@ class RestClient {
     return http
         .delete(
           Uri.https(Endpoints.baseUrl, path),
-          body: body,
+          body: jsonEncode(body),
           headers: headers,
           encoding: encoding,
         )

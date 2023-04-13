@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/models/schedule.dart';
+import 'package:lettutor/ultilities/meeting.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
@@ -116,9 +117,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   )
                 : ElevatedButton(
                     onPressed: () {
-                      {
-                        Navigator.pushNamed(context, Routers.VideoCall);
-                      }
+                      joinJitsiMeet(context, widget.schedule);
                     },
                     child: Text(AppLocalizations.of(context)!.joinMeeting),
                   ),

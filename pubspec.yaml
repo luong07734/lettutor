@@ -65,6 +65,7 @@ dependencies:
   multiselect: ^0.1.0
   syncfusion_flutter_calendar: ^19.4.56
   jitsi_meet_wrapper: ^0.0.6
+  fluttertoast: ^8.2.1
 
 
 

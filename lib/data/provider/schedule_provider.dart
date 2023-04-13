@@ -37,4 +37,14 @@ class ScheduleProvider extends ChangeNotifier {
     _hasMoreItems = true;
     _page = 1;
   }
+
+    cancelSchedule(String scheduleDetailId) async {
+
+    var value = await _scheduleApis.cancelAbookedClass([scheduleDetailId]);
+    if (value["statusCode"] == null) {
+      _schedules.removeWhere(
+          (schedule) => schedule.scheduleDetailId == scheduleDetailId);
+      notifyListeners();
+    }
+  }
 }

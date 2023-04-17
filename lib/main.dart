@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -32,6 +33,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   final prefs = SharedPreference.instance;
   String? accessToken = await prefs.accessToken ?? "";
   String? refreshToken = await prefs.refreshToken ?? "";
@@ -76,13 +78,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     LanguageProfile languageProfile = Provider.of<LanguageProfile>(context);
     ThemeProfile themeModel = Provider.of<ThemeProfile>(context);
-    
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TutorProvider>(create: (_) => TutorProvider()),
         ChangeNotifierProvider<CourseProvider>(create: (_) => CourseProvider()),
-        ChangeNotifierProvider<ScheduleProvider>(create: (_) => ScheduleProvider()),
-        ChangeNotifierProvider<HistoryProvider>(create: (_) => HistoryProvider()),
+        ChangeNotifierProvider<ScheduleProvider>(
+            create: (_) => ScheduleProvider()),
+        ChangeNotifierProvider<HistoryProvider>(
+            create: (_) => HistoryProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -94,16 +98,19 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: AppLocalizations.supportedLocales,
         locale: languageProfile.locale,
         onGenerateRoute: Routers.generateRoute,
-        initialRoute: (widget.token != null && widget.token!.isNotEmpty && widget.user != null)
+        initialRoute: (widget.token != null &&
+                widget.token!.isNotEmpty &&
+                widget.user != null)
             ? Routers.Home
             : Routers.LogIn,
         onGenerateInitialRoutes: (String initialRouteName) {
           return [
             MaterialPageRoute(
-              builder: (context) =>
-                  (widget.token != null && widget.token!.isNotEmpty && widget.user != null)
-                      ? HomeDrawerAndNavigationBar()
-                      : LoginPage(),
+              builder: (context) => (widget.token != null &&
+                      widget.token!.isNotEmpty &&
+                      widget.user != null)
+                  ? HomeDrawerAndNavigationBar()
+                  : LoginPage(),
             )
           ];
         },

@@ -21,7 +21,9 @@ class RestClient {
   // Get:-----------------------------------------------------------------------
   Future<dynamic> get(String path,
       {Map<String, String>? headers, Map<String, String>? params}) async {
-    return http.get(Uri.https(Endpoints.baseUrl, path, params),  headers: headers).then(_createResponse);
+    return http
+        .get(Uri.https(Endpoints.baseUrl, path, params), headers: headers)
+        .then(_createResponse);
   }
 
   // Post:----------------------------------------------------------------------
@@ -53,7 +55,6 @@ class RestClient {
         .then(_createResponse);
   }
 
-
   // Delete:----------------------------------------------------------------------
   Future<dynamic> delete(String path,
       {Map<String, String>? headers, body, encoding}) {
@@ -75,8 +76,8 @@ class RestClient {
     if (statusCode < 200 || statusCode > 400) {
       print("${statusCode}");
       print("${res}");
-      throw NetworkException(
-          message: 'Error fetching data from server', statusCode: statusCode);
+      // throw NetworkException(
+      //     message: 'Error fetching data from server', statusCode: statusCode);
     }
 
     return _decoder.convert(res);

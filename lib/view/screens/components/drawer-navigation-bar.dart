@@ -47,7 +47,6 @@ class _HomeDrawerAndNavigationBarState
       const TutorsPage(),
       CoursePage(),
     ];
-
   }
 
   @override
@@ -136,6 +135,7 @@ class _HomeDrawerAndNavigationBarState
                   prefs.removeAccessToken();
                   prefs.removeRefreshToken();
                   prefs.removeCurrentLoggedUser();
+                  authProvider.signOut();
 
                   Navigator.pushNamedAndRemoveUntil(
                       context, Routers.LogIn, (route) => false);

@@ -66,6 +66,9 @@ dependencies:
   syncfusion_flutter_calendar: ^19.4.56
   jitsi_meet_wrapper: ^0.0.6
   fluttertoast: ^8.2.1
+  firebase_auth: ^4.4.1
+  firebase_core: ^2.9.0
+  flutter_facebook_auth: ^5.0.8
 
 
 

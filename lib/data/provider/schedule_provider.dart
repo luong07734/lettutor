@@ -15,7 +15,7 @@ class ScheduleProvider extends ChangeNotifier {
   int get totalStudyTime => _totalStudyTime;
 
   ScheduleProvider() {
-    _loadTotalStudyTime();
+    // _loadTotalStudyTime();
   }
 
   void loadScheduleData({int page = 1}) {
@@ -50,15 +50,15 @@ class ScheduleProvider extends ChangeNotifier {
     var value = await _scheduleApis.cancelAbookedClass(scheduleDetailId);
     if (value["message"] == "Cancel booking successful") {
       print("if");
-      _schedules.removeWhere(
-          (schedule) => schedule.id! == scheduleDetailId);
+      _schedules.removeWhere((schedule) => schedule.id! == scheduleDetailId);
     } else {
       print("else");
     }
     notifyListeners();
   }
 
-  _loadTotalStudyTime() {
+  loadTotalStudyTime() {
+    print("load total study time");
     _scheduleApis.geTotalStudyTime().then((value) {
       if (value["total"] != null) {
         _totalStudyTime = value["total"];

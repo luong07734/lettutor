@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     context.read<CourseProvider>().loadCoursesInPage();
     context.read<ScheduleProvider>().reset();
     context.read<ScheduleProvider>().loadScheduleData();
+    context.read<ScheduleProvider>().loadTotalStudyTime();
   }
 
   @override

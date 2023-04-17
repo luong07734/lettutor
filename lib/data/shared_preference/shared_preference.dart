@@ -62,7 +62,14 @@ class SharedPreference {
 
   Future<UserProfile?> get currentLoggedUser async {
     SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    if (_sharedPreference.getString(SharedPreferenceKeys.currentLoggedUser) ==
+        null) {
+      return null;
+    }
+    else{
     return UserProfile.fromJson(jsonDecode(
         _sharedPreference.getString(SharedPreferenceKeys.currentLoggedUser)!));
+    }
+
   }
 }

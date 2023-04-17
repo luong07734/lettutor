@@ -22,6 +22,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
   }
 
   String formatLessonTime(int minutes) {
+    print("minutes ${minutes}");
     int hours = minutes ~/ 60;
     int remainingMinutes = minutes % 60;
     return "Total lesson time is $hours hours $remainingMinutes minutes";
@@ -74,7 +75,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
             borderRadius: BorderRadius.circular(10),
             child: ElevatedButton(
               onPressed: () {
-                 joinJitsiMeet(context, schedule);
+                joinJitsiMeet(context, schedule);
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.blue,

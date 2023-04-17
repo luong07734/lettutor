@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lettutor/data/network/apis/authentication/authentication_apis.dart';
 import 'package:lettutor/data/network/apis/users/user_apis.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
@@ -14,6 +16,7 @@ class AuthenticationProvider extends ChangeNotifier {
   UserProfile? tempCurrentUser;
   final SharedPreference _prefHelper = SharedPreference.instance;
   File? avatarImage;
+  // GoogleSignIn googleSignIn = GoogleSignIn();
 
   AuthenticationProvider() {
     _loadUser();
@@ -47,8 +50,8 @@ class AuthenticationProvider extends ChangeNotifier {
     if (result['user'] != null) {
       emailSave = email;
       passwordSave = password;
-      currentLoggedUser = result['user'];
-      tempCurrentUser = result['user'];
+      currentLoggedUser = UserProfile.fromJson(result['user']);
+      tempCurrentUser = UserProfile.fromJson(result['user']);
       notifyListeners();
       return true;
     }
@@ -57,6 +60,9 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<bool> logIn(String email, String password) async {
     final result = await _authApi.logIn(email, password);
+    if (result["message"] == "Your account has not activated") {
+      return false;
+    }
     if (result['user'] != null) {
       currentLoggedUser = UserProfile.fromJson(result["user"]);
       tempCurrentUser = UserProfile.fromJson(result["user"]);
@@ -147,5 +153,52 @@ class AuthenticationProvider extends ChangeNotifier {
       print("cannot get user");
       return false;
     }
+  }
+
+  Future<bool> signInWithGoogle() async {
+    print("google sign in");
+    GoogleSignIn googleSignIn = GoogleSignIn();
+
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return false;
+
+    var googleAuth = await googleUser.authentication;
+    String token = googleAuth.accessToken ?? "";
+    final result = await _authApi.loginByGoogle(token);
+    if (result['user'] != null) {
+      print(result);
+      final prefs = SharedPreference.instance;
+      currentLoggedUser = UserProfile.fromJson(result["user"]);
+      tempCurrentUser = UserProfile.fromJson(result["user"]);
+      prefs.saveCurrentLoggedUser(currentLoggedUser!);
+      saveAccessTokenAndRefreshToken(result['tokens']!);
+      return true;
+    }
+    return false;
+  }
+
+  void signOut() async {
+    await GoogleSignIn().disconnect();
+    // await googleSignIn.disconnect();
+  }
+
+  Future<bool> signInWithFacebook() async {
+    print("fb sign in");
+    var fbAuth = await FacebookAuth.instance
+        .login(permissions: ["public_profile", "email"]);
+    if (fbAuth.status != LoginStatus.success) return false;
+
+    var accessToken = fbAuth.accessToken;
+    String token = accessToken?.token ?? "";
+    final result = await _authApi.loginByFacebook(token);
+    if (result['user'] != null) {
+      final prefs = SharedPreference.instance;
+      currentLoggedUser = UserProfile.fromJson(result["user"]);
+      tempCurrentUser = UserProfile.fromJson(result["user"]);
+      prefs.saveCurrentLoggedUser(currentLoggedUser!);
+      saveAccessTokenAndRefreshToken(result['tokens']!);
+      return true;
+    }
+    return false;
   }
 }

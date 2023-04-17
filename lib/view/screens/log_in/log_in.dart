@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/components/log_in_form.dart';
 import 'package:lettutor/view/screens/sign_up/sign_up.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   static String routeName = "/log_in";
@@ -19,6 +22,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -87,14 +92,40 @@ class LoginPage extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // TODO: handle Facebook sign up
+                        authProvider.signInWithFacebook().then((value) {
+                          if (value) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Routers.Home,
+                            );
+                            // initData();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Login failed",
+                                toastLength: Toast.LENGTH_LONG,
+                                timeInSecForIosWeb: 2);
+                          }
+                        });
                       },
                       icon: const Icon(FontAwesomeIcons.facebook, size: 25.0),
                     ),
                     const SizedBox(width: 25),
                     IconButton(
                       onPressed: () {
-                        // TODO: handle Facebook sign up
+                        authProvider.signInWithGoogle().then((value) {
+                          if (value) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Routers.Home,
+                            );
+                            // initData();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Login failed",
+                                toastLength: Toast.LENGTH_LONG,
+                                timeInSecForIosWeb: 2);
+                          }
+                        });
                       },
                       icon: const Icon(FontAwesomeIcons.google, size: 25.0),
                     ),

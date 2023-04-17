@@ -12,8 +12,10 @@ class Endpoints {
 
   // authenticaion endpoints
   static const String loginByGoogle = "/auth/google";
+  static const String loginByFacebook = "/auth/facebook";
   static const String register = "/auth/register";
   static const String login = "/auth/login";
+  static const String forgotPassword = "/user/forgotPassword";
 
   // tutors
   static const String tutorList = "/tutor/more";

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/data/network/apis/schedule/schedule_apis.dart';
 import 'package:lettutor/models/schedule.dart';
 
-class HistoryProvider extends ChangeNotifier{
+class HistoryProvider extends ChangeNotifier {
   final ScheduleApis _scheduleApis = ScheduleApis();
   List<ScheduleRowItem> _history = [];
   int _page = 1;
@@ -12,17 +12,18 @@ class HistoryProvider extends ChangeNotifier{
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
 
-
   void loadHistoryData({int page = 1}) {
     _page = page;
-    _scheduleApis.getHistory(page, DateTime.now().millisecondsSinceEpoch).then((value) {
-       print("getting...");
+    _scheduleApis
+        .getHistory(page, DateTime.now().millisecondsSinceEpoch)
+        .then((value) {
+      print("getting...");
       int oldLength = _history.length;
       if (value["data"] != null) {
-        print("load dc schedule");
+        print("load dc history");
         ScheduleList myScheduleList = ScheduleList.fromJson(value["data"]);
         _history += myScheduleList.rows!;
-        print("length of schedules: ${_history.length}");
+        print("length of history: ${_history.length}");
         if (_history.length > oldLength) {
           _hasMoreItems = true;
         } else {

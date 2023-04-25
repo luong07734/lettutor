@@ -7,7 +7,10 @@ class DatePickerFormField extends StatefulWidget {
   final String hint;
 
   const DatePickerFormField(
-      {super.key, required this.title, required this.controller, required this.hint});
+      {super.key,
+      required this.title,
+      required this.controller,
+      required this.hint});
 
   @override
   _DatePickerFormFieldState createState() => _DatePickerFormFieldState();
@@ -26,7 +29,8 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        widget.controller.text = DateFormat.yMd().format(_selectedDate!);
+        widget.controller.text =
+            DateFormat('yyyy-MM-dd').format(_selectedDate!);
       });
     }
   }

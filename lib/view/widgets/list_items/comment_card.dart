@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/view/widgets/view_items/rating/rating.dart';
 
-class CommentCard extends StatelessWidget {
-  const CommentCard({Key? key}) : super(key: key);
+class CommentCard extends StatefulWidget {
+  final FeedBack feedBack;
+  const CommentCard({Key? key, required this.feedBack}) : super(key: key);
+
+  @override
+  State<CommentCard> createState() => _CommentCardState();
+}
+
+class _CommentCardState extends State<CommentCard> {
+ 
+  String formatDate(String date) {
+    //  print("before ${date}");
+    return date.substring(0, 10) + " " + date.substring(11, 16);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +27,22 @@ class CommentCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(AssetsManager.avatarImage),
-            ),
+            (widget.feedBack.firstInfo!.avatar == null ||
+                    widget.feedBack.firstInfo!.avatar!
+                        .contains("icon-avatar-default.png") ||
+                    widget.feedBack.firstInfo!.avatar!
+                        .contains("https://platform-lookaside.fbsbx.com/"))
+                ? CircleAvatar(
+                    backgroundImage: AssetImage(
+                      AssetsManager.userAvatarImage,
+                    ),
+                  )
+                : CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(widget.feedBack.firstInfo!.avatar!),
+                  ),
             const SizedBox(width: 16.0),
             Expanded(
               child: Column(
@@ -25,8 +50,8 @@ class CommentCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Text(
-                        "LE KY LUONG",
+                      Text(
+                        widget.feedBack.firstInfo!.name!,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
@@ -37,12 +62,14 @@ class CommentCard extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  RatingWidget("4.5"),
+                  RatingWidget(double.parse(widget.feedBack.rating.toString())
+                      .toStringAsFixed(1)
+                      .toString()),
                   const SizedBox(
                     height: 4,
                   ),
-                  const Text(
-                    "He is a great tracher who I have studied. I am very admire her. Luvvvvvv",
+                  Text(
+                    widget.feedBack.content!,
                     textAlign: TextAlign.start,
                     maxLines: 4,
                     softWrap: true,
@@ -51,8 +78,8 @@ class CommentCard extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  const Text(
-                    "Mon, 2 Aug 2021, 02:06",
+                  Text(
+                    formatDate(widget.feedBack.createdAt!),
                     style: TextStyle(
                       fontWeight: FontWeight.w100,
                       fontSize: 12.0,

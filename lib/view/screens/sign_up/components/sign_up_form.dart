@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class SignupForm extends StatefulWidget {
   @override
@@ -15,9 +18,13 @@ class _SignupFormState extends State<SignupForm> {
   final _confirmPasswordController = TextEditingController();
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
+  bool isLoading = false;
+  List<String> errors = [];
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authenticationProvider =
+        context.read<AuthenticationProvider>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Form(
@@ -25,26 +32,28 @@ class _SignupFormState extends State<SignupForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // const SizedBox(height: 16),
+            // Text(AppLocalizations.of(context)!.username,
+            //     style: TextStyle(fontSize: 16)),
+            // TextFormField(
+            //   controller: _userNameController,
+            //   keyboardType: TextInputType.name,
+            //   validator: (value) {
+            //     if (value!.isEmpty) {
+            //       return 'Please enter your user name';
+            //     }
+            //     return null;
+            //   },
+            //   decoration: InputDecoration(
+            //     hintText: 'Enter your user name',
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 16),
-            const Text('User name', style: TextStyle(fontSize: 16)),
-            TextFormField(
-              controller: _userNameController,
-              keyboardType: TextInputType.name,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter your user name';
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                hintText: 'Enter your user name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text('Email', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.email,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
@@ -62,7 +71,8 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Password', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.password,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               obscureText: !_passwordVisible,
               validator: (value) {
@@ -90,7 +100,8 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Confirm Password', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.confirmPassword,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               obscureText: !_confirmPasswordVisible,
               validator: (value) {
@@ -121,36 +132,66 @@ class _SignupFormState extends State<SignupForm> {
             ),
             const SizedBox(height: 30),
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Do sign in here
-                    // Do something with the form data
-                    final userName = _userNameController.text;
-                    final email = _emailController.text;
-                    final password = _passwordController.text;
-                    print('User Name: $userName');
-                    print('Email: $email');
-                    print('Password: $password');
-                    Navigator.pushNamedAndRemoveUntil(
-                      context, Routers.LogIn, (route) => false);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: const Center(
-                    child: Text(
-                      "SIGN UP",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+              child: isLoading
+                  ? CircularProgressIndicator(
+                      valueColor: const AlwaysStoppedAnimation(Colors.blue),
+                      backgroundColor: Colors.grey[200],
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Do sign in here
+                          // Do something with the form data
+                          final userName = _userNameController.text;
+                          final email = _emailController.text;
+                          final password = _passwordController.text;
+                          print('User Name: $userName');
+                          print('Email: $email');
+                          print('Password: $password');
+
+                          setState(() {
+                            isLoading = true;
+                          });
+                          authenticationProvider
+                              .signUp(email, password)
+                              .then((value) {
+                            if (value) {
+                              print(value.toString());
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Dang ki thanh cong"),
+                              ));
+                              // Navigator.pop(context);
+                              print("dang ki thanh cong");
+                            } else {
+                              // addError(S.current.email_is_already_in_use);
+                              print("bi loi");
+                              Text("email has been used");
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+
+                          // Navigator.pushNamedAndRemoveUntil(
+                          //     context, Routers.LogIn, (route) => false);
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.signUpCapital,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

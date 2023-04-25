@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/models/course.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 // import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseDetailPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class CourseDetailPage extends StatefulWidget {
 class _CourseDetailPageState extends State<CourseDetailPage> {
   String remotePDFpath = "";
   int _selectedIndex = -1;
+  CousreRowItem? course;
 
   final List<String> _titles = [
     '1. Food You Love',
@@ -27,6 +30,19 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     '5. Having Fun in Your Freetime',
   ];
   // final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    CousreRowItem courseArgs = args['course'];
+
+    setState(() {
+      course = courseArgs;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +63,19 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       SizedBox(
                         height: 200,
                         width: double.infinity,
-                        child: Image.asset(
-                          AssetsManager.courseImage,
+                        child: Image.network(
+                          course!.imageUrl!,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                                AssetsManager.imageLoadFailedImage);
+                          },
                           fit: BoxFit.cover,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
-                          'Life in the Internet Age',
+                          course!.name!,
                           style: TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
@@ -64,11 +84,11 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                         ),
                       ),
                       Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              "Let's discuss how technology is changing the way we live",
+                              course!.description!,
                               style: TextStyle(
                                 fontSize: 18.0,
                               ),
@@ -78,7 +98,11 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                           Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Intermediate . 9 Lessons',
+                              "Level " +
+                                  course!.level! +
+                                  " · " +
+                                  course!.topics!.length.toString() +
+                                  " lessons",
                               style: TextStyle(fontSize: 18.0),
                             ),
                           ),
@@ -88,7 +112,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                   ),
                 ),
               ),
-              const ProfileTitle(text: "Overview"),
+              ProfileTitle(text: AppLocalizations.of(context)!.overview),
               Row(
                 children: [
                   Padding(
@@ -104,8 +128,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       ),
                     ),
                   ),
-                  const Text(
-                    'Why take this course?',
+                  Text(
+                    AppLocalizations.of(context)!.courseWhy,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -117,9 +141,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
               const SizedBox(
                 height: 20,
               ),
-              const ProfileDescription(
-                  text:
-                      "Our world is rapidly changing thanks to new technology , and the vocabulary nededed to discuss modern life is evolving almost daily. In this course you will learn the most up-tio-date terminology from experly crafted lessons as well from your native-speaking tutor."),
+              ProfileDescription(text: course!.reason!),
               const SizedBox(
                 height: 20,
               ),
@@ -138,8 +160,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       ),
                     ),
                   ),
-                  const Text(
-                    'What will you be able to do?',
+                  Text(
+                    AppLocalizations.of(context)!.courseWhat,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -151,14 +173,13 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
               const SizedBox(
                 height: 20,
               ),
-              const ProfileDescription(
-                text:
-                    "You will learn vocabulary related to timely topics like remote work, artificial intelligence, online privacy, and more. In addition to discuss questions, you will practise intermediate level speakking tasks such as using data to describe trends.",
+              ProfileDescription(
+                text: course!.purpose!,
               ),
               const SizedBox(
                 height: 10,
               ),
-              const ProfileTitle(text: "Experience Level"),
+              ProfileTitle(text: AppLocalizations.of(context)!.experienceLevel),
               Row(
                 children: [
                   Padding(
@@ -168,8 +189,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       color: ColorsManager.circleIconColor,
                     ),
                   ),
-                  const Text(
-                    'Intermediate',
+                  Text(
+                    "Level " + course!.level!,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -178,7 +199,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                   ),
                 ],
               ),
-              const ProfileTitle(text: "Course Length"),
+              ProfileTitle(text: AppLocalizations.of(context)!.courseLength),
               Row(
                 children: [
                   Padding(
@@ -188,8 +209,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       color: ColorsManager.circleIconColor,
                     ),
                   ),
-                  const Text(
-                    '9',
+                  Text(
+                    course!.topics!.length.toString(),
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -199,14 +220,14 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                 ],
               ),
 
-              const ProfileTitle(text: "List Topics"),
+              ProfileTitle(text: AppLocalizations.of(context)!.listTopics),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _titles.length,
+                  itemCount: course!.topics!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
@@ -216,8 +237,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
 
                         Navigator.pushNamed(context, Routers.PDFView,
                             arguments: {
-                              'url':
-                                  'https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf',
+                              'topics': course!.topics!,
+                              'index': index,
                               'title': 'PDF VIEW',
                             });
                         // Navigator.of(context).push(
@@ -243,7 +264,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            _titles[index],
+                            course!.topics![index].name!,
                             style: TextStyle(
                               color: _selectedIndex == index
                                   ? Colors.white

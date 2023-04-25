@@ -3,6 +3,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 import '../../widgets/view_items/textfields/custom_textfield.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -31,8 +32,8 @@ class ForgotPasswordPage extends StatelessWidget {
                 height: 200,
               ),
               const SizedBox(height: 36),
-              const Text(
-                "Reset Password",
+              Text(
+                AppLocalizations.of(context)!.resetPassword,
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -43,7 +44,7 @@ class ForgotPasswordPage extends StatelessWidget {
 
               // welcome back, you've been missed!
               Text(
-                "Enter your email address and we'll send you\n a link to reset password",
+                AppLocalizations.of(context)!.enterEmailAddress,
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 16,
@@ -67,9 +68,9 @@ class ForgotPasswordPage extends StatelessWidget {
               CustomButton(
                   onTap: () {
                     Navigator.pushNamedAndRemoveUntil(
-                      context, Routers.LogIn, (route) => false);
+                        context, Routers.LogIn, (route) => false);
                   },
-                  text: 'Send'),
+                  text: AppLocalizations.of(context)!.sendResetLink),
             ],
           ),
         ),

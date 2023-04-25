@@ -1,15 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/data/provider/schedule_provider.dart';
+import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
-class SchedulePage extends StatelessWidget {
-  static String routeName = "/schedule";
+class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
-  
+
+  @override
+  State<SchedulePage> createState() => _SchedulePageState();
+}
+
+class _SchedulePageState extends State<SchedulePage> {
+  final _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    print("init schedule called");
+
+    // fetch initial teacher data
+    context.read<ScheduleProvider>().reset();
+    context.read<ScheduleProvider>().loadScheduleData();
+
+    // listen to scroll events to detect when user reaches end of list
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final provider = context.read<ScheduleProvider>();
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent) {
+      print("scrolled max");
+      // fetch next page of teacher data
+
+      provider.loadScheduleData(page: provider.page + 1);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,11 +60,11 @@ class SchedulePage extends StatelessWidget {
               height: 100,
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: Text(
-              "Schedule",
-              style: TextStyle(
+              AppLocalizations.of(context)!.schedule,
+              style: const TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -42,10 +81,10 @@ class SchedulePage extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "Here is a lisst of the sessions you have bookeed. \nYou can track when the meeeting starts, join the meeting with one click or can cancel the meeting before 2 hours.",
+                  AppLocalizations.of(context)!.scheduleDescription,
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -54,14 +93,59 @@ class SchedulePage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return const ScheduleCard();
-            },
-          ),
+          Consumer<ScheduleProvider>(builder: (context, scheduleProvider, _) {
+            if (scheduleProvider.schedules.isEmpty) {
+              // show loading indicator while data is being fetched
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return scheduleProvider.schedules.length == 0
+                  ? Center(child: Text("No Schedule"))
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      // controller: _scrollController,
+                      itemCount: scheduleProvider.schedules.length +
+                          ((scheduleProvider.hasMoreItems &&
+                                  scheduleProvider.schedules.length >= 3)
+                              ? 1
+                              : 0),
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index < scheduleProvider.schedules.length) {
+                          final schedule = scheduleProvider.schedules[index];
+                          return Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey
+                                      .withOpacity(0.1), // Màu bóng đổ
+                                  spreadRadius: 1, // Bán kính của bóng đổ
+                                  blurRadius: 1, // Độ mờ của bóng đổ
+                                  offset: const Offset(
+                                      0, 1), // Độ dịch chuyển của bóng đổ
+                                ),
+                              ],
+                            ),
+                            // child: TeacherCard(index, context, tutor),
+                            child: ScheduleCard(
+                              schedule: schedule,
+                              isHistoryCard: false,
+                            ),
+                          );
+                        } else {
+                          // show loading indicator at end of list
+                          if (scheduleProvider.hasMoreItems) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: CircularProgressIndicator()),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        }
+                      },
+                    );
+            }
+          }),
         ],
       ),
     );

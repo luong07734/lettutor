@@ -9,4 +9,8 @@ class AssetsManager {
   static String historyImage = '$imagePath/history.png';
   static String doneImage = '$imagePath/done.png';
   static String loginImage = '$imagePath/login_image.png';
+  static String vnFlagImage = '$imagePath/vn_flag.png';
+  static String ukFlagImage = '$imagePath/uk_flag.png';
+  static String userAvatarImage = '$imagePath/user.png';
+  static String imageLoadFailedImage = '$imagePath/image_load_failed.png';
 }

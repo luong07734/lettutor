@@ -4,10 +4,12 @@ class LanguageFormField extends StatefulWidget {
   final List<String> languages;
   final IconData icon;
   final String label;
+  final ValueChanged<List<String>> onSelectedLanguagesChanged;
 
-  const LanguageFormField({super.key, required this.languages, required this.icon, required this.label});
+  const LanguageFormField({super.key, required this.languages, required this.icon, required this.label,required this.onSelectedLanguagesChanged});
   @override
   _LanguageFormFieldState createState() => _LanguageFormFieldState();
+
 }
 
 class _LanguageFormFieldState extends State<LanguageFormField> {
@@ -67,6 +69,7 @@ class _LanguageFormFieldState extends State<LanguageFormField> {
           _selectedLanguages.add(selectedLanguage);
         }
       });
+      widget.onSelectedLanguagesChanged(_selectedLanguages);
     }
   }
 }

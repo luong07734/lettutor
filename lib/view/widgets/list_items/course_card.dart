@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/models/course.dart';
 
 class CourseCard extends StatelessWidget {
   final int index;
-  final List<Map<String, String>> items;
-  const CourseCard({super.key, required this.index, required this.items});
+  final CousreRowItem course;
+  const CourseCard({super.key, required this.index, required this.course});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +29,15 @@ class CourseCard extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                 ),
-                height: 130,
+                height: 114,
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    AssetsManager.courseImage,
+                  child: Image.network(
+                    course.imageUrl!,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(AssetsManager.imageLoadFailedImage);
+                    },
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -41,7 +45,7 @@ class CourseCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  items[index]['title']!,
+                  course.name!,
                   style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -55,7 +59,7 @@ class CourseCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
-                  items[index]['subtitle1']!,
+                  course.description!,
                   style: const TextStyle(
                     color: Colors.black87,
                   ),
@@ -70,7 +74,11 @@ class CourseCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      items[index]['subtitle2']!,
+                      "Level " +
+                          course.level! +
+                          " · " +
+                          course.topics!.length.toString() +
+                          " lessons",
                       style: TextStyle(
                         color: Colors.blue[500],
                       ),

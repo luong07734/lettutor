@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/main.dart';
 import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/view/screens/components/drawer-navigation-bar.dart';
 import 'package:lettutor/view/screens/forgot_password/forgot_password.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class SigninForm extends StatefulWidget {
   @override
@@ -13,9 +17,12 @@ class _SigninFormState extends State<SigninForm> {
   String? _email;
   String? _password;
   bool _passwordVisible = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authenticationProvider =
+        context.read<AuthenticationProvider>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Form(
@@ -24,7 +31,8 @@ class _SigninFormState extends State<SigninForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
-            const Text('Email', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.email,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
@@ -44,7 +52,8 @@ class _SigninFormState extends State<SigninForm> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Password', style: TextStyle(fontSize: 16)),
+            Text(AppLocalizations.of(context)!.password,
+                style: TextStyle(fontSize: 16)),
             TextFormField(
               obscureText: !_passwordVisible,
               validator: (value) {
@@ -73,48 +82,74 @@ class _SigninFormState extends State<SigninForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, Routers.ForgotPassword);
               },
               child: Text(
-                'Forgot Password?',
+                AppLocalizations.of(context)!.forgotPassword,
                 style: TextStyle(
                     color: Colors.blue[600],
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Do sign in here
-                    print('Email: $_email');
-                    print('Password: $_password');
-                    //TO DO: change to named navigator
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => const MyApp()),
-                        (Route<dynamic> route) => false);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: const Center(
-                    child: Text(
-                      "SIGN IN",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+              child: isLoading
+                  ? CircularProgressIndicator(
+                      valueColor: const AlwaysStoppedAnimation(Colors.blue),
+                      backgroundColor: Colors.grey[200],
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Do sign in here
+
+                          setState(() {
+                            isLoading = true;
+                          });
+                          authenticationProvider
+                              .logIn(_email!, _password!)
+                              .then((value) {
+                            if (value) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeDrawerAndNavigationBar()),
+                                  (Route<dynamic> route) => false);
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Dang nhap that bai"),
+                              ));
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+                          print('Email: $_email');
+                          print('Password: $_password');
+
+                          //TO DO: change to named navigator
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.signIn,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

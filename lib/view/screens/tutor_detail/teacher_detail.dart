@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/constants/fake_data.dart';
@@ -7,6 +8,7 @@ import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/models/tutor_detail.dart';
 import 'package:lettutor/ultilities/routes.dart';
+import 'package:lettutor/view/screens/tutor_detail/components/report_modal.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
 import 'package:lettutor/view/widgets/list_items/comment_card.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
@@ -29,6 +31,24 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
   TutorRowItem? tutorRowItem;
   bool isLoading = true;
   bool? isFavorite;
+  bool isReporting = false;
+  final TutorApis _tutorApi = TutorApis();
+
+  Future<bool> reportTutor(String tutorId, String content) async {
+    setState(() {
+      isReporting = true;
+    });
+    var res = await _tutorApi.reportTutor(tutorId, content);
+    print(res["message"]);
+    if (res["message"] != "Report successfully") {
+      setState(() {
+        isReporting = false;
+      });
+      return false;
+    }
+    isReporting = false;
+    return true;
+  }
 
   @override
   void initState() {
@@ -76,59 +96,6 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
     if (res["statusCode"] != null) return null;
 
     return TutorDetail.fromJson(res);
-  }
-
-  void _showModalBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 300.0,
-          color: Colors.white,
-          child: Column(
-            children: <Widget>[
-              Container(
-                color: Colors.blueAccent,
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: const Text(
-                  'Pick your date!',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const Divider(
-                height: 1.0,
-                color: Colors.grey,
-              ),
-              const SizedBox(height: 10.0),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: const Text(
-                        'Fri, 29 April 2022, 08:00 PM',
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: const Icon(Icons.date_range),
-                      onTap: () {
-                        // Handle button press
-                        Navigator.pop(context);
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -275,6 +242,24 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                       InkWell(
                         onTap: () {
                           // do something when button is tapped
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ReportModal(
+                                  tutorName: tutorRowItem!.name!,
+                                  onReport: (report) {
+                                    print(report);
+                                    reportTutor(tutorRowItem!.userId!, report)
+                                        .then((value) {
+                                      if (value) {
+                                        print("sucess");
+                                      } else {
+                                        print("fail");
+                                      }
+                                    });
+                                  });
+                            },
+                          );
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,

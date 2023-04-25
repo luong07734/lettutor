@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
+import 'package:lettutor/data/network/apis/become-tutor/become_tutor_api.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:lettutor/view/widgets/view_items/textfields/country_picker_textfield.dart';
@@ -14,9 +16,8 @@ import 'package:lettutor/view/widgets/view_items/textfields/paragraph_textfield.
 import 'package:video_player/video_player.dart';
 
 class RegisterStepper extends StatefulWidget {
-  static String routeName = "/become_teacher";
   @override
-  _RegisterStepperState createState() => _RegisterStepperState();
+  State<RegisterStepper> createState() => _RegisterStepperState();
 }
 
 class _RegisterStepperState extends State<RegisterStepper> {
@@ -31,6 +32,8 @@ class _RegisterStepperState extends State<RegisterStepper> {
   final TextEditingController _experienceController = TextEditingController();
   final TextEditingController _professionController = TextEditingController();
   final TextEditingController _introductionController = TextEditingController();
+  String _selectedLanguages = "";
+  String _selectedSpec = "";
   File? _imageFile;
   List<String> _languages = [
     'English',
@@ -44,15 +47,19 @@ class _RegisterStepperState extends State<RegisterStepper> {
   ];
 
   List<String> _specialities = [
-    'English',
-    'Spanish',
-    'French',
-    'German',
-    'Chinese',
-    'Japanese',
-    'Korean',
-    'Arabic'
+    'English for Kids',
+    'Business English',
+    'Conversational English',
+    'STARTERS',
+    'MOVERS',
+    'FLYERS',
+    'KET',
+    'PET',
+    "IELTS",
+    "TOEFL",
+    "TOEFL",
   ];
+
   Future<void> _pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     setState(() {
@@ -65,6 +72,7 @@ class _RegisterStepperState extends State<RegisterStepper> {
   File? _video;
 
   final picker = ImagePicker();
+  Map<String, String> body = {};
 
   _pickVideo() async {
     PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
@@ -83,6 +91,7 @@ class _RegisterStepperState extends State<RegisterStepper> {
     _fullnameController.dispose();
     _doBController.dispose();
     _countryController.dispose();
+    _videoPlayerController!.dispose();
     super.dispose();
   }
 
@@ -225,6 +234,12 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   languages: _languages,
                   icon: Icons.language,
                   label: "Language",
+                  onSelectedLanguagesChanged: (languages) {
+                    setState(() {
+                      _selectedLanguages =
+                          languages.isNotEmpty ? languages.join(', ') : "";
+                    });
+                  },
                 ),
                 const SizedBox(height: 8),
                 Divider(
@@ -241,6 +256,12 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   languages: _specialities,
                   icon: Icons.bookmark,
                   label: "Specialities",
+                  onSelectedLanguagesChanged: (specs) {
+                    setState(() {
+                      _selectedLanguages =
+                          specs.isNotEmpty ? specs.join(', ') : "";
+                    });
+                  },
                 ),
                 const ProfileTitle(
                     text: "I am best at teaching students who are"),
@@ -366,7 +387,44 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   textAlign: TextAlign.center,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      body["name"] = _fullnameController.text;
+                      body["country"] = _countryController.text;
+                      body["birthday"] = _doBController.text;
+                      body["interests"] = _interestController.text;
+                      body["education"] = _educationController.text;
+                      body["experience"] = _experienceController.text;
+                      body["profession"] = _professionController.text;
+                      body["languages"] = _selectedLanguages;
+                      body["bio"] = _introductionController.text;
+                      body["targetStudent"] = _currentStep == 1
+                          ? "Beginner"
+                          : (_currentStep == 2 ? "Intermediate" : "Advance");
+                      body["specialities"] = _selectedSpec;
+                      body["price"] = 50000.toString();
+                      // body["avatar"] = _imageFile;
+                      // body["video"] = _video;
+                    });
+                    final BecomeTutorApi _api = BecomeTutorApi();
+                    if (_video != null && _imageFile != null) {
+                      _api
+                          .becomeTutor(body, _video!, _imageFile!)
+                          .then((value) {
+                        if (value) {
+                          Fluttertoast.showToast(
+                              msg: "Your information has been sent",
+                              toastLength: Toast.LENGTH_LONG,
+                              timeInSecForIosWeb: 2);
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Send failed",
+                              toastLength: Toast.LENGTH_LONG,
+                              timeInSecForIosWeb: 2);
+                        }
+                      });
+                    }
+                  },
                   child: const Text("Submit"),
                 ),
               ],

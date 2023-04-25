@@ -75,4 +75,16 @@ class TutorApis {
 
     return response;
   }
+
+  Future<dynamic> reportTutor(String tutorId, String content) async {
+    final response =
+        await _restClient.post(Endpoints.reportTutor, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, body: {
+      'tutorId': tutorId,
+      'content': content
+    });
+    return response;
+  }
 }

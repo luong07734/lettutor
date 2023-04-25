@@ -15,6 +15,7 @@ Future joinMeeting(ScheduleRowItem schedule) async {
     String? token = schedule.studentMeetingLink?.substring(13);
     dynamic roomId = json.decode(decodeBase64(token!.split(".")[1]))["room"];
     String serverUrl = "https://meet.lettutor.com";
+    bool shouldDisplayToast = true;
 
     Map<FeatureFlag, Object> featureFlags = {};
 
@@ -39,7 +40,8 @@ Future joinMeeting(ScheduleRowItem schedule) async {
       if (schedule.scheduleDetailInfo!.startPeriodTimestamp! <=
           DateTime.now().millisecondsSinceEpoch) {
         timer.cancel();
-      } else {
+      } else if (shouldDisplayToast) {
+        print(shouldDisplayToast);
         Fluttertoast.showToast(
             msg:
                 "$strTimeUntil\n ultil lesson start (${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})",
@@ -66,9 +68,11 @@ Future joinMeeting(ScheduleRowItem schedule) async {
             debugPrint("onConferenceJoined: url: $url");
           },
           onConferenceTerminated: (url, error) {
+            shouldDisplayToast = false;
             Fluttertoast.cancel();
             if (_timer != null) {
               _timer!.cancel();
+              _timer = null;
             }
             debugPrint("onConferenceTerminated: url: $url, error: $error");
           },
@@ -108,19 +112,22 @@ Future joinMeeting(ScheduleRowItem schedule) async {
           onChatToggled: (isOpen) =>
               debugPrint("onChatToggled: isOpen: $isOpen"),
           onClosed: () {
+            shouldDisplayToast = false;
             Fluttertoast.cancel();
-            if (_timer != null) {
-              _timer!.cancel();
-            }
+
+            print("timer ${_timer}");
+            _timer!.cancel();
+            _timer = null;
+
             debugPrint("onClosed");
           }),
     );
   } catch (error) {
     print("error: $error");
     Fluttertoast.cancel();
-            if (_timer != null) {
-              _timer!.cancel();
-            }
+
+    _timer!.cancel();
+    _timer = null;
   }
 }
 

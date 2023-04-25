@@ -22,7 +22,7 @@ class Endpoints {
   static const String tutorDetail = "/tutor";
   static const String tutorSearch = "/tutor/search";
   static const String addFavoriteTutors = "/user/manageFavoriteTutor";
-
+  static const String reportTutor = "/report";
   // courses
   static const String courseList = "/course";
 
@@ -40,4 +40,7 @@ class Endpoints {
 
   // call
   static const String totalCall = "/call/total";
+
+  // become a tutor
+  static const String becomeTutor = "/tutor/register";
 }

@@ -187,7 +187,7 @@ class AuthenticationProvider extends ChangeNotifier {
     var fbAuth = await FacebookAuth.instance
         .login(permissions: ["public_profile", "email"]);
     if (fbAuth.status != LoginStatus.success) return false;
-
+    print(fbAuth);
     var accessToken = fbAuth.accessToken;
     String token = accessToken?.token ?? "";
     final result = await _authApi.loginByFacebook(token);

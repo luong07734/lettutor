@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/data/shared_preference/shared_preference.dart';
 
 class LanguageProfile extends ChangeNotifier {
+  final SharedPreference _prefHelper = SharedPreference.instance;
   static const String codeVN = 'vi';
   static const String codeEN = 'en';
   // final SharedPreferenceHelper _prefHelper = SharedPreferenceHelper.instance;
@@ -12,7 +14,12 @@ class LanguageProfile extends ChangeNotifier {
 
   _loadlanguage() async {
     print("_loadLanguage called");
-    String? currentLanguage = 'en';
+
+    String? currentLanguage = await _prefHelper.currentLanguage;
+    if (currentLanguage == null) {
+      print('currentLanguage is null');
+    }
+    print(currentLanguage);
     if (currentLanguage == null) return;
     if (currentLanguage == codeVN) {
       locale = const Locale(codeVN);
@@ -28,6 +35,8 @@ class LanguageProfile extends ChangeNotifier {
     } else {
       locale = const Locale(codeEN);
     }
+
+    _prefHelper.saveCurrentLanguage(language);
     // _prefHelper.changeLanguage(language);
     // FirebaseAnalytics.instance
     //     .logEvent(name: 'change_language', parameters: {'language': language});

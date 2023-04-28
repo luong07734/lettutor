@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/asset_manager.dart';
@@ -11,8 +12,10 @@ import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/data/provider/course_provider.dart';
 import 'package:lettutor/data/provider/history_provider.dart';
+import 'package:lettutor/data/provider/is_auto_tts.dart';
 import 'package:lettutor/data/provider/language.dart';
 import 'package:lettutor/data/provider/schedule_provider.dart';
+import 'package:lettutor/data/provider/speech_language.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/models/user.dart';
@@ -34,6 +37,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await dotenv.load(fileName: ".env");
   final prefs = SharedPreference.instance;
   String? accessToken = await prefs.accessToken ?? "";
   String? refreshToken = await prefs.refreshToken ?? "";
@@ -45,6 +49,9 @@ Future main() async {
       ChangeNotifierProvider<ThemeProfile>(create: (_) => ThemeProfile()),
       ChangeNotifierProvider<AuthenticationProvider>(
           create: (_) => AuthenticationProvider()),
+      ChangeNotifierProvider<SpeechLanguageProfile>(
+          create: (_) => SpeechLanguageProfile()),
+      ChangeNotifierProvider<AutoTTSProfile>(create: (_) => AutoTTSProfile()),
     ],
     child: MyApp(token: accessToken, user: user),
   ));

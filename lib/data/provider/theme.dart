@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/data/shared_preference/shared_preference.dart';
 
 final ThemeData themeDataLight = ThemeData(
   brightness: Brightness.light,
@@ -19,6 +20,7 @@ final ThemeData themeDataDark = ThemeData(
 );
 
 class ThemeProfile extends ChangeNotifier {
+  final SharedPreference _prefHelper = SharedPreference.instance;
   ThemeData _themeMode = themeDataLight;
   ThemeData get themeMode => _themeMode;
 
@@ -31,7 +33,8 @@ class ThemeProfile extends ChangeNotifier {
 
   _loadTheme() async {
     print("_loadTheme called");
-    bool? isDark = false;
+    bool? isDark = await _prefHelper.isDark;
+    print(isDark);
     if (isDark == true) {
       _themeMode = themeDataDark;
       _typeName = "Dark";
@@ -52,7 +55,7 @@ class ThemeProfile extends ChangeNotifier {
     _themeMode = themeDataDark;
     _typeName = "Dark";
     // _themeModeType = ThemeMode.dark;
-    // await _prefHelper?.changeBrightnessToDark(true);
+    await _prefHelper.saveIsDark(true);
     notifyListeners();
   }
 
@@ -60,7 +63,7 @@ class ThemeProfile extends ChangeNotifier {
     _themeMode = themeDataLight;
     _typeName = "Light";
     // _themeModeType = ThemeMode.light;
-    // await _prefHelper?.changeBrightnessToDark(false);
+    await _prefHelper.saveIsDark(false);
     notifyListeners();
   }
 }

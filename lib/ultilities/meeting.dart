@@ -23,7 +23,7 @@ Future joinMeeting(ScheduleRowItem schedule) async {
     var options = JitsiMeetingOptions(
       roomNameOrUrl: roomId,
       serverUrl: serverUrl,
-      subject: "Test meeting KL",
+      subject: "Letutot Meeting",
       token: token,
       isAudioMuted: true,
       isAudioOnly: false,

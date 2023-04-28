@@ -123,6 +123,14 @@ class _HomeDrawerAndNavigationBarState
               ),
               ListTile(
                 onTap: () {
+                  Navigator.pushNamed(context, Routers.Chat);
+                  _advancedDrawerController.hideDrawer();
+                },
+                leading: const Icon(Icons.chat),
+                title: Text("VoiceGPT"),
+              ),
+              ListTile(
+                onTap: () {
                   Navigator.pushNamed(context, Routers.Settings);
                   _advancedDrawerController.hideDrawer();
                 },

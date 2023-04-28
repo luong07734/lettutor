@@ -91,7 +91,10 @@ class _RegisterStepperState extends State<RegisterStepper> {
     _fullnameController.dispose();
     _doBController.dispose();
     _countryController.dispose();
-    _videoPlayerController!.dispose();
+    if (_videoPlayerController != null) {
+      _videoPlayerController!.dispose();
+    }
+
     super.dispose();
   }
 

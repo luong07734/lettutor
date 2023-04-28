@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     final tutor = tutorProvider.tutors[index];
                     return Container(
-                      width: 350,
+                      width: 360,
                       height: 250,
                       decoration: BoxDecoration(
                         boxShadow: [

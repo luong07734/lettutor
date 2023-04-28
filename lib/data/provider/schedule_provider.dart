@@ -8,11 +8,13 @@ class ScheduleProvider extends ChangeNotifier {
   int _page = 1;
   bool _hasMoreItems = true;
   int _totalStudyTime = 0;
+  bool _isLoading = false;
 
   List<ScheduleRowItem> get schedules => _schedules;
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
   int get totalStudyTime => _totalStudyTime;
+  bool get isLoading => _isLoading;
 
   ScheduleProvider() {
     // _loadTotalStudyTime();
@@ -20,6 +22,7 @@ class ScheduleProvider extends ChangeNotifier {
 
   void loadScheduleData({int page = 1}) {
     _page = page;
+    _isLoading = true;
     _scheduleApis
         .getBookedClasses(page, DateTime.now().millisecondsSinceEpoch)
         .then((value) {
@@ -36,6 +39,7 @@ class ScheduleProvider extends ChangeNotifier {
           _hasMoreItems = false;
         }
       } else {}
+      _isLoading = false; // indicate that data loading is complete
       notifyListeners();
     });
   }

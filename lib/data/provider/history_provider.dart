@@ -7,12 +7,15 @@ class HistoryProvider extends ChangeNotifier {
   List<ScheduleRowItem> _history = [];
   int _page = 1;
   bool _hasMoreItems = true;
+  bool _isLoading = false;
 
   List<ScheduleRowItem> get history => _history;
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
+  bool get isLoading => _isLoading;
 
   void loadHistoryData({int page = 1}) {
+     _isLoading = true;
     _page = page;
     _scheduleApis
         .getHistory(page, DateTime.now().millisecondsSinceEpoch)
@@ -30,6 +33,7 @@ class HistoryProvider extends ChangeNotifier {
           _hasMoreItems = false;
         }
       } else {}
+      _isLoading = false;
       notifyListeners();
     });
   }

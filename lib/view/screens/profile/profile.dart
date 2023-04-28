@@ -301,7 +301,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //     }),
                       DropDownMultiSelect(
                         decoration: InputDecoration(
-                          hintText: "Select Your Test Preparation",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -316,7 +315,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         options: _testPreps,
                         selectedValues: _selectedTestPreps,
-                        whenEmpty: 'Select Something',
+                        whenEmpty: 'Select test preperation',
                       ),
 
                       const SizedBox(height: 16),

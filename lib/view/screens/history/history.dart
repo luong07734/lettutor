@@ -42,6 +42,7 @@ class _HistoryPageState extends State<HistoryPage> {
       provider.loadHistoryData(page: provider.page + 1);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,58 +96,60 @@ class _HistoryPageState extends State<HistoryPage> {
               height: 20,
             ),
             Consumer<HistoryProvider>(builder: (context, historyProvider, _) {
-            if (historyProvider.history.isEmpty) {
-              // show loading indicator while data is being fetched
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return historyProvider.history.length == 0
-                  ? Center(child: Text("No Schedule"))
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      // controller: _scrollController,
-                      itemCount: historyProvider.history.length +
-                          ((historyProvider.hasMoreItems &&
-                                  historyProvider.history.length >= 3)
-                              ? 1
-                              : 0),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < historyProvider.history.length) {
-                          final schedule = historyProvider.history[index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.1), // Màu bóng đổ
-                                  spreadRadius: 1, // Bán kính của bóng đổ
-                                  blurRadius: 1, // Độ mờ của bóng đổ
-                                  offset: const Offset(
-                                      0, 1), // Độ dịch chuyển của bóng đổ
-                                ),
-                              ],
+              if (historyProvider.history.isEmpty &&
+                  !historyProvider.isLoading) {
+                // show "No Schedule" message
+                return Center(child: Text("No History"));
+              } else if (historyProvider.isLoading) {
+                // show loading indicator while data is being fetched
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  // controller: _scrollController,
+                  itemCount: historyProvider.history.length +
+                      ((historyProvider.hasMoreItems &&
+                              historyProvider.history.length >= 3)
+                          ? 1
+                          : 0),
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index < historyProvider.history.length) {
+                      final schedule = historyProvider.history[index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                              spreadRadius: 1, // Bán kính của bóng đổ
+                              blurRadius: 1, // Độ mờ của bóng đổ
+                              offset: const Offset(
+                                  0, 1), // Độ dịch chuyển của bóng đổ
                             ),
-                            // child: TeacherCard(index, context, tutor),
-                            child: ScheduleCard(
-                              schedule: schedule,
-                              isHistoryCard: true,
-                            ),
-                          );
-                        } else {
-                          // show loading indicator at end of list
-                          if (historyProvider.hasMoreItems) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }
-                      },
-                    );
-            }
-          }),
+                          ],
+                        ),
+                        // child: TeacherCard(index, context, tutor),
+                        child: ScheduleCard(
+                          schedule: schedule,
+                          isHistoryCard: true,
+                        ),
+                      );
+                    } else {
+                      // show loading indicator at end of list
+                      if (historyProvider.hasMoreItems) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }
+                  },
+                );
+              }
+            }),
           ],
         ),
       ),

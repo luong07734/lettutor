@@ -38,6 +38,9 @@ class _SigninFormState extends State<SigninForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return 'Please enter a valid email address';
                 }
                 return null;
               },
@@ -59,6 +62,8 @@ class _SigninFormState extends State<SigninForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your password';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
                 }
                 return null;
               },

@@ -40,9 +40,11 @@ class TutorApis {
     int? page,
     int perPage = 12,
     List<String>? specialties,
+    bool? isVietnamese,
   }) async {
     print("page ${page}");
     print("specs ${specialties}");
+    print("is vn ${isVietnamese}");
     final response = await _restClient.post(Endpoints.tutorSearch, headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
@@ -51,18 +53,14 @@ class TutorApis {
       "perPage": perPage,
       "filters": {
         "specialties": specialties ?? [],
-        // "nationality":{
-        //   "isNative" : true,
-        //   "isVietnamese": true
-        // }
+        "nationality":
+            isVietnamese == null ? {} : {"isVietNamese": isVietnamese}
       },
       "search": keySearch
     });
 
     return response;
   }
-
-
 
   Future<dynamic> addATutorToFavouriteList(String tutorId) async {
     final response =
@@ -77,8 +75,7 @@ class TutorApis {
   }
 
   Future<dynamic> reportTutor(String tutorId, String content) async {
-    final response =
-        await _restClient.post(Endpoints.reportTutor, headers: {
+    final response = await _restClient.post(Endpoints.reportTutor, headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
     }, body: {

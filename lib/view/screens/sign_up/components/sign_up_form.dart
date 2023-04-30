@@ -32,25 +32,6 @@ class _SignupFormState extends State<SignupForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const SizedBox(height: 16),
-            // Text(AppLocalizations.of(context)!.username,
-            //     style: TextStyle(fontSize: 16)),
-            // TextFormField(
-            //   controller: _userNameController,
-            //   keyboardType: TextInputType.name,
-            //   validator: (value) {
-            //     if (value!.isEmpty) {
-            //       return 'Please enter your user name';
-            //     }
-            //     return null;
-            //   },
-            //   decoration: InputDecoration(
-            //     hintText: 'Enter your user name',
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //   ),
-            // ),
             const SizedBox(height: 16),
             Text(AppLocalizations.of(context)!.email,
                 style: TextStyle(fontSize: 16)),
@@ -60,6 +41,9 @@ class _SignupFormState extends State<SignupForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return 'Please enter a valid email address';
                 }
                 return null;
               },
@@ -78,6 +62,8 @@ class _SignupFormState extends State<SignupForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your password';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
                 }
                 return null;
               },

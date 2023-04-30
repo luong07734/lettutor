@@ -16,6 +16,7 @@ class TutorProvider extends ChangeNotifier {
   bool _hasMoreItems = true;
   List<String> _specialities = [];
   String keySearch = "";
+  bool? _isVietnamese;
   //schedule
 
   List<ScheduleOfTutor> _teacherSchedule = [];
@@ -84,7 +85,7 @@ class TutorProvider extends ChangeNotifier {
     _searchPage = page;
     print("searching .....");
     keySearch = value;
-    if (value.isEmpty && _specialities.isEmpty) {
+    if (value.isEmpty && _specialities.isEmpty && _isVietnamese == null) {
       print("reloading...");
       keySearch = "";
       _tutors.clear();
@@ -106,7 +107,8 @@ class TutorProvider extends ChangeNotifier {
         .searchTutor(
             page: page,
             value,
-            specialties: listKeySpec.isEmpty ? null : listKeySpec)
+            specialties: listKeySpec.isEmpty ? null : listKeySpec,
+            isVietnamese: _isVietnamese)
         .then((value) {
       Tutors tutors = Tutors.fromJson(value);
       int oldLength = _tutors.length;
@@ -143,6 +145,7 @@ class TutorProvider extends ChangeNotifier {
 
     search(keySearch, 1, false);
     print(_specialities);
+    notifyListeners();
   }
 
   void clearSpec(int index) {
@@ -153,6 +156,21 @@ class TutorProvider extends ChangeNotifier {
 
     search(keySearch, 1, false);
     print(_specialities);
+    notifyListeners();
+  }
+
+  void clearAllSpecs() {
+    // if (index == 0) {
+    // } else {
+    _specialities.clear();
+    notifyListeners();
+    // }
+  }
+
+  void setIsVietnamese(bool? isVietnamese) {
+    _isVietnamese = isVietnamese;
+    search(keySearch, 1, false);
+    print(_isVietnamese);
   }
 
   // schedule of tutor

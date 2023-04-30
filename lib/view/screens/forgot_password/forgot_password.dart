@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/view_items/textfields/custom_textfield.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -15,6 +17,8 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -67,8 +71,17 @@ class ForgotPasswordPage extends StatelessWidget {
               // sign in button
               CustomButton(
                   onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Routers.LogIn, (route) => false);
+                    authProvider
+                        .fogotPassword(emailController.text)
+                        .then((value) {
+                      if (value) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, Routers.LogIn, (route) => false);
+                        print("reset password thanh cong");
+                      } else {
+                        print("reset password that bai");
+                      }
+                    });
                   },
                   text: AppLocalizations.of(context)!.sendResetLink),
             ],

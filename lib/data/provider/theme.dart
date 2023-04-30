@@ -6,7 +6,7 @@ final ThemeData themeDataLight = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   // inputDecorationTheme: inputDecorationTheme(),
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  // appBarTheme: appBarTheme(),
+  appBarTheme: appBarTheme(),
   // textTheme: textTheme(),
 );
 
@@ -15,9 +15,31 @@ final ThemeData themeDataDark = ThemeData(
   scaffoldBackgroundColor: Colors.black87,
   // inputDecorationTheme: inputDecorationDarkTheme(),
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  // appBarTheme: appBarDarkTheme(),
+  appBarTheme: appBarDarkTheme(),
   // textTheme: textThemeDark(),
 );
+
+AppBarTheme appBarTheme() {
+  return const AppBarTheme(
+    color: Colors.white,
+    elevation: 0,
+    iconTheme: IconThemeData(color: Colors.black),
+    titleTextStyle: pageNameStyle,
+  );
+}
+
+AppBarTheme appBarDarkTheme() {
+  return const AppBarTheme(
+    color: Colors.black87,
+    elevation: 0,
+    iconTheme: IconThemeData(color: Colors.white),
+    titleTextStyle: pageNameStyle,
+  );
+}
+const TextStyle pageNameStyle = TextStyle(
+    color: Color(0xff248EEF),
+    // fontSize: textSizePageName,
+    fontWeight: FontWeight.bold);
 
 class ThemeProfile extends ChangeNotifier {
   final SharedPreference _prefHelper = SharedPreference.instance;

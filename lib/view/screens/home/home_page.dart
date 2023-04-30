@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
             height: 20,
           ),
           Container(
-            height: 250,
+            height: 260,
             width: double.infinity,
             child:
                 Consumer<CourseProvider>(builder: (context, courseProvider, _) {

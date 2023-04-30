@@ -56,4 +56,13 @@ class AuthenticationApi {
     );
     return response;
   }
+
+  Future<dynamic> fogotPassword(String email) async {
+    final response = await _restClient.post(Endpoints.forgotPassword, headers: {
+      'Content-Type': 'application/json',
+    }, body: {
+      'email': email,
+    });
+    return response;
+  }
 }

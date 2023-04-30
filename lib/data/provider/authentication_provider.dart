@@ -201,4 +201,12 @@ class AuthenticationProvider extends ChangeNotifier {
     }
     return false;
   }
+
+  Future<bool> fogotPassword(String email) async {
+    final result = await _authApi.fogotPassword(email);
+    if (result['message'] == "Email send success!") {
+      return true;
+    }
+    return false;
+  }
 }

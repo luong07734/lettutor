@@ -25,7 +25,8 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
     print("minutes ${minutes}");
     int hours = minutes ~/ 60;
     int remainingMinutes = minutes % 60;
-    return "Total lesson time is $hours hours $remainingMinutes minutes";
+    return AppLocalizations.of(context)!
+        .totalLessonTime(hours, remainingMinutes);
   }
 
   @override
@@ -42,7 +43,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
         mainAxisAlignment: MainAxisAlignment.center, // canh giữa các phần tử
         children: [
           Text(
-            "Upcoming lesson",
+            AppLocalizations.of(context)!.upcomingLesson,
             style: TextStyle(
               color: Colors.white,
               fontSize: 24.0,
@@ -85,7 +86,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
                   fontSize: 16,
                 ),
               ),
-              child: Text("Enter lesson room"),
+              child: Text(AppLocalizations.of(context)!.enterLessonRoom),
             ),
           ),
 

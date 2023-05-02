@@ -5,8 +5,7 @@ import 'package:lettutor/data/shared_preference/constants/shared_preference_keys
 import 'package:lettutor/view/screens/chat/components/custom_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -50,7 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _isToggleOn = autoTTSProfile.autoTTS;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(AppLocalizations.of(context)!.chatSettings),
         centerTitle: true,
       ),
       body: Padding(
@@ -75,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: 20,
                       ),
                       Text(
-                        'Auto TTS Replies',
+                        AppLocalizations.of(context)!.autoTTS,
                         style: TextStyle(fontSize: 16.0),
                       ),
                     ],
@@ -113,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: 20,
                       ),
                       Text(
-                        'Speech Language',
+                        AppLocalizations.of(context)!.speechLanguage,
                         style: TextStyle(
                           fontSize: 16.0,
                         ),
@@ -167,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   elevation: 10,
                 ),
                 child: Text(
-                  'Delete all messages',
+                  AppLocalizations.of(context)!.deleteAllMessages,
                   style: TextStyle(color: Colors.white),
                 ),
               ),

@@ -37,10 +37,10 @@ class _SigninFormState extends State<SigninForm> {
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your email';
+                  return AppLocalizations.of(context)!.pleaseEnterEmail;
                 } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                     .hasMatch(value)) {
-                  return 'Please enter a valid email address';
+                  return AppLocalizations.of(context)!.emailValid;
                 }
                 return null;
               },
@@ -48,7 +48,7 @@ class _SigninFormState extends State<SigninForm> {
                 _email = value;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: AppLocalizations.of(context)!.enterEmail,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -61,9 +61,9 @@ class _SigninFormState extends State<SigninForm> {
               obscureText: !_passwordVisible,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your password';
+                  return AppLocalizations.of(context)!.pleaseEnterPassword;
                 } else if (value.length < 6) {
-                  return 'Password must be at least 6 characters long';
+                  return AppLocalizations.of(context)!.passwordLength;
                 }
                 return null;
               },
@@ -71,7 +71,7 @@ class _SigninFormState extends State<SigninForm> {
                 _password = value;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your password',
+                hintText: AppLocalizations.of(context)!.enterPassword,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

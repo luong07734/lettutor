@@ -7,7 +7,6 @@ import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
-
 // TODO: add provider for favorite tutor
 class FavoriteTutorsPage extends StatefulWidget {
   const FavoriteTutorsPage({super.key});

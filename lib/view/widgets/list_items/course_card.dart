@@ -60,9 +60,9 @@ class CourseCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   course.description!,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                  ),
+                  // style: const TextStyle(
+                  //   color: Colors.black87,
+                  // ),
                   maxLines: 2,
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,

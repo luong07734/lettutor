@@ -5,11 +5,9 @@ import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/home/components/upcoming_lessson.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
-import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
-import '../../../constants/fake_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,6 +30,14 @@ class _HomePageState extends State<HomePage> {
     context.read<ScheduleProvider>().reset();
     context.read<ScheduleProvider>().loadScheduleData();
     context.read<ScheduleProvider>().loadTotalStudyTime();
+  }
+
+  String formatLessonTime(int minutes) {
+    print("minutes ${minutes}");
+    int hours = minutes ~/ 60;
+    int remainingMinutes = minutes % 60;
+    return AppLocalizations.of(context)!
+        .totalLessonTime(hours, remainingMinutes);
   }
 
   @override
@@ -81,6 +87,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           child: Text(AppLocalizations.of(context)!.bookLesson),
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Text(
+                        formatLessonTime(Provider.of<ScheduleProvider>(context)
+                            .totalStudyTime),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -177,7 +193,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recommend courses",
+                  AppLocalizations.of(context)!.recommendCourses,
                   style: TextStyle(
                     fontWeight: FontWeight.bold, // Chữ in đậm
                     fontSize: 16.0, // Cỡ chữ 16

@@ -40,15 +40,15 @@ class _SignupFormState extends State<SignupForm> {
               controller: _emailController,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your email';
+                  return AppLocalizations.of(context)!.pleaseEnterEmail;
                 } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                     .hasMatch(value)) {
-                  return 'Please enter a valid email address';
+                  return AppLocalizations.of(context)!.emailValid;
                 }
                 return null;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: AppLocalizations.of(context)!.enterEmail,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -61,15 +61,15 @@ class _SignupFormState extends State<SignupForm> {
               obscureText: !_passwordVisible,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your password';
+                  return AppLocalizations.of(context)!.pleaseEnterPassword;
                 } else if (value.length < 6) {
-                  return 'Password must be at least 6 characters long';
+                  return AppLocalizations.of(context)!.passwordLength;
                 }
                 return null;
               },
               controller: _passwordController,
               decoration: InputDecoration(
-                hintText: 'Enter your password',
+                hintText: AppLocalizations.of(context)!.enterPassword,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -92,13 +92,13 @@ class _SignupFormState extends State<SignupForm> {
               obscureText: !_confirmPasswordVisible,
               validator: (value) {
                 if (value != _passwordController.text) {
-                  return 'Passwords do not match';
+                  return AppLocalizations.of(context)!.passwordNotMatch;
                 }
                 return null;
               },
               controller: _confirmPasswordController,
               decoration: InputDecoration(
-                hintText: 'Confirm your password',
+                hintText: AppLocalizations.of(context)!.confirmYourPassword,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

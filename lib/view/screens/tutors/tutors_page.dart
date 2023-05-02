@@ -5,6 +5,7 @@ import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class TutorsPage extends StatefulWidget {
   // static String routeName = "/tutors";
@@ -19,11 +20,7 @@ class _TutorsPageState extends State<TutorsPage> {
   final TextEditingController _textEditingController = TextEditingController();
   final _searchController = TextEditingController(); // Add this line
   // String _searchQuery = '';
-  final List<String> _searchOptions = [
-    'All',
-    'Vietnamese Tutors',
-    'Foreign Tutors',
-  ];
+
   String _selectedSearchOption = 'All';
 
   // handle load data
@@ -84,7 +81,8 @@ class _TutorsPageState extends State<TutorsPage> {
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
-                hintText: "Search tutors in ${_selectedSearchOption}",
+                hintText: AppLocalizations.of(context)!.searchTutorsIn +
+                    (_selectedSearchOption),
                 prefixIcon: const Icon(Icons.search),
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -98,7 +96,11 @@ class _TutorsPageState extends State<TutorsPage> {
                       context: context,
                       position:
                           const RelativeRect.fromLTRB(1000.0, 0, 0.0, 1000.0),
-                      items: _searchOptions.map((option) {
+                      items: [
+                        AppLocalizations.of(context)!.all,
+                        AppLocalizations.of(context)!.vnTutors,
+                        AppLocalizations.of(context)!.foreignTutors,
+                      ].map((option) {
                         return PopupMenuItem(
                           value: option,
                           child: Text(option),
@@ -110,9 +112,11 @@ class _TutorsPageState extends State<TutorsPage> {
                       setState(() {
                         _selectedSearchOption = selectedOption;
                         print(selectedOption);
-                        if (selectedOption == "Vietnamese Tutors") {
+                        if (selectedOption ==
+                            AppLocalizations.of(context)!.vnTutors) {
                           context.read<TutorProvider>().setIsVietnamese(true);
-                        } else if (selectedOption == "Foreign Tutors") {
+                        } else if (selectedOption ==
+                            AppLocalizations.of(context)!.foreignTutors) {
                           context.read<TutorProvider>().setIsVietnamese(false);
                         } else {
                           context.read<TutorProvider>().setIsVietnamese(null);
@@ -162,63 +166,62 @@ class _TutorsPageState extends State<TutorsPage> {
         Flexible(
           flex: 10,
           child: Consumer<TutorProvider>(builder: (context, tutorProvider, _) {
-            if (tutorProvider.tutors.isEmpty) {
+            if (tutorProvider.tutors.isEmpty && !tutorProvider.isLoading) {
+              // show "No Schedule" message
+              return Center(child: Text("No tutors found"));
+            } else if (tutorProvider.isLoading) {
               // show loading indicator while data is being fetched
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             } else {
-              return tutorProvider.tutors.length == 0
-                  ? Center(child: Text("No result"))
-                  : ListView.builder(
-                      controller: _scrollController,
-                      itemCount: tutorProvider.tutors.length +
-                          ((tutorProvider.hasMoreItems &&
-                                  tutorProvider.tutors.length >= 3)
-                              ? 1
-                              : 0),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < tutorProvider.tutors.length) {
-                          final tutor = tutorProvider.tutors[index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.1), // Màu bóng đổ
-                                  spreadRadius: 1, // Bán kính của bóng đổ
-                                  blurRadius: 1, // Độ mờ của bóng đổ
-                                  offset: const Offset(
-                                      0, 1), // Độ dịch chuyển của bóng đổ
-                                ),
-                              ],
-                            ),
-                            // child: TeacherCard(index, context, tutor),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, Routers.TeacherDetail,
-                                    arguments: {
-                                      'tutor': tutor,
-                                    });
-                              },
-                              child: TutorCard(
-                                tutor: tutor,
-                                isFavorite: tutorProvider.isFavorite(tutor),
-                              ),
-                            ),
-                          );
-                        } else {
-                          // show loading indicator at end of list
-                          if (tutorProvider.hasMoreItems) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }
-                      },
+              return ListView.builder(
+                controller: _scrollController,
+                itemCount: tutorProvider.tutors.length +
+                    ((tutorProvider.hasMoreItems &&
+                            tutorProvider.tutors.length >= 3)
+                        ? 1
+                        : 0),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index < tutorProvider.tutors.length) {
+                    final tutor = tutorProvider.tutors[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                            spreadRadius: 1, // Bán kính của bóng đổ
+                            blurRadius: 1, // Độ mờ của bóng đổ
+                            offset: const Offset(
+                                0, 1), // Độ dịch chuyển của bóng đổ
+                          ),
+                        ],
+                      ),
+                      // child: TeacherCard(index, context, tutor),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routers.TeacherDetail,
+                              arguments: {
+                                'tutor': tutor,
+                              });
+                        },
+                        child: TutorCard(
+                          tutor: tutor,
+                          isFavorite: tutorProvider.isFavorite(tutor),
+                        ),
+                      ),
                     );
+                  } else {
+                    // show loading indicator at end of list
+                    if (tutorProvider.hasMoreItems) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }
+                },
+              );
             }
           }),
         )

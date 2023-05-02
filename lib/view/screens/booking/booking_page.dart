@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/data/network/apis/schedule/schedule_apis.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
+import 'package:lettutor/main.dart';
 import 'package:lettutor/models/tutor_schedule.dart';
 import 'package:lettutor/view/screens/booking/components/booking_modal.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class BookingPage extends StatefulWidget {
   @override
@@ -36,6 +38,20 @@ class _BookingPageState extends State<BookingPage> {
       });
     });
     return true;
+  }
+
+  BuildContext? _context;
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _context = context;
+    });
+  }
+
+  void dispose() {
+    _context = null;
+    super.dispose();
   }
 
   @override
@@ -89,7 +105,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Booking'),
+        title: Text(AppLocalizations.of(context)!.booking),
       ),
       body: isLoading
           ? Center(
@@ -130,16 +146,24 @@ class _BookingPageState extends State<BookingPage> {
                                   isLoading = false;
                                 });
                                 if (value) {
-                                  ScaffoldMessenger.of(context)
+                                  print("Booking sucessfully!");
+                                  // ScaffoldMessenger.of(context)
+                                  scaffoldMessengerKey.currentState!
                                       .showSnackBar(SnackBar(
-                                    content: Text('Booking sucessfully!'),
+                                    content: Text(
+                                        AppLocalizations.of(_context!)!
+                                            .bookingSuccessfully),
                                     backgroundColor: Colors.green,
                                     duration: Duration(seconds: 2),
                                   ));
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  print("Booking failed!");
+                                  scaffoldMessengerKey.currentState!
+                                      .showSnackBar(
                                     SnackBar(
-                                      content: Text('Booking failed!'),
+                                      content: Text(
+                                          AppLocalizations.of(_context!)!
+                                              .bookingFailed),
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 2),
                                     ),

@@ -285,7 +285,6 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                     child: Text(
                       tutorRowItem!.bio!,
                       style: TextStyle(
-                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
                       ),

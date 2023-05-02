@@ -17,6 +17,9 @@ class TutorProvider extends ChangeNotifier {
   List<String> _specialities = [];
   String keySearch = "";
   bool? _isVietnamese;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   //schedule
 
   List<ScheduleOfTutor> _teacherSchedule = [];
@@ -44,7 +47,7 @@ class TutorProvider extends ChangeNotifier {
 
   void loadTutorsInPage({int page = 1}) {
     _page = page;
-
+    _isLoading = true;
     _tutorApis.getTutorList(page).then((tutors) {
       print("getting...");
       int oldLength = _tutors.length;
@@ -66,6 +69,7 @@ class TutorProvider extends ChangeNotifier {
           _hasMoreItems = false;
         }
       } else {}
+      _isLoading = false;
       notifyListeners();
     });
   }
@@ -83,6 +87,7 @@ class TutorProvider extends ChangeNotifier {
 
   void search(String value, int page, bool isScrolled) {
     _searchPage = page;
+    _isLoading = true;
     print("searching .....");
     keySearch = value;
     if (value.isEmpty && _specialities.isEmpty && _isVietnamese == null) {
@@ -125,7 +130,7 @@ class TutorProvider extends ChangeNotifier {
       } else {
         _hasMoreItems = false;
       }
-
+      _isLoading = false;
       notifyListeners();
     });
   }

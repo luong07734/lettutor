@@ -3,6 +3,7 @@ import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/data/provider/history_provider.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -47,7 +48,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History'),
+        title: Text(AppLocalizations.of(context)!.scheduleHistory),
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -62,10 +63,10 @@ class _HistoryPageState extends State<HistoryPage> {
                 height: 100,
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Text(
-                "History",
+                AppLocalizations.of(context)!.scheduleHistory,
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
@@ -75,10 +76,10 @@ class _HistoryPageState extends State<HistoryPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Container(
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: Text(
-                    "The following is a list of lessons you have attended. \nYou can review the details of the lessens youu have attended.",
+                    AppLocalizations.of(context)!.historyDescription,
                     textAlign: TextAlign.start,
                   ),
                 ),

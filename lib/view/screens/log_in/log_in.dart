@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
         Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

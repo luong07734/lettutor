@@ -28,7 +28,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Colors.grey[300],
+          color: Colors.grey[500],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,8 +100,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
                                   .difference(DateTime.now())
                                   .inHours >
                               2) {
-                            scheduleProvider.cancelSchedule(
-                                widget.schedule.id!);
+                            scheduleProvider
+                                .cancelSchedule(widget.schedule.id!);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("Cancel sucesssfully"),
                             ));
@@ -130,11 +130,11 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             widget.isHistoryCard
                 ? Card(
                     child: ListTile(
-                      title: Text("No review from tutors "),
+                      title: Text(AppLocalizations.of(context)!.noReview),
                     ),
                   )
                 : ElevatedButton(

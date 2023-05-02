@@ -173,8 +173,8 @@ class _HomeDrawerAndNavigationBarState
       ),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
+          // backgroundColor: Colors.white,
+          elevation: 3,
           leading: IconButton(
             color: ColorsManager.primaryColor,
             onPressed: _handleMenuButtonPressed,

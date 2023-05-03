@@ -29,7 +29,7 @@ class CourseCard extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                 ),
-                height: 114,
+                height: 92,
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

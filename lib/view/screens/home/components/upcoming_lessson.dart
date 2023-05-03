@@ -95,7 +95,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
             formatLessonTime(widget.totalStudyTime),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16.0,
+              fontSize: 12.0,
               // fontWeight: FontWeight.bold,
             ),
           ),

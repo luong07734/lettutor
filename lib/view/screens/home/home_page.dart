@@ -63,12 +63,15 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment:
                         MainAxisAlignment.center, // canh giữa các phần tử
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.welcome,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          AppLocalizations.of(context)!.welcome,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -96,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                             .totalStudyTime),
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: 12.0,
                           // fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -149,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     final tutor = tutorProvider.tutors[index];
                     return Container(
-                      width: 380,
+                      width: 382,
                       height: 250,
                       decoration: BoxDecoration(
                         boxShadow: [

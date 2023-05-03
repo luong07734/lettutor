@@ -76,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Text(
                         AppLocalizations.of(context)!.autoTTS,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 12.0),
                       ),
                     ],
                   ),
@@ -115,7 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         AppLocalizations.of(context)!.speechLanguage,
                         style: TextStyle(
-                          fontSize: 16.0,
+                          fontSize: 12.0,
                         ),
                       ),
                     ],
@@ -142,7 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: value,
                         child: Text(
                           value,
-                          style: TextStyle(fontSize: 16.0),
+                          style: TextStyle(fontSize: 12.0),
                         ),
                       );
                     }).toList(),

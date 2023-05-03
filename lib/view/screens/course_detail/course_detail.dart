@@ -22,15 +22,6 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   int _selectedIndex = -1;
   CousreRowItem? course;
 
-  final List<String> _titles = [
-    '1. Food You Love',
-    '2. Your Job',
-    '3. Playing and Watching Sports',
-    '4. The Best Pets',
-    '5. Having Fun in Your Freetime',
-  ];
-  // final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -48,7 +39,11 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   Widget build(BuildContext context) {
     return Stack(children: [
       Scaffold(
-        appBar: AppBar(title: const Text('Course Detail')),
+        appBar: AppBar(
+          elevation: 3,
+          title: Text(AppLocalizations.of(context)!.courseDetail),
+          centerTitle: true,
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,14 +236,6 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                               'index': index,
                               'title': 'PDF VIEW',
                             });
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const CourseTopicPDFViewer(
-                        //         url:
-                        //             "https://www.nasa.gov/sites/default/files/atoms/files/journey-to-mars-next-steps-20151008_508.pdf",
-                        //         title: "PDF VIEW"),
-                        //   ),
-                        // );
                       },
                       onHover: (value) {
                         setState(() {
@@ -260,15 +247,15 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                         });
                       },
                       child: Container(
-                        color: _selectedIndex == index ? Colors.grey : null,
+                        // color: _selectedIndex == index ? Colors.grey : null,
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
                             course!.topics![index].name!,
                             style: TextStyle(
-                              color: _selectedIndex == index
-                                  ? Colors.white
-                                  : Colors.black,
+                              // color: _selectedIndex == index
+                              //     ? Colors.white
+                              //     : Colors.black,
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),

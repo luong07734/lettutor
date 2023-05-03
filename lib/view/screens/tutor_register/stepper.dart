@@ -91,14 +91,21 @@ class _RegisterStepperState extends State<RegisterStepper> {
     _fullnameController.dispose();
     _doBController.dispose();
     _countryController.dispose();
-    _videoPlayerController!.dispose();
+    if (_videoPlayerController != null) {
+      _videoPlayerController!.dispose();
+    }
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Become a Tutor')),
+      appBar: AppBar(
+        title: const Text('Become a Tutor'),
+        centerTitle: true,
+        elevation: 3,
+      ),
       body: Stepper(
         currentStep: _currentStep,
         onStepTapped: (index) {

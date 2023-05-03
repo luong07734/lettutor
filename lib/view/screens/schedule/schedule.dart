@@ -4,6 +4,7 @@ import 'package:lettutor/data/provider/schedule_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -94,56 +95,71 @@ class _SchedulePageState extends State<SchedulePage> {
             height: 20,
           ),
           Consumer<ScheduleProvider>(builder: (context, scheduleProvider, _) {
-            if (scheduleProvider.schedules.isEmpty) {
+            if (scheduleProvider.schedules.isEmpty &&
+                !scheduleProvider.isLoading) {
+              // show "No Schedule" message
+              return Center(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Image.asset(
+                      AssetsManager.searchNotFoundImage,
+                      width: 160,
+                      height: 160,
+                    ),
+                  ),
+                  ProfileDescription(
+                      text: AppLocalizations.of(context)!.noSchedule),
+                ],
+              ));
+            } else if (scheduleProvider.isLoading) {
               // show loading indicator while data is being fetched
               return Center(child: CircularProgressIndicator());
             } else {
-              return scheduleProvider.schedules.length == 0
-                  ? Center(child: Text("No Schedule"))
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      // controller: _scrollController,
-                      itemCount: scheduleProvider.schedules.length +
-                          ((scheduleProvider.hasMoreItems &&
-                                  scheduleProvider.schedules.length >= 3)
-                              ? 1
-                              : 0),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < scheduleProvider.schedules.length) {
-                          final schedule = scheduleProvider.schedules[index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.1), // Màu bóng đổ
-                                  spreadRadius: 1, // Bán kính của bóng đổ
-                                  blurRadius: 1, // Độ mờ của bóng đổ
-                                  offset: const Offset(
-                                      0, 1), // Độ dịch chuyển của bóng đổ
-                                ),
-                              ],
-                            ),
-                            // child: TeacherCard(index, context, tutor),
-                            child: ScheduleCard(
-                              schedule: schedule,
-                              isHistoryCard: false,
-                            ),
-                          );
-                        } else {
-                          // show loading indicator at end of list
-                          if (scheduleProvider.hasMoreItems) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }
-                      },
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                // controller: _scrollController,
+                itemCount: scheduleProvider.schedules.length +
+                    ((scheduleProvider.hasMoreItems &&
+                            scheduleProvider.schedules.length >= 3)
+                        ? 1
+                        : 0),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index < scheduleProvider.schedules.length) {
+                    final schedule = scheduleProvider.schedules[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                            spreadRadius: 1, // Bán kính của bóng đổ
+                            blurRadius: 1, // Độ mờ của bóng đổ
+                            offset: const Offset(
+                                0, 1), // Độ dịch chuyển của bóng đổ
+                          ),
+                        ],
+                      ),
+                      // child: TeacherCard(index, context, tutor),
+                      child: ScheduleCard(
+                        schedule: schedule,
+                        isHistoryCard: false,
+                      ),
                     );
+                  } else {
+                    // show loading indicator at end of list
+                    if (scheduleProvider.hasMoreItems) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }
+                },
+              );
             }
           }),
         ],

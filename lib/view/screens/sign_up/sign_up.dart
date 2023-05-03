@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/sign_up/components/sign_up_form.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/widgets/view_items/texts/profile_title.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
   static String routeName = "/sign_up";
@@ -19,9 +22,11 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -87,7 +92,20 @@ class SignUpPage extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // TODO: handle Facebook sign up
+                        authProvider.signInWithGoogle().then((value) {
+                          if (value) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Routers.Home,
+                            );
+                            // initData();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Login failed",
+                                toastLength: Toast.LENGTH_LONG,
+                                timeInSecForIosWeb: 2);
+                          }
+                        });
                       },
                       icon: const Icon(FontAwesomeIcons.facebook, size: 25.0),
                     ),
@@ -114,7 +132,7 @@ class SignUpPage extends StatelessWidget {
                       onTap: (() {
                         Navigator.pushNamed(context, Routers.LogIn);
                       }),
-                      child:  Text(
+                      child: Text(
                         AppLocalizations.of(context)!.logIn,
                         style: TextStyle(
                           color: Colors.blue,

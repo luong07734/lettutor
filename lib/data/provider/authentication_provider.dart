@@ -7,6 +7,7 @@ import 'package:lettutor/data/network/apis/authentication/authentication_apis.da
 import 'package:lettutor/data/network/apis/users/user_apis.dart';
 import 'package:lettutor/data/shared_preference/shared_preference.dart';
 import 'package:lettutor/models/user.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final AuthenticationApi _authApi = AuthenticationApi();
@@ -44,24 +45,30 @@ class AuthenticationProvider extends ChangeNotifier {
     prefs.saveRefreshToken(refreshToken);
   }
 
-  Future<bool> signUp(String email, String password) async {
+  Future<int> signUp(String email, String password) async {
     print("signUP authentication provider");
     final result = await _authApi.register(email, password);
+    if (result["message"] == "Email has already taken") {
+      return 2;
+    }
     if (result['user'] != null) {
       emailSave = email;
       passwordSave = password;
       currentLoggedUser = UserProfile.fromJson(result['user']);
       tempCurrentUser = UserProfile.fromJson(result['user']);
       notifyListeners();
-      return true;
+      return 1;
     }
-    return false;
+    return 0;
   }
 
-  Future<bool> logIn(String email, String password) async {
+  Future<int> logIn(String email, String password) async {
     final result = await _authApi.logIn(email, password);
     if (result["message"] == "Your account has not activated") {
-      return false;
+      return 2;
+    }
+    if (result["message"] == "Incorrect email or password") {
+      return 3;
     }
     if (result['user'] != null) {
       currentLoggedUser = UserProfile.fromJson(result["user"]);
@@ -73,9 +80,9 @@ class AuthenticationProvider extends ChangeNotifier {
       saveAccessTokenAndRefreshToken(result['tokens']!);
       // saveAccount(email, password);
 
-      return true;
+      return 1;
     }
-    return false;
+    return 0;
   }
 
   void updateProfile(BuildContext context) {
@@ -84,21 +91,26 @@ class AuthenticationProvider extends ChangeNotifier {
       _userApi.updateAvatar(avatarImage!).then((outterValue) {
         _userApi.updateUserInformation(tempCurrentUser!).then((value) {
           if (value["user"] != null) {
+            print("update success");
             currentLoggedUser = UserProfile.fromJson(value["user"]);
             tempCurrentUser = UserProfile.fromJson(value["user"]);
 
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Profile updated successfully!'),
+              content: Center(
+                  child:
+                      Text(AppLocalizations.of(context)!.updateProfileSuccess)),
               backgroundColor: Colors.green,
               duration: Duration(seconds: 2),
             ));
 
             // analyticsUpdate("update_profile", true);
           } else {
-            print("not success");
+            print("update not success");
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Profile update failed!'),
+                content: Center(
+                    child: Text(
+                        AppLocalizations.of(context)!.updateProfileFailed)),
                 backgroundColor: Colors.red,
                 duration: Duration(seconds: 2),
               ),
@@ -158,7 +170,6 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<bool> signInWithGoogle() async {
     print("google sign in");
     GoogleSignIn googleSignIn = GoogleSignIn();
-
     final googleUser = await googleSignIn.signIn();
     if (googleUser == null) return false;
 
@@ -177,8 +188,12 @@ class AuthenticationProvider extends ChangeNotifier {
     return false;
   }
 
-  void signOut() async {
+  Future<void> signOut() async {
+    // if (await googleSignIn.isSignedIn()) {
+    print("dang xuat google");
     await GoogleSignIn().disconnect();
+    // }
+
     // await googleSignIn.disconnect();
   }
 
@@ -197,6 +212,14 @@ class AuthenticationProvider extends ChangeNotifier {
       tempCurrentUser = UserProfile.fromJson(result["user"]);
       prefs.saveCurrentLoggedUser(currentLoggedUser!);
       saveAccessTokenAndRefreshToken(result['tokens']!);
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> fogotPassword(String email) async {
+    final result = await _authApi.fogotPassword(email);
+    if (result['message'] == "Email send success!") {
       return true;
     }
     return false;

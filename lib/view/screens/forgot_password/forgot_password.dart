@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/view_items/buttons/custom_button.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/view_items/textfields/custom_textfield.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   static String routeName = "/forgot_password";
@@ -15,9 +18,11 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider authProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -67,8 +72,34 @@ class ForgotPasswordPage extends StatelessWidget {
               // sign in button
               CustomButton(
                   onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Routers.LogIn, (route) => false);
+                    authProvider
+                        .fogotPassword(emailController.text)
+                        .then((value) {
+                      if (value) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Center(
+                              child: Text(AppLocalizations.of(context)!
+                                  .resetPasswordSuccess)),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                        ));
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, Routers.LogIn, (route) => false);
+
+                        print("reset password thanh cong");
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Center(
+                                child: Text(AppLocalizations.of(context)!
+                                    .resetPasswordFailed)),
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        print("reset password that bai");
+                      }
+                    });
                   },
                   text: AppLocalizations.of(context)!.sendResetLink),
             ],

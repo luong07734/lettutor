@@ -65,11 +65,53 @@ class SharedPreference {
     if (_sharedPreference.getString(SharedPreferenceKeys.currentLoggedUser) ==
         null) {
       return null;
+    } else {
+      return UserProfile.fromJson(jsonDecode(_sharedPreference
+          .getString(SharedPreferenceKeys.currentLoggedUser)!));
     }
-    else{
-    return UserProfile.fromJson(jsonDecode(
-        _sharedPreference.getString(SharedPreferenceKeys.currentLoggedUser)!));
-    }
+  }
 
+  Future<String?> get currentLanguage async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference
+        .getString(SharedPreferenceKeys.currentLanguage);
+  }
+
+  Future<bool> saveCurrentLanguage(String currentLanguage) async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.setString(
+        SharedPreferenceKeys.currentLanguage, currentLanguage);
+  }
+
+  Future<String?> get currentSpeechLanguage async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference
+        .getString(SharedPreferenceKeys.currentSpeechLanguage);
+  }
+
+  Future<bool> saveCurrentSpeechLanguage(String currentSpeechLanguage) async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.setString(
+        SharedPreferenceKeys.currentSpeechLanguage, currentSpeechLanguage);
+  }
+
+  Future<bool?> get isAutoTTS async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.getBool(SharedPreferenceKeys.isAutoTTS);
+  }
+
+  Future<bool> saveIsAutoTTS(bool isAutoTTS) async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.setBool(SharedPreferenceKeys.isAutoTTS, isAutoTTS);
+  }
+
+  Future<bool?> get isDark async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.getBool(SharedPreferenceKeys.isDark);
+  }
+
+  Future<bool> saveIsDark(bool isDark) async {
+    SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
+    return _sharedPreference.setBool(SharedPreferenceKeys.isDark, isDark);
   }
 }

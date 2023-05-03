@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class BookingModal extends StatefulWidget {
   final String bookingTime;
@@ -29,7 +30,7 @@ class _BookingModalState extends State<BookingModal> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Booking time',
+              AppLocalizations.of(context)!.bookingTime,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -45,7 +46,7 @@ class _BookingModalState extends State<BookingModal> {
             ),
             SizedBox(height: 16),
             Text(
-              'Notes',
+              AppLocalizations.of(context)!.notes,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -64,7 +65,7 @@ class _BookingModalState extends State<BookingModal> {
               child: TextFormField(
                 controller: _notesController,
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Enter notes',
+                  hintText: AppLocalizations.of(context)!.enterNotes,
                 ),
                 maxLines: null,
               ),
@@ -77,14 +78,14 @@ class _BookingModalState extends State<BookingModal> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     widget.onBook(_notesController.text);
                     Navigator.pop(context);
                   },
-                  child: Text('Book'),
+                  child: Text(AppLocalizations.of(context)!.book),
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/view/screens/settings/components/language_dropdown_button.dart';
 import 'package:lettutor/view/screens/settings/components/settings_button.dart';
 import 'package:lettutor/view/screens/settings/components/theme_dropdown_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 List<Map<String, dynamic>> _languageOptions = [
   {
@@ -27,7 +28,11 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Settings')),
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.settings),
+          centerTitle: true,
+          elevation: 3,
+        ),
         body: Column(
           children: [
             SettingsButton(
@@ -37,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: const Icon(
                   Icons.language_rounded,
                 ),
-                title: "Language",
+                title: AppLocalizations.of(context)!.languageSetting,
                 child: const SettingLanguageDropdownButton()),
             SettingsButton(
                 onPress: () {
@@ -46,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: const Icon(
                   Icons.light_sharp,
                 ),
-                title: "Theme",
+                title: AppLocalizations.of(context)!.theme,
                 child: const SettingThemeDropdownButton()),
           ],
         ));

@@ -32,25 +32,6 @@ class _SignupFormState extends State<SignupForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const SizedBox(height: 16),
-            // Text(AppLocalizations.of(context)!.username,
-            //     style: TextStyle(fontSize: 16)),
-            // TextFormField(
-            //   controller: _userNameController,
-            //   keyboardType: TextInputType.name,
-            //   validator: (value) {
-            //     if (value!.isEmpty) {
-            //       return 'Please enter your user name';
-            //     }
-            //     return null;
-            //   },
-            //   decoration: InputDecoration(
-            //     hintText: 'Enter your user name',
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //   ),
-            // ),
             const SizedBox(height: 16),
             Text(AppLocalizations.of(context)!.email,
                 style: TextStyle(fontSize: 16)),
@@ -59,12 +40,15 @@ class _SignupFormState extends State<SignupForm> {
               controller: _emailController,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your email';
+                  return AppLocalizations.of(context)!.pleaseEnterEmail;
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return AppLocalizations.of(context)!.emailValid;
                 }
                 return null;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: AppLocalizations.of(context)!.enterEmail,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -77,13 +61,15 @@ class _SignupFormState extends State<SignupForm> {
               obscureText: !_passwordVisible,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your password';
+                  return AppLocalizations.of(context)!.pleaseEnterPassword;
+                } else if (value.length < 6) {
+                  return AppLocalizations.of(context)!.passwordLength;
                 }
                 return null;
               },
               controller: _passwordController,
               decoration: InputDecoration(
-                hintText: 'Enter your password',
+                hintText: AppLocalizations.of(context)!.enterPassword,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -106,13 +92,13 @@ class _SignupFormState extends State<SignupForm> {
               obscureText: !_confirmPasswordVisible,
               validator: (value) {
                 if (value != _passwordController.text) {
-                  return 'Passwords do not match';
+                  return AppLocalizations.of(context)!.passwordNotMatch;
                 }
                 return null;
               },
               controller: _confirmPasswordController,
               decoration: InputDecoration(
-                hintText: 'Confirm your password',
+                hintText: AppLocalizations.of(context)!.confirmYourPassword,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -155,18 +141,38 @@ class _SignupFormState extends State<SignupForm> {
                           authenticationProvider
                               .signUp(email, password)
                               .then((value) {
-                            if (value) {
+                            if (value == 1) {
                               print(value.toString());
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text("Dang ki thanh cong"),
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .signUpSuccess)),
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
                               ));
                               // Navigator.pop(context);
                               print("dang ki thanh cong");
+                            } else if (value == 2) {
+                              print("bi loi ton tai");
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .signUpFailedEmailTaken)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
                             } else {
-                              // addError(S.current.email_is_already_in_use);
                               print("bi loi");
-                              Text("email has been used");
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .signUpFailed0)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
                             }
                             setState(() {
                               isLoading = false;

@@ -91,10 +91,10 @@ class _TutorCardState extends State<TutorCard> {
                 onPressed: () {
                   setState(() {
                     isFavorite = !isFavorite!;
-
-                   
                   });
-                  context.read<TutorProvider>().updateFavorite(widget.tutor.userId!);
+                  context
+                      .read<TutorProvider>()
+                      .updateFavorite(widget.tutor.userId!);
                 },
                 icon: isFavorite!
                     ? const Icon(Icons.favorite_outlined, color: Colors.red)

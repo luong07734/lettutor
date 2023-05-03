@@ -24,7 +24,7 @@ class RatingWidget extends StatelessWidget {
                     ? Colors.yellow[600]
                     : Colors.grey[300]),
           ),
-        const SizedBox(width: 8.0),
+        const SizedBox(width: 4.0),
         Text(text),
       ],
     );

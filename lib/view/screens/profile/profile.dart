@@ -9,10 +9,10 @@ import 'package:lettutor/models/user.dart';
 import 'package:lettutor/view/widgets/view_items/textfields/country_picker_textfield.dart';
 import 'package:lettutor/view/widgets/view_items/textfields/date_picker_textfield.dart';
 import 'package:lettutor/view/widgets/view_items/textfields/form_textfield.dart';
-// import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:lettutor/constants/level_options.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -42,8 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _testPreps = testPreperations.map((e) => e!.name).toList();
   List<String> _selectedTestPreps = [];
 
-  // late AuthenticationProvider profile;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -57,25 +55,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadUser();
     });
-    // profile = context.watch<AuthenticationProvider>();
-
-    // profile.loadUser();
-    // _fullNameController.text = profile.currentLoggedUser!.name!;
-    // _phoneNumberController.text = profile.currentLoggedUser!.phone!;
-    // _birthdayController.text = profile.currentLoggedUser!.birthday == null
-    //     ? ""
-    //     : profile.currentLoggedUser!.birthday!.toString();
-    // _countryController.text = profile.currentLoggedUser!.country == null
-    //     ? ""
-    //     : profile.currentLoggedUser!.country!;
-
-    // _selectedOption = profile.currentLoggedUser!.level == null
-    //     ? "BEGINNER"
-    //     : profile.currentLoggedUser!.level;
-
-    // _selectedTopics = profile.currentLoggedUser!.testPreparations == null
-    //     ? []
-    //     : profile.currentLoggedUser!.testPreparations!;
   }
 
   _loadUser() async {
@@ -131,7 +110,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // initTopics = _selectedTopics;
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: Text(AppLocalizations.of(context)!.profile),
+          centerTitle: true,
+          elevation: 3,
         ),
         body: SingleChildScrollView(
           child:
@@ -142,22 +123,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Form(
               key: _formKey,
               child: Container(
-                color: Colors.grey[200], // set background color here
+                // color: Colors.grey[200], // set background color here
                 padding: EdgeInsets.all(16.0),
                 child: Container(
                   margin: EdgeInsets.all(16.0),
                   padding: EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    // color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.grey.withOpacity(0.5),
+                    //     spreadRadius: 3,
+                    //     blurRadius: 7,
+                    //     offset: Offset(0, 3), // changes position of shadow
+                    //   ),
+                    // ],
                   ),
                   child: Column(
                     children: [
@@ -222,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 16),
                       FormTextField(
-                        title: "Full name",
+                        title: AppLocalizations.of(context)!.name,
                         icon: Icons.person,
                         controller: _fullNameController,
                         hint: "Enter your full name",
@@ -230,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 16),
                       FormTextField(
-                        title: "Phone Number",
+                        title: AppLocalizations.of(context)!.phoneNumber,
                         icon: Icons.phone,
                         controller: _phoneNumberController,
                         hint: "Enter your Phone Number",
@@ -238,13 +219,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 16),
                       DatePickerFormField(
-                        title: 'Date of Birth',
+                        title: AppLocalizations.of(context)!.birthday,
                         controller: _birthdayController,
                         hint: "Select your birthday",
                       ),
                       const SizedBox(height: 16),
                       FlagTextFormField(
-                        title: "Country",
+                        title: AppLocalizations.of(context)!.country,
                         controller: _countryController,
                         hint: "Select your country",
                       ),
@@ -262,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           // suffixIcon: Icon(Icons.upgrade),
-                          labelText: "Level",
+                          labelText: AppLocalizations.of(context)!.myLevel,
                           // floatingLabelBehavior: Floating LabelBehavior.always,
                         ),
                         value: _selectedOption,
@@ -280,33 +261,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      // FormTextField(
-                      //     title: "Test Practise",
-                      //     icon: Icons.book,
-                      //     controller: _testPracticeController,
-                      //     hint: "Enter your Test Practise"),
-                      // _buildSelectedItems(),
-                      // MultiSelectChipField(
-                      //     items: _testPrepsItems,
-                      //     initialValue: _selectedTopics,
-                      //     title: Text("Test Preperations"),
-                      //     headerColor: Colors.blue.withOpacity(0.5),
-                      //     decoration: BoxDecoration(
-                      //       border: Border.all(color: Colors.blue, width: 1.8),
-                      //     ),
-                      //     selectedChipColor: Colors.blue.withOpacity(0.5),
-                      //     selectedTextStyle: TextStyle(color: Colors.blue[800]),
-                      //     onTap: (values) {
-                      //       _selectedTopics = values;
-                      //     }),
+
                       DropDownMultiSelect(
                         decoration: InputDecoration(
-                          hintText: "Select Your Test Preparation",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           // suffixIcon: Icon(Icons.upgrade),
-                          labelText: "Test Preparation",
+                          labelText:
+                              AppLocalizations.of(context)!.testPreparation,
                           // floatingLabelBehavior: Floating LabelBehavior.always,
                         ),
                         onChanged: (List<String> x) {
@@ -316,7 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         options: _testPreps,
                         selectedValues: _selectedTestPreps,
-                        whenEmpty: 'Select Something',
+                        // whenEmpty: 'Select test preperation',
                       ),
 
                       const SizedBox(height: 16),
@@ -351,7 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             profile.updateProfile(context);
                           }
                         },
-                        child: const Text("Save Changes"),
+                        child: Text(AppLocalizations.of(context)!.saveChanges),
                       ),
                     ],
                   ),

@@ -1,12 +1,13 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/filter.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
-import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class TutorsPage extends StatefulWidget {
   // static String routeName = "/tutors";
@@ -21,15 +22,12 @@ class _TutorsPageState extends State<TutorsPage> {
   final TextEditingController _textEditingController = TextEditingController();
   final _searchController = TextEditingController(); // Add this line
   // String _searchQuery = '';
-  final List<String> _searchOptions = [
-    'Foreign Tutors',
-    'Vietnamese Tutors',
-    'Native English Tutor',
-  ];
-  String _selectedSearchOption = 'Vietnamese Tutors';
+
+  String _selectedSearchOption = 'All';
 
   // handle load data
   final _scrollController = ScrollController();
+  int _selectedIndex = -1;
 
   @override
   void initState() {
@@ -39,6 +37,7 @@ class _TutorsPageState extends State<TutorsPage> {
     // fetch initial teacher data
     context.read<TutorProvider>().reset();
     context.read<TutorProvider>().loadTutorsInPage();
+    // context.read<TutorProvider>().search(" ", 1, false);
 
     // listen to scroll events to detect when user reaches end of list
     _scrollController.addListener(_onScroll);
@@ -85,7 +84,8 @@ class _TutorsPageState extends State<TutorsPage> {
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
-                hintText: "Search Tutors $_selectedSearchOption",
+                hintText: AppLocalizations.of(context)!.searchTutorsIn +
+                    (_selectedSearchOption),
                 prefixIcon: const Icon(Icons.search),
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -99,7 +99,11 @@ class _TutorsPageState extends State<TutorsPage> {
                       context: context,
                       position:
                           const RelativeRect.fromLTRB(1000.0, 0, 0.0, 1000.0),
-                      items: _searchOptions.map((option) {
+                      items: [
+                        AppLocalizations.of(context)!.all,
+                        AppLocalizations.of(context)!.vnTutors,
+                        AppLocalizations.of(context)!.foreignTutors,
+                      ].map((option) {
                         return PopupMenuItem(
                           value: option,
                           child: Text(option),
@@ -110,6 +114,16 @@ class _TutorsPageState extends State<TutorsPage> {
                     if (selectedOption != null) {
                       setState(() {
                         _selectedSearchOption = selectedOption;
+                        print(selectedOption);
+                        if (selectedOption ==
+                            AppLocalizations.of(context)!.vnTutors) {
+                          context.read<TutorProvider>().setIsVietnamese(true);
+                        } else if (selectedOption ==
+                            AppLocalizations.of(context)!.foreignTutors) {
+                          context.read<TutorProvider>().setIsVietnamese(false);
+                        } else {
+                          context.read<TutorProvider>().setIsVietnamese(null);
+                        }
                       });
                     }
                   },
@@ -126,14 +140,27 @@ class _TutorsPageState extends State<TutorsPage> {
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: CustomChip(
-                  label: specialitiesList.values.elementAt(index),
-                  clickable: true,
-                  index: index,
-                  selected: context
-                      .read<TutorProvider>()
-                      .specialities
-                      .contains(specialitiesList.keys.elementAt(index)),
+                child: ChoiceChip(
+                  label: Text(
+                    specialitiesList.values.elementAt(index),
+                    style: TextStyle(
+                      color: _selectedIndex == index ? Colors.white : null,
+                    ),
+                  ),
+                  selected: _selectedIndex == index,
+                  onSelected: (bool selected) {
+                    setState(() {
+                      _selectedIndex = selected ? index : -1;
+                    });
+                    if (selected) {
+                      context.read<TutorProvider>().clearAllSpecs();
+                      context.read<TutorProvider>().addSpec(index);
+                    } else {
+                      context.read<TutorProvider>().clearSpec(index);
+                    }
+                  },
+                  selectedColor: Colors.blue,
+                  // labelStyle: const TextStyle(color: Colors.white)
                 ),
               );
             },
@@ -142,66 +169,75 @@ class _TutorsPageState extends State<TutorsPage> {
         Flexible(
           flex: 10,
           child: Consumer<TutorProvider>(builder: (context, tutorProvider, _) {
-            if (tutorProvider.tutors.isEmpty) {
+            if (tutorProvider.tutors.isEmpty && !tutorProvider.isLoading) {
+              return Center(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Image.asset(
+                      AssetsManager.searchNotFoundImage,
+                      width: 160,
+                      height: 160,
+                    ),
+                  ),
+                  ProfileDescription(
+                      text: AppLocalizations.of(context)!.searchNotFound),
+                ],
+              ));
+            } else if (tutorProvider.isLoading) {
               // show loading indicator while data is being fetched
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             } else {
-              return tutorProvider.tutors.length == 0
-                  ? Center(child: Text("No result"))
-                  : ListView.builder(
-                      controller: _scrollController,
-                      itemCount: tutorProvider.tutors.length +
-                          ((tutorProvider.hasMoreItems &&
-                                  tutorProvider.tutors.length >= 3)
-                              ? 1
-                              : 0),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < tutorProvider.tutors.length) {
-                          final tutor = tutorProvider.tutors[index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.1), // Màu bóng đổ
-                                  spreadRadius: 1, // Bán kính của bóng đổ
-                                  blurRadius: 1, // Độ mờ của bóng đổ
-                                  offset: const Offset(
-                                      0, 1), // Độ dịch chuyển của bóng đổ
-                                ),
-                              ],
-                            ),
-                            // child: TeacherCard(index, context, tutor),
-                            child: GestureDetector(
-                              onTap: () {
-                                {
-                                  Navigator.pushNamed(
-                                      context, Routers.TeacherDetail,
-                                      arguments: {
-                                        'tutor': tutor,
-                                      });
-                                }
-                                ;
-                              },
-                              child: TutorCard(
-                                tutor: tutor,
-                                isFavorite: tutorProvider.isFavorite(tutor),
-                              ),
-                            ),
-                          );
-                        } else {
-                          // show loading indicator at end of list
-                          if (tutorProvider.hasMoreItems) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }
-                      },
+              return ListView.builder(
+                controller: _scrollController,
+                itemCount: tutorProvider.tutors.length +
+                    ((tutorProvider.hasMoreItems &&
+                            tutorProvider.tutors.length >= 3)
+                        ? 1
+                        : 0),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index < tutorProvider.tutors.length) {
+                    final tutor = tutorProvider.tutors[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                            spreadRadius: 1, // Bán kính của bóng đổ
+                            blurRadius: 1, // Độ mờ của bóng đổ
+                            offset: const Offset(
+                                0, 1), // Độ dịch chuyển của bóng đổ
+                          ),
+                        ],
+                      ),
+                      // child: TeacherCard(index, context, tutor),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routers.TeacherDetail,
+                              arguments: {
+                                'tutor': tutor,
+                              });
+                        },
+                        child: TutorCard(
+                          tutor: tutor,
+                          isFavorite: tutorProvider.isFavorite(tutor),
+                        ),
+                      ),
                     );
+                  } else {
+                    // show loading indicator at end of list
+                    if (tutorProvider.hasMoreItems) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }
+                },
+              );
             }
           }),
         )

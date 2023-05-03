@@ -5,11 +5,9 @@ import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/screens/home/components/upcoming_lessson.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
-import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
-import '../../../constants/fake_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,6 +32,14 @@ class _HomePageState extends State<HomePage> {
     context.read<ScheduleProvider>().loadTotalStudyTime();
   }
 
+  String formatLessonTime(int minutes) {
+    print("minutes ${minutes}");
+    int hours = minutes ~/ 60;
+    int remainingMinutes = minutes % 60;
+    return AppLocalizations.of(context)!
+        .totalLessonTime(hours, remainingMinutes);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -46,7 +52,8 @@ class _HomePageState extends State<HomePage> {
                       Provider.of<ScheduleProvider>(context).totalStudyTime,
                 )
               : Container(
-                  color: Colors.blueAccent, // màu nền của container
+                  color:
+                      Theme.of(context).primaryColor, // màu nền của container
                   width: double
                       .infinity, // chiều rộng của container bằng toàn bộ màn hình
                   padding: const EdgeInsets.symmetric(
@@ -56,12 +63,15 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment:
                         MainAxisAlignment.center, // canh giữa các phần tử
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.welcome,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          AppLocalizations.of(context)!.welcome,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -73,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                             widget.moveAtIndex(2);
                           },
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.blue,
+                            foregroundColor: Theme.of(context).primaryColor,
                             backgroundColor: Colors.white,
                             elevation: 4,
                             textStyle: const TextStyle(
@@ -81,6 +91,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           child: Text(AppLocalizations.of(context)!.bookLesson),
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Text(
+                        formatLessonTime(Provider.of<ScheduleProvider>(context)
+                            .totalStudyTime),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -132,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     final tutor = tutorProvider.tutors[index];
                     return Container(
-                      width: 350,
+                      width: 382,
                       height: 250,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -177,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recommend courses",
+                  AppLocalizations.of(context)!.recommendCourses,
                   style: TextStyle(
                     fontWeight: FontWeight.bold, // Chữ in đậm
                     fontSize: 16.0, // Cỡ chữ 16
@@ -200,7 +220,7 @@ class _HomePageState extends State<HomePage> {
             height: 20,
           ),
           Container(
-            height: 250,
+            height: 260,
             width: double.infinity,
             child:
                 Consumer<CourseProvider>(builder: (context, courseProvider, _) {

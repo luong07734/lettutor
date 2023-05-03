@@ -7,7 +7,6 @@ import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 
-
 // TODO: add provider for favorite tutor
 class FavoriteTutorsPage extends StatefulWidget {
   const FavoriteTutorsPage({super.key});
@@ -25,7 +24,11 @@ class _FavoriteTutorsPageState extends State<FavoriteTutorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Favourite Tutors')),
+      appBar: AppBar(
+        title: const Text('Favourite Tutors'),
+        centerTitle: true,
+        elevation: 3,
+      ),
       body: Consumer<TutorProvider>(builder: (context, tutorProvider, _) {
         return tutorProvider.favorites.length == 0
             ? Center(child: Text("No favorite tutors"))
@@ -64,10 +67,12 @@ class _FavoriteTutorsPageState extends State<FavoriteTutorsPage> {
                         }
                         ;
                       },
-                      child: TutorCard(
-                        tutor: tutor!,
-                        isFavorite: tutorProvider.isFavorite(tutor),
-                      ),
+                      child: tutor == null
+                          ? Container()
+                          : TutorCard(
+                              tutor: tutor,
+                              isFavorite: tutorProvider.isFavorite(tutor),
+                            ),
                     ),
                   );
                 },

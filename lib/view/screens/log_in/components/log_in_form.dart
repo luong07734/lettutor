@@ -37,7 +37,10 @@ class _SigninFormState extends State<SigninForm> {
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your email';
+                  return AppLocalizations.of(context)!.pleaseEnterEmail;
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return AppLocalizations.of(context)!.emailValid;
                 }
                 return null;
               },
@@ -45,7 +48,7 @@ class _SigninFormState extends State<SigninForm> {
                 _email = value;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: AppLocalizations.of(context)!.enterEmail,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -58,7 +61,9 @@ class _SigninFormState extends State<SigninForm> {
               obscureText: !_passwordVisible,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your password';
+                  return AppLocalizations.of(context)!.pleaseEnterPassword;
+                } else if (value.length < 6) {
+                  return AppLocalizations.of(context)!.passwordLength;
                 }
                 return null;
               },
@@ -66,7 +71,7 @@ class _SigninFormState extends State<SigninForm> {
                 _password = value;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your password',
+                hintText: AppLocalizations.of(context)!.enterPassword,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -113,16 +118,38 @@ class _SigninFormState extends State<SigninForm> {
                           authenticationProvider
                               .logIn(_email!, _password!)
                               .then((value) {
-                            if (value) {
+                            if (value == 1) {
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           const HomeDrawerAndNavigationBar()),
                                   (Route<dynamic> route) => false);
+                            } else if (value == 2) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .loginFailedNotActivated)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
+                            } else if (value == 3) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .loginFailedNotWrong)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text("Dang nhap that bai"),
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .loginFailed0)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
                               ));
                             }
                             setState(() {

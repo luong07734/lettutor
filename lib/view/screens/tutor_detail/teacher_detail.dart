@@ -5,6 +5,7 @@ import 'package:lettutor/constants/color_manager.dart';
 import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/data/network/apis/tutors/tutor_apis.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
+import 'package:lettutor/main.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/models/tutor_detail.dart';
 import 'package:lettutor/ultilities/routes.dart';
@@ -50,9 +51,19 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
     return true;
   }
 
+  BuildContext? _context;
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _context = context;
+    });
+  }
+
+  @override
+  void dispose() {
+    _context = null;
+    super.dispose();
   }
 
   @override
@@ -102,7 +113,9 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Teacher Detail'),
+        title: Text(AppLocalizations.of(context)!.tutorDetail),
+        centerTitle: true,
+        elevation: 3,
       ),
       body: isLoading
           ? Center(
@@ -253,8 +266,30 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                                         .then((value) {
                                       if (value) {
                                         print("sucess");
+                                        scaffoldMessengerKey.currentState!
+                                            .showSnackBar(SnackBar(
+                                          content: Center(
+                                            child: Text(
+                                                AppLocalizations.of(_context!)!
+                                                    .reportSuccessfully),
+                                          ),
+                                          backgroundColor: Colors.green,
+                                          duration: Duration(seconds: 2),
+                                        ));
                                       } else {
                                         print("fail");
+                                        scaffoldMessengerKey.currentState!
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Center(
+                                              child: Text(AppLocalizations.of(
+                                                      _context!)!
+                                                  .reportFailed),
+                                            ),
+                                            backgroundColor: Colors.red,
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
                                       }
                                     });
                                   });
@@ -285,7 +320,6 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                     child: Text(
                       tutorRowItem!.bio!,
                       style: TextStyle(
-                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
                       ),

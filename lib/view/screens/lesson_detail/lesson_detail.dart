@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/course.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class CourseTopicPDFViewer extends StatefulWidget {
   const CourseTopicPDFViewer({Key? key}) : super(key: key);
@@ -38,52 +39,48 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        leadingWidth: 20,
-        centerTitle: true,
-        elevation: 0,
-
-        //iconTheme: IconThemeData(color: Colors.white),
-        title: Container(
-          margin: const EdgeInsets.only(left: 10),
-          child: Text(
-            // widget.title,
-            topicsList![currentIndex].name!,
-            style: const TextStyle(color: Colors.white),
-          ),
+        title: Text(
+          topicsList![currentIndex].name!,
         ),
+        centerTitle: true,
+        elevation: 3,
       ),
       body: Center(
         child: Column(
           children: [
             ExpansionTile(
-              title: const Text('Topic List'),
-              leading: const Icon(Icons.list),
-              trailing: isExpanded
-                  ? const Icon(Icons.expand_less)
-                  : const Icon(Icons.expand_more),
-              onExpansionChanged: (bool expanding) {
-                setState(() {
-                  isExpanded = expanding;
-                });
-              },
-              children: topicsList!.map((item) {
-                return GestureDetector(
-                  onTap: () {
-                    print(topicsList!.indexOf(item));
-                    setState(() {
-                      isExpanded = false;
-                      currentIndex = topicsList!.indexOf(item);
-                      _pdfKey = UniqueKey();
-                    });
-                  },
-                  child: ListTile(
-                    title: Text(item.name!),
+                title: Text(AppLocalizations.of(context)!.topicList),
+                leading: const Icon(Icons.list),
+                trailing: isExpanded
+                    ? const Icon(Icons.expand_less)
+                    : const Icon(Icons.expand_more),
+                onExpansionChanged: (bool expanding) {
+                  setState(() {
+                    isExpanded = expanding;
+                  });
+                },
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: topicsList!.map((item) {
+                        return GestureDetector(
+                          onTap: () {
+                            print(topicsList!.indexOf(item));
+                            setState(() {
+                              isExpanded = false;
+                              currentIndex = topicsList!.indexOf(item);
+                              _pdfKey = UniqueKey();
+                            });
+                          },
+                          child: ListTile(
+                            title: Text(item.name!),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                );
-              }).toList(),
-            ),
+                ]),
             Expanded(
               child: SfPdfViewer.network(
                 topicsList![currentIndex].nameFile!,

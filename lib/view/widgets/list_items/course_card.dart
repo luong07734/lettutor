@@ -29,7 +29,7 @@ class CourseCard extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                 ),
-                height: 114,
+                height: 92,
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -60,9 +60,9 @@ class CourseCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   course.description!,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                  ),
+                  // style: const TextStyle(
+                  //   color: Colors.black87,
+                  // ),
                   maxLines: 2,
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,

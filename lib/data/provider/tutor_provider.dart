@@ -16,6 +16,10 @@ class TutorProvider extends ChangeNotifier {
   bool _hasMoreItems = true;
   List<String> _specialities = [];
   String keySearch = "";
+  bool? _isVietnamese;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   //schedule
 
   List<ScheduleOfTutor> _teacherSchedule = [];
@@ -43,7 +47,7 @@ class TutorProvider extends ChangeNotifier {
 
   void loadTutorsInPage({int page = 1}) {
     _page = page;
-
+    _isLoading = true;
     _tutorApis.getTutorList(page).then((tutors) {
       print("getting...");
       int oldLength = _tutors.length;
@@ -65,31 +69,38 @@ class TutorProvider extends ChangeNotifier {
           _hasMoreItems = false;
         }
       } else {}
+      _isLoading = false;
       notifyListeners();
     });
   }
 
   void updateFavorite(String tutorId) {
-    _tutorApis.addATutorToFavouriteList(tutorId);
-    _tutorApis.getTutorList(page).then((tutors) {
-      TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
-      _favorites = _tutorsPerPage.favoriteTutor == null
-          ? []
-          : _tutorsPerPage.favoriteTutor!;
+    _isLoading = true;
+    _tutorApis.addATutorToFavouriteList(tutorId).then((value) {
+      _tutorApis.getTutorList(page).then((tutors) {
+        TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
+        _favorites = _tutorsPerPage.favoriteTutor == null
+            ? []
+            : _tutorsPerPage.favoriteTutor!;
+      });
     });
+    // search(" ", 1, false);
+    _isLoading = false;
     notifyListeners();
   }
 
   void search(String value, int page, bool isScrolled) {
     _searchPage = page;
+    _isLoading = true;
     print("searching .....");
     keySearch = value;
-    if (value.isEmpty && _specialities.isEmpty) {
+    if (value.isEmpty && _specialities.isEmpty && _isVietnamese == null) {
       print("reloading...");
       keySearch = "";
       _tutors.clear();
       _specialities.clear();
       loadTutorsInPage(page: 1);
+      // search("", 1, false);
 
       notifyListeners();
       return;
@@ -106,7 +117,8 @@ class TutorProvider extends ChangeNotifier {
         .searchTutor(
             page: page,
             value,
-            specialties: listKeySpec.isEmpty ? null : listKeySpec)
+            specialties: listKeySpec.isEmpty ? null : listKeySpec,
+            isVietnamese: _isVietnamese)
         .then((value) {
       Tutors tutors = Tutors.fromJson(value);
       int oldLength = _tutors.length;
@@ -123,7 +135,7 @@ class TutorProvider extends ChangeNotifier {
       } else {
         _hasMoreItems = false;
       }
-
+      _isLoading = false;
       notifyListeners();
     });
   }
@@ -143,6 +155,7 @@ class TutorProvider extends ChangeNotifier {
 
     search(keySearch, 1, false);
     print(_specialities);
+    notifyListeners();
   }
 
   void clearSpec(int index) {
@@ -153,6 +166,21 @@ class TutorProvider extends ChangeNotifier {
 
     search(keySearch, 1, false);
     print(_specialities);
+    notifyListeners();
+  }
+
+  void clearAllSpecs() {
+    // if (index == 0) {
+    // } else {
+    _specialities.clear();
+    notifyListeners();
+    // }
+  }
+
+  void setIsVietnamese(bool? isVietnamese) {
+    _isVietnamese = isVietnamese;
+    search(keySearch, 1, false);
+    print(_isVietnamese);
   }
 
   // schedule of tutor

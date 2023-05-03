@@ -35,8 +35,7 @@
     "courseLength" : "Thời lượng khóa học",
     "listTopics" : "Danh sách chủ đề",
     "history" : "Lịch sử",
-    "historyDescription" : "Đây là danh sách các bài học bạn đã tham gia.\nBạn có thể xem lại thông tin chi tiết về các buổi học đã tham gia đã tham gia.",
-    "noReivew" : "Gia sư chưa có đánh giá",
+    "noReview" : "Gia sư chưa có đánh giá",
     "languageSetting" : "Ngôn ngữ",
     "sayHello" : "Đăng nhập",
     "becomeFluent" : "Phát triển kỹ năng tiếng Anh nhanh nhất bằng cách học 1 kèm 1 trực tuyến theo mục tiêu và lộ trình dành cho riêng bạn.",
@@ -55,7 +54,81 @@
     "startLearning" : "Đăng ký",
     "resetPassword" : "Đặt lại mật khẩu",
     "enterEmailAddress" : "Vui lòng nhập email để tìm kiếm tài khoản của bạn.",
-    "sendResetLink" : "Xác nhận"
+    "sendResetLink" : "Xác nhận",
+    "recommendCourses": "Khóa học gợi ý",
+    "totalLessonTime": "Tổng số giờ bạn đã học là {hour} giờ {minute} phút",
+    "@totalLessonTime": {
+        "placeholders": {
+            "hour": {"type": "int"},
+            "minute": {"type": "int"}
+        }
+    },
+    "upcomingLesson" : "Buổi học sắp diễn ra",
+    "enterLessonRoom" : "Vào lớp học",
+    "theme" : "Chế độ",
+    "profile" : "Hồ sơ",
+    "name" : "Tên",
+    "phoneNumber" : "Số điện thoại",
+    "birthday" : "Ngày sinh",
+    "country" : "Quốc gia",
+    "myLevel" : "Trình độ",
+    "testPreparation" : "Luyện thi",
+    "saveChanges" : "Lưu thay đổi",
+    "historyDescription" : "Đây là danh sách các bài học bạn đã tham gia. \nBạn có thể xem lại thông tin chi tiết về các buổi học đã tham gia đã tham gia.",
+    "reportTutor" : "Báo cáo {tutorName}",
+    "@reportTutor": {
+        "placeholders": {
+            "tutorName": {"type": "String"}
+        }
+    },
+    "pleaseHelpUsUnderstand" : "Bạn đang gặp phải vấn đề gì",
+    "reportDetails" : "Điền thêm thông tin chi tiết",
+    "bookingTime" : "Thời gian đặt lịch",
+    "notes" : "Ghi chú",
+    "enterNotes" : "Thêm ghi chú",
+    "book" : "Đặt lịch",
+    "enterEmail" : "Nhập Email",
+    "enterPassword" : "Nhập mật khẩu",
+    "pleaseEnterEmail" : "Vui lòng nhập Email",
+    "pleaseEnterPassword" : "Vui lòng nhập mật khẩu",
+    "passwordLength" : "Mật khẩu phải chứa ít nhất 6 ký tự",
+    "emailValid" : "Vui lòng nhập email hợp lệ",
+    "passwordNotMatch" : "Mật khẩu không khớp",
+    "confirmYourPassword" : "Xác nhận mật khẩu",
+    "autoTTS" : "Tự động TTS",
+    "speechLanguage" : "Ngôn ngữ Chat",
+    "deleteAllMessages" : "Xóa tất cả tin nhắn",
+    "chatSettings" : "Cài đặt VoiceGPT",
+    "all" : "Tất cả",
+    "vnTutors" : "Gia sư Việt Nam ",
+    "foreignTutors" : "Gia sư nước ngoài",
+    "searchTutorsIn" : "Tìm kiếm gia sư trong ",
+    "bookingSuccessfully" : "Đặt lịch thành công",
+    "bookingFailed" : "Đặt lịch thất bại",
+    "cancelSuccess" : "Bạn đã hủy đặt lịch thành công",
+    "cancelFailed" : "Chỉ có thể hủy lịch đặt cách 2 tiếng",
+    "contentCannotEmpty" : "Nội dung không thể để trống ",
+    "reportSuccessfully" : "Báo cáo thành công",
+    "reportFailed" : "Báo cáo thất bại",
+    "updateProfileSuccess" : "Chỉnh sửa hồ sơ thành công",
+    "updateProfileFailed" : "Chỉnh sửa hồ sơ thất bại",
+    "resetPasswordSuccess" : "Kiểm tra hộp thư đến trong email để đặt lại mật khẩu của bạn",
+    "resetPasswordFailed" : "Gửi mail để đặt lại mật khẩu thất bại",
+    "loginFailedNotActivated" : "Tài khoản của bạn chưa được kích hoạt.",
+    "loginFailedNotWrong" : "Đăng nhập thất bại! Bạn đã nhập sai email hoặc mật khẩu",
+    "loginFailed0" : "Đăng nhập thất bại",
+    "signUpSuccess" : "Đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản",
+    "signUpFailedEmailTaken" : "Email đã được đăng ký",
+    "signUpFailed0" : "Đăng ký thất bại",
+    "searchNotFound" : "Xin lỗi, chúng tôi không thể tìm thấy kết quả với từ khoá này",
+    "tutorDetail" : "Chi tiết gia sư",
+    "courseDetail" : "Chi tiết khóa học",
+    "topicList" : "Danh sách chủ đề",
+    "noSchedule" : "Chưa có lịch học nào!",
+    "emptyData" : "Dữ liệu trống"
+
+    
+
 
     
 }

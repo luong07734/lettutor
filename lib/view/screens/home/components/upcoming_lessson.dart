@@ -25,7 +25,8 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
     print("minutes ${minutes}");
     int hours = minutes ~/ 60;
     int remainingMinutes = minutes % 60;
-    return "Total lesson time is $hours hours $remainingMinutes minutes";
+    return AppLocalizations.of(context)!
+        .totalLessonTime(hours, remainingMinutes);
   }
 
   @override
@@ -34,7 +35,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
     // final ScheduleProvider scheduleHistoryDTO =
     //     context.watch<ScheduleProvider>();
     return Container(
-      color: Colors.blueAccent, // màu nền của container
+      color: Theme.of(context).primaryColor, // màu nền của container
       width: double.infinity, // chiều rộng của container bằng toàn bộ màn hình
       padding: const EdgeInsets.symmetric(
           vertical: 40.0), // khoảng cách giữa các phần tử trong container
@@ -42,7 +43,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
         mainAxisAlignment: MainAxisAlignment.center, // canh giữa các phần tử
         children: [
           Text(
-            "Upcoming lesson",
+            AppLocalizations.of(context)!.upcomingLesson,
             style: TextStyle(
               color: Colors.white,
               fontSize: 24.0,
@@ -78,14 +79,14 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
                 joinJitsiMeet(context, schedule);
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.blue,
+                foregroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Colors.white,
                 elevation: 4,
                 textStyle: const TextStyle(
                   fontSize: 16,
                 ),
               ),
-              child: Text("Enter lesson room"),
+              child: Text(AppLocalizations.of(context)!.enterLessonRoom),
             ),
           ),
 
@@ -94,7 +95,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
             formatLessonTime(widget.totalStudyTime),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16.0,
+              fontSize: 12.0,
               // fontWeight: FontWeight.bold,
             ),
           ),

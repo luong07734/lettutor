@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/data/provider/history_provider.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -42,11 +44,14 @@ class _HistoryPageState extends State<HistoryPage> {
       provider.loadHistoryData(page: provider.page + 1);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History'),
+        elevation: 3,
+        title: Text(AppLocalizations.of(context)!.scheduleHistory),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -61,10 +66,10 @@ class _HistoryPageState extends State<HistoryPage> {
                 height: 100,
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Text(
-                "History",
+                AppLocalizations.of(context)!.scheduleHistory,
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
@@ -74,10 +79,10 @@ class _HistoryPageState extends State<HistoryPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Container(
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: Text(
-                    "The following is a list of lessons you have attended. \nYou can review the details of the lessens youu have attended.",
+                    AppLocalizations.of(context)!.historyDescription,
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -95,58 +100,74 @@ class _HistoryPageState extends State<HistoryPage> {
               height: 20,
             ),
             Consumer<HistoryProvider>(builder: (context, historyProvider, _) {
-            if (historyProvider.history.isEmpty) {
-              // show loading indicator while data is being fetched
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return historyProvider.history.length == 0
-                  ? Center(child: Text("No Schedule"))
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      // controller: _scrollController,
-                      itemCount: historyProvider.history.length +
-                          ((historyProvider.hasMoreItems &&
-                                  historyProvider.history.length >= 3)
-                              ? 1
-                              : 0),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < historyProvider.history.length) {
-                          final schedule = historyProvider.history[index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.1), // Màu bóng đổ
-                                  spreadRadius: 1, // Bán kính của bóng đổ
-                                  blurRadius: 1, // Độ mờ của bóng đổ
-                                  offset: const Offset(
-                                      0, 1), // Độ dịch chuyển của bóng đổ
-                                ),
-                              ],
+              if (historyProvider.history.isEmpty &&
+                  !historyProvider.isLoading) {
+                // show "No history" message
+                return Center(
+                    child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Image.asset(
+                        AssetsManager.searchNotFoundImage,
+                        width: 160,
+                        height: 160,
+                      ),
+                    ),
+                    ProfileDescription(
+                        text: AppLocalizations.of(context)!.emptyData),
+                  ],
+                ));
+              } else if (historyProvider.isLoading) {
+                // show loading indicator while data is being fetched
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  // controller: _scrollController,
+                  itemCount: historyProvider.history.length +
+                      ((historyProvider.hasMoreItems &&
+                              historyProvider.history.length >= 3)
+                          ? 1
+                          : 0),
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index < historyProvider.history.length) {
+                      final schedule = historyProvider.history[index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.grey.withOpacity(0.1), // Màu bóng đổ
+                              spreadRadius: 1, // Bán kính của bóng đổ
+                              blurRadius: 1, // Độ mờ của bóng đổ
+                              offset: const Offset(
+                                  0, 1), // Độ dịch chuyển của bóng đổ
                             ),
-                            // child: TeacherCard(index, context, tutor),
-                            child: ScheduleCard(
-                              schedule: schedule,
-                              isHistoryCard: true,
-                            ),
-                          );
-                        } else {
-                          // show loading indicator at end of list
-                          if (historyProvider.hasMoreItems) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }
-                      },
-                    );
-            }
-          }),
+                          ],
+                        ),
+                        // child: TeacherCard(index, context, tutor),
+                        child: ScheduleCard(
+                          schedule: schedule,
+                          isHistoryCard: true,
+                        ),
+                      );
+                    } else {
+                      // show loading indicator at end of list
+                      if (historyProvider.hasMoreItems) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }
+                  },
+                );
+              }
+            }),
           ],
         ),
       ),

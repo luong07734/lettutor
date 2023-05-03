@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class ReportModal extends StatefulWidget {
   final String tutorName;
@@ -12,6 +13,8 @@ class ReportModal extends StatefulWidget {
 
 class _ReportModalState extends State<ReportModal> {
   final _reportController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void dispose() {
@@ -29,7 +32,7 @@ class _ReportModalState extends State<ReportModal> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Report ${widget.tutorName}',
+              AppLocalizations.of(context)!.reportTutor(widget.tutorName),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -37,7 +40,7 @@ class _ReportModalState extends State<ReportModal> {
             ),
             SizedBox(height: 16),
             Text(
-              'Help us understand what is happening',
+              AppLocalizations.of(context)!.pleaseHelpUsUnderstand,
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -52,12 +55,21 @@ class _ReportModalState extends State<ReportModal> {
                 ),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: TextFormField(
-                controller: _reportController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Please let us know details about the problem',
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return AppLocalizations.of(context)!.contentCannotEmpty;
+                    }
+                    return null;
+                  },
+                  controller: _reportController,
+                  decoration: InputDecoration.collapsed(
+                    hintText: AppLocalizations.of(context)!.reportDetails,
+                  ),
+                  maxLines: null,
                 ),
-                maxLines: null,
               ),
             ),
             SizedBox(height: 16),
@@ -68,14 +80,16 @@ class _ReportModalState extends State<ReportModal> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    widget.onReport(_reportController.text);
-                    Navigator.pop(context);
+                    if (_formKey.currentState!.validate()) {
+                      widget.onReport(_reportController.text);
+                      Navigator.pop(context);
+                    }
                   },
-                  child: Text('Report'),
+                  child: Text(AppLocalizations.of(context)!.report),
                 ),
               ],
             ),

@@ -75,13 +75,16 @@ class TutorProvider extends ChangeNotifier {
   }
 
   void updateFavorite(String tutorId) {
-    _tutorApis.addATutorToFavouriteList(tutorId);
-    _tutorApis.getTutorList(page).then((tutors) {
-      TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
-      _favorites = _tutorsPerPage.favoriteTutor == null
-          ? []
-          : _tutorsPerPage.favoriteTutor!;
+    _isLoading = true;
+    _tutorApis.addATutorToFavouriteList(tutorId).then((value) {
+      _tutorApis.getTutorList(page).then((tutors) {
+        TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
+        _favorites = _tutorsPerPage.favoriteTutor == null
+            ? []
+            : _tutorsPerPage.favoriteTutor!;
+      });
     });
+    _isLoading = false;
     notifyListeners();
   }
 

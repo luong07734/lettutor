@@ -13,4 +13,5 @@ class AssetsManager {
   static String ukFlagImage = '$imagePath/uk_flag.png';
   static String userAvatarImage = '$imagePath/user.png';
   static String imageLoadFailedImage = '$imagePath/image_load_failed.png';
+  static String searchNotFoundImage = '$imagePath/search.png';
 }

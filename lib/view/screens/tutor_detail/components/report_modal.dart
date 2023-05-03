@@ -13,6 +13,8 @@ class ReportModal extends StatefulWidget {
 
 class _ReportModalState extends State<ReportModal> {
   final _reportController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void dispose() {
@@ -53,12 +55,21 @@ class _ReportModalState extends State<ReportModal> {
                 ),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: TextFormField(
-                controller: _reportController,
-                decoration: InputDecoration.collapsed(
-                  hintText: AppLocalizations.of(context)!.reportDetails,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return AppLocalizations.of(context)!.contentCannotEmpty;
+                    }
+                    return null;
+                  },
+                  controller: _reportController,
+                  decoration: InputDecoration.collapsed(
+                    hintText: AppLocalizations.of(context)!.reportDetails,
+                  ),
+                  maxLines: null,
                 ),
-                maxLines: null,
               ),
             ),
             SizedBox(height: 16),
@@ -73,8 +84,10 @@ class _ReportModalState extends State<ReportModal> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    widget.onReport(_reportController.text);
-                    Navigator.pop(context);
+                    if (_formKey.currentState!.validate()) {
+                      widget.onReport(_reportController.text);
+                      Navigator.pop(context);
+                    }
                   },
                   child: Text(AppLocalizations.of(context)!.report),
                 ),

@@ -4,6 +4,7 @@ import 'package:lettutor/data/provider/schedule_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -97,7 +98,21 @@ class _SchedulePageState extends State<SchedulePage> {
             if (scheduleProvider.schedules.isEmpty &&
                 !scheduleProvider.isLoading) {
               // show "No Schedule" message
-              return Center(child: Text("No Schedule"));
+              return Center(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Image.asset(
+                      AssetsManager.searchNotFoundImage,
+                      width: 160,
+                      height: 160,
+                    ),
+                  ),
+                  ProfileDescription(
+                      text: AppLocalizations.of(context)!.noSchedule),
+                ],
+              ));
             } else if (scheduleProvider.isLoading) {
               // show loading indicator while data is being fetched
               return Center(child: CircularProgressIndicator());

@@ -104,7 +104,30 @@
     "foreignTutors" : "Foreign tutors",
     "searchTutorsIn" : "Search tutors in ",
     "bookingSuccessfully" : "Booking successfully",
-    "bookingFailed" : "Booking failed"
+    "bookingFailed" : "Booking failed",
+    "cancelSuccess" : "You deleted booking successfully",
+    "cancelFailed" : "Only cancel the meeting before 2 hours",
+    "contentCannotEmpty" : "Content is not allowed to be empty ",
+    "reportSuccessfully" : "Report successfully",
+    "reportFailed" : "Report failed",
+    "updateProfileSuccess" : "Edit profile successful",
+    "updateProfileFailed" : "Edit profile failed",
+    "resetPasswordSuccess" : "Check your inbox for a link to reset your password",
+    "resetPasswordFailed" : "Fail to send reset passsword request to your mail",
+    "loginFailedNotActivated" : "Your account has not activated",
+    "loginFailedNotWrong" : "Log in failed! Incorrect email or password.",
+    "loginFailed0" : "Log in failed!",
+    "signUpSuccess" : "Sign up successful. Please check your email to verify the account",
+    "signUpFailedEmailTaken" : "Email has already taken",
+    "signUpFailed0" : "Sign up failed",
+    "searchNotFound" : "Sorry we can't find any tutor with this keywords",
+    "tutorDetail" : "Tutor Detail",
+    "courseDetail" : "Course Detail",
+    "topicList" : "Topic List",
+    "noSchedule" : "There is no lesson schedule yet!",
+    "emptyData" : "Empty data"
+
+
 
 
 

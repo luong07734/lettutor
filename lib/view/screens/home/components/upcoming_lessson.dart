@@ -35,7 +35,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
     // final ScheduleProvider scheduleHistoryDTO =
     //     context.watch<ScheduleProvider>();
     return Container(
-      color: Colors.blueAccent, // màu nền của container
+      color: Theme.of(context).primaryColor, // màu nền của container
       width: double.infinity, // chiều rộng của container bằng toàn bộ màn hình
       padding: const EdgeInsets.symmetric(
           vertical: 40.0), // khoảng cách giữa các phần tử trong container
@@ -79,7 +79,7 @@ class _UpcomingLessonBannerState extends State<UpcomingLessonBanner> {
                 joinJitsiMeet(context, schedule);
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.blue,
+                foregroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Colors.white,
                 elevation: 4,
                 textStyle: const TextStyle(

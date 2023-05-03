@@ -52,7 +52,8 @@ class _HomePageState extends State<HomePage> {
                       Provider.of<ScheduleProvider>(context).totalStudyTime,
                 )
               : Container(
-                  color: Colors.blueAccent, // màu nền của container
+                  color:
+                      Theme.of(context).primaryColor, // màu nền của container
                   width: double
                       .infinity, // chiều rộng của container bằng toàn bộ màn hình
                   padding: const EdgeInsets.symmetric(
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                             widget.moveAtIndex(2);
                           },
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.blue,
+                            foregroundColor: Theme.of(context).primaryColor,
                             backgroundColor: Colors.white,
                             elevation: 4,
                             textStyle: const TextStyle(
@@ -148,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     final tutor = tutorProvider.tutors[index];
                     return Container(
-                      width: 360,
+                      width: 380,
                       height: 250,
                       decoration: BoxDecoration(
                         boxShadow: [

@@ -141,18 +141,38 @@ class _SignupFormState extends State<SignupForm> {
                           authenticationProvider
                               .signUp(email, password)
                               .then((value) {
-                            if (value) {
+                            if (value == 1) {
                               print(value.toString());
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text("Dang ki thanh cong"),
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .signUpSuccess)),
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
                               ));
                               // Navigator.pop(context);
                               print("dang ki thanh cong");
+                            } else if (value == 2) {
+                              print("bi loi ton tai");
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .signUpFailedEmailTaken)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
                             } else {
-                              // addError(S.current.email_is_already_in_use);
                               print("bi loi");
-                              Text("email has been used");
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .signUpFailed0)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
                             }
                             setState(() {
                               isLoading = false;

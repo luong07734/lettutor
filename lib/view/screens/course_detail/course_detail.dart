@@ -39,7 +39,10 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   Widget build(BuildContext context) {
     return Stack(children: [
       Scaffold(
-        appBar: AppBar(title: const Text('Course Detail')),
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.courseDetail),
+          centerTitle: true,
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

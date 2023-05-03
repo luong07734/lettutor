@@ -42,13 +42,15 @@ class _BookingPageState extends State<BookingPage> {
 
   BuildContext? _context;
 
+  @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _context = context;
     });
   }
 
+  @override
   void dispose() {
     _context = null;
     super.dispose();
@@ -105,7 +107,9 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.booking),
+        title: Text(
+          AppLocalizations.of(context)!.booking
+        ),
       ),
       body: isLoading
           ? Center(
@@ -150,9 +154,11 @@ class _BookingPageState extends State<BookingPage> {
                                   // ScaffoldMessenger.of(context)
                                   scaffoldMessengerKey.currentState!
                                       .showSnackBar(SnackBar(
-                                    content: Text(
-                                        AppLocalizations.of(_context!)!
-                                            .bookingSuccessfully),
+                                    content: Center(
+                                      child: Text(
+                                          AppLocalizations.of(_context!)!
+                                              .bookingSuccessfully),
+                                    ),
                                     backgroundColor: Colors.green,
                                     duration: Duration(seconds: 2),
                                   ));
@@ -161,9 +167,11 @@ class _BookingPageState extends State<BookingPage> {
                                   scaffoldMessengerKey.currentState!
                                       .showSnackBar(
                                     SnackBar(
-                                      content: Text(
-                                          AppLocalizations.of(_context!)!
-                                              .bookingFailed),
+                                      content: Center(
+                                        child: Text(
+                                            AppLocalizations.of(_context!)!
+                                                .bookingFailed),
+                                      ),
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 2),
                                     ),

@@ -118,16 +118,38 @@ class _SigninFormState extends State<SigninForm> {
                           authenticationProvider
                               .logIn(_email!, _password!)
                               .then((value) {
-                            if (value) {
+                            if (value == 1) {
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           const HomeDrawerAndNavigationBar()),
                                   (Route<dynamic> route) => false);
+                            } else if (value == 2) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .loginFailedNotActivated)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
+                            } else if (value == 3) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .loginFailedNotWrong)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ));
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text("Dang nhap that bai"),
+                                content: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .loginFailed0)),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
                               ));
                             }
                             setState(() {

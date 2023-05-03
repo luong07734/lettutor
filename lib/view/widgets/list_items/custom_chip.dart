@@ -32,9 +32,10 @@ class _CustomChipState extends State<CustomChip> {
   Widget build(BuildContext context) {
     return ChoiceChip(
       label: Text(widget.label),
-      backgroundColor:
-          (isSelected || !widget.clickable) ? Colors.blue : Colors.grey,
-      selectedColor: Colors.blue,
+      backgroundColor: (isSelected || !widget.clickable)
+          ? Theme.of(context).primaryColor
+          : Colors.grey,
+      selectedColor: Theme.of(context).primaryColor,
       labelStyle: (isSelected || !widget.clickable)
           ? const TextStyle(color: Colors.white)
           : null,

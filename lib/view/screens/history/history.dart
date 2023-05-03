@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/data/provider/history_provider.dart';
 import 'package:lettutor/view/widgets/list_items/schedule_card.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
@@ -99,8 +100,22 @@ class _HistoryPageState extends State<HistoryPage> {
             Consumer<HistoryProvider>(builder: (context, historyProvider, _) {
               if (historyProvider.history.isEmpty &&
                   !historyProvider.isLoading) {
-                // show "No Schedule" message
-                return Center(child: Text("No History"));
+                // show "No history" message
+                return Center(
+                    child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Image.asset(
+                        AssetsManager.searchNotFoundImage,
+                        width: 160,
+                        height: 160,
+                      ),
+                    ),
+                    ProfileDescription(
+                        text: AppLocalizations.of(context)!.emptyData),
+                  ],
+                ));
               } else if (historyProvider.isLoading) {
                 // show loading indicator while data is being fetched
                 return Center(child: CircularProgressIndicator());

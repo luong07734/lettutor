@@ -63,10 +63,12 @@ class _FavoriteTutorsPageState extends State<FavoriteTutorsPage> {
                         }
                         ;
                       },
-                      child: TutorCard(
-                        tutor: tutor!,
-                        isFavorite: tutorProvider.isFavorite(tutor),
-                      ),
+                      child: tutor == null
+                          ? Container()
+                          : TutorCard(
+                              tutor: tutor,
+                              isFavorite: tutorProvider.isFavorite(tutor),
+                            ),
                     ),
                   );
                 },

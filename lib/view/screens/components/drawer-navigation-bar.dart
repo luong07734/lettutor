@@ -54,7 +54,7 @@ class _HomeDrawerAndNavigationBarState
     AuthenticationProvider authProvider =
         Provider.of<AuthenticationProvider>(context);
     return AdvancedDrawer(
-      backdropColor: Colors.blueGrey,
+      backdropColor: Theme.of(context).primaryColorDark,
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -92,8 +92,28 @@ class _HomeDrawerAndNavigationBarState
                   color: Colors.black26,
                   shape: BoxShape.circle,
                 ),
-                child: Image.asset(
-                  AssetsManager.appLogoImage,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routers.Profile);
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      child: ClipOval(
+                        child: authProvider.currentLoggedUser == null ||
+                                authProvider.currentLoggedUser!.avatar!
+                                    .contains("icon-avatar-default.png")
+                            ? Image.asset(AssetsManager.userAvatarImage)
+                            : Image.network(
+                                authProvider.currentLoggedUser!.avatar!,
+                                fit: BoxFit.cover,
+                                width: 110,
+                                height: 110,
+                              ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               ListTile(
@@ -143,7 +163,7 @@ class _HomeDrawerAndNavigationBarState
                   prefs.removeAccessToken();
                   prefs.removeRefreshToken();
                   prefs.removeCurrentLoggedUser();
-                  authProvider.signOut();
+                  authProvider.signOut().then((value) => null);
 
                   Navigator.pushNamedAndRemoveUntil(
                       context, Routers.LogIn, (route) => false);
@@ -172,6 +192,9 @@ class _HomeDrawerAndNavigationBarState
         ),
       ),
       child: Scaffold(
+        backgroundColor: (Theme.of(context).brightness == Brightness.light)
+            ? Theme.of(context).scaffoldBackgroundColor
+            : Colors.black,
         appBar: AppBar(
           // backgroundColor: Colors.white,
           elevation: 3,
@@ -194,7 +217,7 @@ class _HomeDrawerAndNavigationBarState
           title: const Text(
             'Let Tutor',
             style: TextStyle(
-              color: Colors.blue, // set the color of the text
+              // color: Colors.blue, // set the color of the text
               fontSize: 24, // set the font size of the text
               fontWeight: FontWeight.bold, // set the font weight of the text
             ),
@@ -237,19 +260,14 @@ class _HomeDrawerAndNavigationBarState
         // ),
         bottomNavigationBar: CurvedNavigationBar(
           key: _navBarKey,
-          backgroundColor: Colors.white,
-          color: Colors.blueAccent,
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+          color: Theme.of(context).primaryColor,
           items: const <Widget>[
             Icon(
               Icons.home,
               size: 30,
               color: Colors.white,
             ),
-            // Icon(
-            //   Icons.message,
-            //   size: 30,
-            //   color: Colors.white,
-            // ),
             Icon(
               Icons.lock_clock,
               size: 30,

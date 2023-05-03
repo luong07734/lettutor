@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/data/provider/course_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/course_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
 
 class CoursePage extends StatefulWidget {
@@ -82,8 +84,22 @@ class _CoursePageState extends State<CoursePage> {
                       course.name!.toLowerCase().contains(_searchQuery))
                   .toList();
 
-              return filteredCourses.length == 0
-                  ? Center(child: Text("No result"))
+              return filteredCourses.isEmpty
+                  ? Center(
+                      child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Image.asset(
+                            AssetsManager.searchNotFoundImage,
+                            width: 160,
+                            height: 160,
+                          ),
+                        ),
+                        ProfileDescription(
+                            text: AppLocalizations.of(context)!.searchNotFound),
+                      ],
+                    ))
                   : GridView.builder(
                       controller: _scrollController,
                       itemCount: filteredCourses.length +

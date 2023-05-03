@@ -103,12 +103,17 @@ class _ScheduleCardState extends State<ScheduleCard> {
                             scheduleProvider
                                 .cancelSchedule(widget.schedule.id!);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Cancel sucesssfully"),
+                              content: Text(
+                                  AppLocalizations.of(context)!.cancelSuccess),
+                              backgroundColor: Colors.green,
+                              duration: Duration(seconds: 2),
                             ));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
-                                  "Only cancel the meeting before 2 hours"),
+                                  AppLocalizations.of(context)!.cancelFailed),
+                              backgroundColor: Colors.red,
+                              duration: Duration(seconds: 2),
                             ));
                           }
                           // handle button press

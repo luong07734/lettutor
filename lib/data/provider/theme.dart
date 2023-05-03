@@ -36,9 +36,11 @@ AppBarTheme appBarDarkTheme() {
     titleTextStyle: pageNameStyle,
   );
 }
+
 const TextStyle pageNameStyle = TextStyle(
     color: Color(0xff248EEF),
     // fontSize: textSizePageName,
+    fontSize: 16,
     fontWeight: FontWeight.bold);
 
 class ThemeProfile extends ChangeNotifier {

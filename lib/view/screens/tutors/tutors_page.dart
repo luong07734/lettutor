@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/filter.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/ultilities/routes.dart';
 import 'package:lettutor/view/widgets/list_items/custom_chip.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
+import 'package:lettutor/view/widgets/view_items/texts/profile_description.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
@@ -167,8 +169,21 @@ class _TutorsPageState extends State<TutorsPage> {
           flex: 10,
           child: Consumer<TutorProvider>(builder: (context, tutorProvider, _) {
             if (tutorProvider.tutors.isEmpty && !tutorProvider.isLoading) {
-              // show "No Schedule" message
-              return Center(child: Text("No tutors found"));
+              return Center(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Image.asset(
+                      AssetsManager.searchNotFoundImage,
+                      width: 160,
+                      height: 160,
+                    ),
+                  ),
+                  ProfileDescription(
+                      text: AppLocalizations.of(context)!.searchNotFound),
+                ],
+              ));
             } else if (tutorProvider.isLoading) {
               // show loading indicator while data is being fetched
               return Center(child: CircularProgressIndicator());

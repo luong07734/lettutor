@@ -22,17 +22,18 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
-            prefixIcon: icon,
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400),
-            ),
-            fillColor: Colors.grey.shade200,
-            filled: true,
-            hintText: hintText,
-            hintStyle: TextStyle(color: Colors.grey[500])),
+          prefixIcon: icon,
+          enabledBorder: const OutlineInputBorder(
+              // borderSide: BorderSide(color: Colors.white),
+              ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade400),
+          ),
+          // fillColor: Colors.grey.shade200,
+          filled: true,
+          hintText: hintText,
+          // hintStyle: TextStyle(color: Colors.grey[500])
+        ),
       ),
     );
   }

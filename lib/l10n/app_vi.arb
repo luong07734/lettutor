@@ -104,7 +104,28 @@
     "foreignTutors" : "Gia sư nước ngoài",
     "searchTutorsIn" : "Tìm kiếm gia sư trong ",
     "bookingSuccessfully" : "Đặt lịch thành công",
-    "bookingFailed" : "Đặt lịch thất bại"
+    "bookingFailed" : "Đặt lịch thất bại",
+    "cancelSuccess" : "Bạn đã hủy đặt lịch thành công",
+    "cancelFailed" : "Chỉ có thể hủy lịch đặt cách 2 tiếng",
+    "contentCannotEmpty" : "Nội dung không thể để trống ",
+    "reportSuccessfully" : "Báo cáo thành công",
+    "reportFailed" : "Báo cáo thất bại",
+    "updateProfileSuccess" : "Chỉnh sửa hồ sơ thành công",
+    "updateProfileFailed" : "Chỉnh sửa hồ sơ thất bại",
+    "resetPasswordSuccess" : "Kiểm tra hộp thư đến trong email để đặt lại mật khẩu của bạn",
+    "resetPasswordFailed" : "Gửi mail để đặt lại mật khẩu thất bại",
+    "loginFailedNotActivated" : "Tài khoản của bạn chưa được kích hoạt.",
+    "loginFailedNotWrong" : "Đăng nhập thất bại! Bạn đã nhập sai email hoặc mật khẩu",
+    "loginFailed0" : "Đăng nhập thất bại",
+    "signUpSuccess" : "Đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản",
+    "signUpFailedEmailTaken" : "Email đã được đăng ký",
+    "signUpFailed0" : "Đăng ký thất bại",
+    "searchNotFound" : "Xin lỗi, chúng tôi không thể tìm thấy kết quả với từ khoá này",
+    "tutorDetail" : "Chi tiết gia sư",
+    "courseDetail" : "Chi tiết khóa học",
+    "topicList" : "Danh sách chủ đề",
+    "noSchedule" : "Chưa có lịch học nào!",
+    "emptyData" : "Dữ liệu trống"
 
     
 

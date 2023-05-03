@@ -24,7 +24,11 @@ class _FavoriteTutorsPageState extends State<FavoriteTutorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Favourite Tutors')),
+      appBar: AppBar(
+        title: const Text('Favourite Tutors'),
+        centerTitle: true,
+        elevation: 3,
+      ),
       body: Consumer<TutorProvider>(builder: (context, tutorProvider, _) {
         return tutorProvider.favorites.length == 0
             ? Center(child: Text("No favorite tutors"))

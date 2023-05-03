@@ -37,6 +37,7 @@ class _TutorsPageState extends State<TutorsPage> {
     // fetch initial teacher data
     context.read<TutorProvider>().reset();
     context.read<TutorProvider>().loadTutorsInPage();
+    // context.read<TutorProvider>().search(" ", 1, false);
 
     // listen to scroll events to detect when user reaches end of list
     _scrollController.addListener(_onScroll);

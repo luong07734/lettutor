@@ -101,7 +101,11 @@ class _RegisterStepperState extends State<RegisterStepper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Become a Tutor')),
+      appBar: AppBar(
+        title: const Text('Become a Tutor'),
+        centerTitle: true,
+        elevation: 3,
+      ),
       body: Stepper(
         currentStep: _currentStep,
         onStepTapped: (index) {

@@ -204,6 +204,7 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 3,
         title: const Text('Chat'),
         centerTitle: true,
         actions: <Widget>[

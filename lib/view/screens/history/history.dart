@@ -49,7 +49,9 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 3,
         title: Text(AppLocalizations.of(context)!.scheduleHistory),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         controller: _scrollController,

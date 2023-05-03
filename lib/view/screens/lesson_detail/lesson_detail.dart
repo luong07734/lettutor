@@ -44,6 +44,7 @@ class _CourseTopicPDFViewerState extends State<CourseTopicPDFViewer> {
           topicsList![currentIndex].name!,
         ),
         centerTitle: true,
+        elevation: 3,
       ),
       body: Center(
         child: Column(

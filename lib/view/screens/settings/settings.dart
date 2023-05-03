@@ -28,7 +28,11 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context)!.settings)),
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.settings),
+          centerTitle: true,
+          elevation: 3,
+        ),
         body: Column(
           children: [
             SettingsButton(

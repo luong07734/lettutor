@@ -84,6 +84,7 @@ class TutorProvider extends ChangeNotifier {
             : _tutorsPerPage.favoriteTutor!;
       });
     });
+    // search(" ", 1, false);
     _isLoading = false;
     notifyListeners();
   }
@@ -99,6 +100,7 @@ class TutorProvider extends ChangeNotifier {
       _tutors.clear();
       _specialities.clear();
       loadTutorsInPage(page: 1);
+      // search("", 1, false);
 
       notifyListeners();
       return;

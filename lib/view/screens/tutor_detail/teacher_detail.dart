@@ -115,6 +115,7 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.tutorDetail),
         centerTitle: true,
+        elevation: 3,
       ),
       body: isLoading
           ? Center(

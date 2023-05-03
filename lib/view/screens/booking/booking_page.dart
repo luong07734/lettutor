@@ -110,6 +110,8 @@ class _BookingPageState extends State<BookingPage> {
         title: Text(
           AppLocalizations.of(context)!.booking
         ),
+        centerTitle: true,
+        elevation: 3,
       ),
       body: isLoading
           ? Center(

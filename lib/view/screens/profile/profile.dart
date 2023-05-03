@@ -111,6 +111,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.profile),
+          centerTitle: true,
+          elevation: 3,
         ),
         body: SingleChildScrollView(
           child:

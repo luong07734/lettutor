@@ -40,6 +40,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     return Stack(children: [
       Scaffold(
         appBar: AppBar(
+          elevation: 3,
           title: Text(AppLocalizations.of(context)!.courseDetail),
           centerTitle: true,
         ),

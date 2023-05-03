@@ -49,6 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _isToggleOn = autoTTSProfile.autoTTS;
     return Scaffold(
       appBar: AppBar(
+        elevation: 3,
         title: Text(AppLocalizations.of(context)!.chatSettings),
         centerTitle: true,
       ),

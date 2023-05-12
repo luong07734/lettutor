@@ -125,7 +125,12 @@
     "courseDetail" : "Chi tiết khóa học",
     "topicList" : "Danh sách chủ đề",
     "noSchedule" : "Chưa có lịch học nào!",
-    "emptyData" : "Dữ liệu trống"
+    "emptyData" : "Dữ liệu trống",
+    "selectLevel" : "Chọn cấp độ",
+    "selectCategory" : "Chọn danh mục",
+    "level" : "Cấp độ",
+    "category" : "Danh mục",
+    "noReviewYet" : "Chưa có đánh giá"
 
     
 

@@ -97,13 +97,13 @@ class _CoursePageState extends State<CoursePage> {
                 decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  hintText: 'Select a level',
+                  hintText: AppLocalizations.of(context)!.selectLevel,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(8.0),
                     ),
                   ),
-                  labelText: 'Level',
+                  labelText: AppLocalizations.of(context)!.level,
                   prefixIcon: Icon(Icons.sort),
                 ),
                 items: [
@@ -180,13 +180,13 @@ class _CoursePageState extends State<CoursePage> {
                 decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  hintText: 'Select a category',
+                  hintText: AppLocalizations.of(context)!.selectCategory,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(8.0),
                     ),
                   ),
-                  labelText: 'Category',
+                  labelText: AppLocalizations.of(context)!.category,
                   prefixIcon: Icon(Icons.sort),
                 ),
                 items: [

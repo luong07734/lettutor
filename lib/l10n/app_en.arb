@@ -125,7 +125,14 @@
     "courseDetail" : "Course Detail",
     "topicList" : "Topic List",
     "noSchedule" : "There is no lesson schedule yet!",
-    "emptyData" : "Empty data"
+    "emptyData" : "Empty data",
+    "selectLevel" : "Select level",
+    "selectCategory" : "Select category",
+    "level" : "Level",
+    "category" : "Category",
+    "noReviewYet" : "No reviews yet"
+
+
 
 
 

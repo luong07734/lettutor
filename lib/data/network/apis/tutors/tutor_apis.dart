@@ -102,4 +102,21 @@ class TutorApis {
     });
     return response;
   }
+
+  Future<dynamic> loadCommentOfTutor(String tutorId, int page,
+      [int perPage = 1000]) async {
+    print("bat dau load comment");
+    final response =
+        await _restClient.get('${Endpoints.comment}/$tutorId', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, params: {
+      'perPage': perPage.toString(),
+      'page': page.toString(),
+    });
+
+    print("sau khi load comment");
+    print(response);
+    return response;
+  }
 }

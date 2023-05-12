@@ -23,6 +23,24 @@ class TutorApis {
     return response;
   }
 
+  Future<dynamic> getTutorList2(int page, [int perPage = 12]) async {
+    final response = await _restClient.post(Endpoints.tutorSearch, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${await _restClient.getAccessToken()}'
+    }, body: {
+      'filters': {
+        'specialties': [],
+        'date': null,
+        'nationality': {},
+        'tutoringTimeAvailable': [null, null]
+      },
+      "page": page,
+      "perPage": perPage,
+    });
+    print(response);
+    return response;
+  }
+
   Future<dynamic> getTutorInformationById(String tutorId) async {
     print("bat dau goi api chi tiet tutor");
     final response = await _restClient.get('${Endpoints.tutorDetail}/$tutorId',

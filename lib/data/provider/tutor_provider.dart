@@ -9,14 +9,13 @@ class TutorProvider extends ChangeNotifier {
   final TutorApis _tutorApis = TutorApis();
   final ScheduleApis _scheduleApis = ScheduleApis();
   List<TutorRowItem> _tutors = [];
-  List<TutorRowItem> _baseTutors = [];
   List<FavoriteTutor> _favorites = [];
   int _page = 1;
-  int _searchPage = 1;
   bool _hasMoreItems = true;
   List<String> _specialities = [];
   String keySearch = "";
   bool? _isVietnamese;
+  bool? get isVietnamese => _isVietnamese;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -29,7 +28,6 @@ class TutorProvider extends ChangeNotifier {
   int get page => _page;
   bool get hasMoreItems => _hasMoreItems;
   List<String> get specialities => _specialities;
-  int get searchPage => _searchPage;
 
   bool isFavorite(TutorRowItem tutor) {
     bool isFavorite = false;
@@ -46,6 +44,7 @@ class TutorProvider extends ChangeNotifier {
   }
 
   void loadTutorsInPage({int page = 1}) {
+    print("load tutor in page");
     _page = page;
     _isLoading = true;
     _tutorApis.getTutorList(page).then((tutors) {
@@ -54,23 +53,26 @@ class TutorProvider extends ChangeNotifier {
       if (tutors["tutors"] != null) {
         print("load dc");
         TutorPerPage _tutorsPerPage = TutorPerPage.fromJson(tutors);
-        _tutors += _tutorsPerPage.tutors.rows;
-        _baseTutors += _tutorsPerPage.tutors.rows;
+        // _tutors += _tutorsPerPage.tutors.rows;
 
         _favorites = _tutorsPerPage.favoriteTutor == null
             ? []
             : _tutorsPerPage.favoriteTutor!;
-        print("favorites ${_favorites}");
-
-        print("length of tutors: ${_tutors.length}");
-        if (_tutors.length > oldLength) {
-          _hasMoreItems = true;
-        } else {
-          _hasMoreItems = false;
-        }
+        _tutorApis.getTutorList2(page).then((value) {
+          Tutors tutors = Tutors.fromJson(value);
+          _tutors += tutors.rows;
+          if (_tutors.length > oldLength) {
+            _hasMoreItems = true;
+          } else {
+            _hasMoreItems = false;
+          }
+          _isLoading = false;
+          notifyListeners();
+        });
       } else {}
-      _isLoading = false;
-      notifyListeners();
+
+      // _isLoading = false;
+      // notifyListeners();
     });
   }
 
@@ -90,7 +92,8 @@ class TutorProvider extends ChangeNotifier {
   }
 
   void search(String value, int page, bool isScrolled) {
-    _searchPage = page;
+    print("load tutor in page");
+    _page = page;
     _isLoading = true;
     print("searching .....");
     keySearch = value;
@@ -99,6 +102,7 @@ class TutorProvider extends ChangeNotifier {
       keySearch = "";
       _tutors.clear();
       _specialities.clear();
+      _page = 1;
       loadTutorsInPage(page: 1);
       // search("", 1, false);
 
@@ -111,7 +115,6 @@ class TutorProvider extends ChangeNotifier {
         listKeySpec.add(i);
       }
     }
-    print("list key spec ${listKeySpec}");
 
     _tutorApis
         .searchTutor(
@@ -128,7 +131,6 @@ class TutorProvider extends ChangeNotifier {
       } else {
         _tutors.clear();
         _tutors = tutors.rows;
-        print("${tutors.rows}");
       }
       if (_tutors.length > oldLength) {
         _hasMoreItems = true;

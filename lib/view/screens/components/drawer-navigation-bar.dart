@@ -192,6 +192,7 @@ class _HomeDrawerAndNavigationBarState
         ),
       ),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: (Theme.of(context).brightness == Brightness.light)
             ? Theme.of(context).scaffoldBackgroundColor
             : Colors.black,

@@ -130,7 +130,16 @@
     "selectCategory" : "Chọn danh mục",
     "level" : "Cấp độ",
     "category" : "Danh mục",
-    "noReviewYet" : "Chưa có đánh giá"
+    "noReviewYet" : "Chưa có đánh giá",
+    "balance" : "Số dư",
+    "price" : "Giá",
+    "oneLesson" : "1 buổi học",
+    "youHaveLesson" : "Bạn còn {lesson} buổi học",
+    "@youHaveLesson": {
+        "placeholders": {
+            "lesson": {"type": "int"}
+        }
+    }
 
     
 

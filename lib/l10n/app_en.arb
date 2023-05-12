@@ -130,7 +130,17 @@
     "selectCategory" : "Select category",
     "level" : "Level",
     "category" : "Category",
-    "noReviewYet" : "No reviews yet"
+    "noReviewYet" : "No reviews yet",
+    "balance" : "Balance",
+    "price" : "Price",
+    "oneLesson" : "1 lesson",
+    "youHaveLesson" : "You have {lesson} lessons left",
+    "@youHaveLesson": {
+        "placeholders": {
+            "lesson": {"type": "int"}
+        }
+    }
+
 
 
 

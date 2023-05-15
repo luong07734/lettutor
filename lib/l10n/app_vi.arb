@@ -164,7 +164,22 @@
     "clickOnPickVideo" : "Nhấn chọn video để thêm video giới thiệu",
     "submitForm" : "Bạn đã hoàn thành form đăng ký\nVui lòng nhấn Đăng ký và đợi phê duyệt",
     "submit" : "Đăng ký",
-    "approval" : "Phê duyệt"
+    "approval" : "Phê duyệt",
+    "days" : " ngày ",
+    "hours" : " giờ ",
+    "minutes" : " phút ",
+    "seconds" : " giây ",
+    "ultil" : " cho đến khi buổi học bắt đầu ",
+    "enterName" : "Nhập tên",
+    "enterDob" : "Nhập ngày sinh",
+    "enterCountry" : "Nhập quốc gia",
+    "enterInterest" : "Ví dụ: sở thích, hoạt động, ...",
+    "enterEducation" : "Nhập học vấn",
+    "enterExperience" : "Nhập kinh nghiệm",
+    "enterProfession" : "Nhập nghề nghiệp",
+    "enterIntroduction" : "Ví dụ: Tôi là một giáo viên...",
+    "enterSpec" : "Nhập chuyên ngành",
+    "enterLevel" : "Nhập trình độ"
 
 
     

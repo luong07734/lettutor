@@ -199,41 +199,41 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   title: AppLocalizations.of(context)!.tutoringName,
                   icon: Icons.person,
                   controller: _fullnameController,
-                  hint: "Enter your full name",
+                  hint:  AppLocalizations.of(context)!.enterName,
                   enabled: true,
                 ),
                 const SizedBox(height: 16),
                 DatePickerFormField(
                   title: AppLocalizations.of(context)!.dob,
                   controller: _doBController,
-                  hint: "Select your birthday",
+                  hint:  AppLocalizations.of(context)!.enterDob,
                 ),
                 const SizedBox(height: 16),
                 FlagTextFormField(
                   title: AppLocalizations.of(context)!.imFrom,
                   controller: _countryController,
-                  hint: "Select your country",
+                  hint:  AppLocalizations.of(context)!.enterCountry,
                 ),
                 const ProfileTitle(text: "CV"),
                 ParagraphTextField(
                     title: AppLocalizations.of(context)!.interest,
                     controller: _interestController,
-                    hint: "Interests, hobbies, ..."),
+                    hint:  AppLocalizations.of(context)!.enterInterest),
                 const SizedBox(height: 16),
                 ParagraphTextField(
                     title: AppLocalizations.of(context)!.educationTutor,
                     controller: _educationController,
-                    hint: "Enter your Education"),
+                    hint:  AppLocalizations.of(context)!.enterEducation),
                 const SizedBox(height: 16),
                 ParagraphTextField(
                     title: AppLocalizations.of(context)!.experienceTutor,
                     controller: _experienceController,
-                    hint: "Enter your Experience"),
+                    hint:  AppLocalizations.of(context)!.enterExperience),
                 const SizedBox(height: 16),
                 ParagraphTextField(
                     title: AppLocalizations.of(context)!.professionTutor,
                     controller: _professionController,
-                    hint: "Current or Previous"),
+                    hint:  AppLocalizations.of(context)!.enterExperience),
                 const SizedBox(height: 8),
                 Divider(
                   thickness: 0.5,
@@ -261,12 +261,12 @@ class _RegisterStepperState extends State<RegisterStepper> {
                 ParagraphTextField(
                     title: AppLocalizations.of(context)!.introduction,
                     controller: _introductionController,
-                    hint: "Example: I was a teacher ..."),
+                    hint:  AppLocalizations.of(context)!.enterIntroduction),
                 ProfileTitle(text: AppLocalizations.of(context)!.mySpecialties),
                 LanguageFormField(
                   languages: _specialities,
                   icon: Icons.bookmark,
-                  label: "Specialities",
+                  label:  AppLocalizations.of(context)!.specialities,
                   onSelectedLanguagesChanged: (specs) {
                     setState(() {
                       _selectedLanguages =

@@ -62,7 +62,7 @@ class ForgotPasswordPage extends StatelessWidget {
               // username textfield
               CustomTextField(
                 controller: emailController,
-                hintText: 'Enter your email',
+                hintText: AppLocalizations.of(context)!.enterEmail,
                 obscureText: false,
                 icon: const Icon(Icons.email),
               ),

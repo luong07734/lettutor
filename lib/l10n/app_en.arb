@@ -164,8 +164,22 @@
     "clickOnPickVideo" : "Click on Choose video to select video",
     "submitForm" : "You have done all the steps\nPlease, press submit wait for the operator's approval",
     "submit" : "Submit",
-    "approval" : "Approval"
-
+    "approval" : "Approval",
+    "days" : " days ",
+    "hours" : " hours ",
+    "minutes" : " minutes ",
+    "seconds" : " seconds ",
+    "ultil" : " ultil lesson start ",
+    "enterName" : "Enter name",
+    "enterDob" : "Enter DoB",
+    "enterCountry" : "Enter country",
+    "enterInterest" : "Ex: Interests, hobbies, activities, ...",
+    "enterEducation" : "Enter education",
+    "enterExperience" : "Enter experience",
+    "enterProfession" : "Enter profession",
+    "enterIntroduction" : "Ex: I am a teacher...",
+    "enterSpec" : "Enter specialities",
+    "enterLevel" : "Enter level"
 
 
 

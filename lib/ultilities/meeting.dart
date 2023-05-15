@@ -7,15 +7,16 @@ import 'package:intl/intl.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 import 'package:lettutor/models/schedule.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
-Timer? _timer;
+// Timer? _timer;
 
-Future joinMeeting(ScheduleRowItem schedule) async {
+Future joinMeeting(ScheduleRowItem schedule, BuildContext context) async {
   try {
     String? token = schedule.studentMeetingLink?.substring(13);
     dynamic roomId = json.decode(decodeBase64(token!.split(".")[1]))["room"];
     String serverUrl = "https://meet.lettutor.com";
-    bool shouldDisplayToast = true;
+    // bool shouldDisplayToast = true;
 
     Map<FeatureFlag, Object> featureFlags = {};
 
@@ -23,38 +24,39 @@ Future joinMeeting(ScheduleRowItem schedule) async {
     var options = JitsiMeetingOptions(
       roomNameOrUrl: roomId,
       serverUrl: serverUrl,
-      subject: "Letutot Meeting",
+      subject: "Letutor Meeting",
       token: token,
       isAudioMuted: true,
       isAudioOnly: false,
       isVideoMuted: true,
-      userDisplayName: "Temp User",
-      userEmail: "tempUser@gmail.com",
+      // userDisplayName: "Temp User",
+      // userEmail: "tempUser@gmail.com",
       featureFlags: featureFlags,
     );
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      String strTimeUntil = getUntilTime(DateTime.fromMillisecondsSinceEpoch(
-          schedule.scheduleDetailInfo!.startPeriodTimestamp!));
+    String strTimeUntil = getUntilTime(
+        DateTime.fromMillisecondsSinceEpoch(
+            schedule.scheduleDetailInfo!.startPeriodTimestamp!),
+        context);
 
-      if (schedule.scheduleDetailInfo!.startPeriodTimestamp! <=
-          DateTime.now().millisecondsSinceEpoch) {
-        timer.cancel();
-      } else if (shouldDisplayToast) {
-        print(shouldDisplayToast);
-        Fluttertoast.showToast(
-            msg:
-                "$strTimeUntil\n ultil lesson start (${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            timeInSecForIosWeb: 1,
-            fontSize: 16.0);
-        // print(
-        //     "$strTimeUntil\n ultil lesson start (${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})");
-      }
-    });
+    if (schedule.scheduleDetailInfo!.startPeriodTimestamp! <=
+        DateTime.now().millisecondsSinceEpoch) {
+      // timer.cancel();
+    } else {
+      // print("should display $shouldDisplayToast");
+      Fluttertoast.showToast(
+          msg:
+              "$strTimeUntil\n${AppLocalizations.of(context)!.ultil}(${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          timeInSecForIosWeb: 5,
+          fontSize: 16.0);
+      // timer.cancel();
+      // print(
+      //     "$strTimeUntil\n ultil lesson start (${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})");
+    }
 
     debugPrint("JitsiMeetingOptions: $options");
     await JitsiMeetWrapper.joinMeeting(
@@ -68,12 +70,12 @@ Future joinMeeting(ScheduleRowItem schedule) async {
             debugPrint("onConferenceJoined: url: $url");
           },
           onConferenceTerminated: (url, error) {
-            shouldDisplayToast = false;
+            // shouldDisplayToast = false;
             Fluttertoast.cancel();
-            if (_timer != null) {
-              _timer!.cancel();
-              _timer = null;
-            }
+            // if (_timer != null) {
+            //   _timer!.cancel();
+            //   // _timer = null;
+            // }
             debugPrint("onConferenceTerminated: url: $url, error: $error");
           },
           onAudioMutedChanged: (isMuted) {
@@ -112,13 +114,14 @@ Future joinMeeting(ScheduleRowItem schedule) async {
           onChatToggled: (isOpen) =>
               debugPrint("onChatToggled: isOpen: $isOpen"),
           onClosed: () {
-            shouldDisplayToast = false;
+            // shouldDisplayToast = false;
             Fluttertoast.cancel();
 
-            print("timer ${_timer}");
-            _timer!.cancel();
-            _timer = null;
-
+            // print("timer $_timer");
+            // if (_timer != null) {
+            //   _timer!.cancel();
+            //   // _timer = null;
+            // }
             debugPrint("onClosed");
           }),
     );
@@ -126,8 +129,10 @@ Future joinMeeting(ScheduleRowItem schedule) async {
     print("error: $error");
     Fluttertoast.cancel();
 
-    _timer!.cancel();
-    _timer = null;
+    // if (_timer != null) {
+    //   _timer!.cancel();
+    //   // _timer = null;
+    // }
   }
 }
 
@@ -144,7 +149,7 @@ String decodeBase64(String toDecode) {
   return res;
 }
 
-String getUntilTime(DateTime time) {
+String getUntilTime(DateTime time, BuildContext context) {
   final now = DateTime.now();
   final difference = time.difference(now);
   final days = difference.inDays;
@@ -154,9 +159,9 @@ String getUntilTime(DateTime time) {
       days * 24 * 60 * 60 -
       hours * 60 * 60 -
       minutes * 60;
-  return "$days days $hours hours $minutes minutes $seconds seconds";
+  return "$days${AppLocalizations.of(context)!.days}$hours${AppLocalizations.of(context)!.hours}$minutes${AppLocalizations.of(context)!.minutes}$seconds${AppLocalizations.of(context)!.seconds}";
 }
 
 void joinJitsiMeet(BuildContext context, ScheduleRowItem schedule) async {
-  await joinMeeting(schedule);
+  await joinMeeting(schedule, context);
 }

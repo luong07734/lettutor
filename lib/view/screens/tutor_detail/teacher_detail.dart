@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lettutor/constants/asset_manager.dart';
 import 'package:lettutor/constants/color_manager.dart';
-import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/data/network/apis/tutors/tutor_apis.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/main.dart';
@@ -33,6 +32,8 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
   bool isLoading = true;
   bool? isFavorite;
   bool isReporting = false;
+  List<FeedBack> feedbacks = [];
+
   final TutorApis _tutorApi = TutorApis();
 
   Future<bool> reportTutor(String tutorId, String content) async {
@@ -92,6 +93,13 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
         isFavorite = false;
       });
     }
+    _loadComment(tutorArgs.userId!).then((value) {
+      print("comment co kq la");
+      print("comment $value");
+      setState(() {
+        feedbacks = value;
+      });
+    });
   }
 
   String toUpperCase(String word) {
@@ -104,9 +112,20 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
 
   static Future<TutorDetail?> _loadTutorDetail(String id) async {
     var res = await TutorApis().getTutorInformationById(id);
-    if (res["statusCode"] != null) return null;
-
+    if (res["statusCode"] != null) {
+      print("return null");
+      return null;
+    }
+    print("status code is:");
+    print(res["statusCode"]);
     return TutorDetail.fromJson(res);
+  }
+
+  static Future<List<FeedBack>> _loadComment(String id) async {
+    var res = await TutorApis().loadCommentOfTutor(id, 1);
+    return res["data"]["rows"]
+        .map<FeedBack>((e) => FeedBack.fromJson(e))
+        .toList();
   }
 
   @override
@@ -326,18 +345,6 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                     ),
                   ),
                   ProfileTitle(text: AppLocalizations.of(context)!.languages),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  //   child: Wrap(
-                  //     spacing: 4.0,
-                  //     children: List.generate(3, (chipIndex) {
-                  //       return const Padding(
-                  //         padding: EdgeInsets.only(top: 4.0),
-                  //         child: CustomChip(label: "English", clickable: false),
-                  //       );
-                  //     }),
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: SizedBox(
@@ -397,17 +404,25 @@ class _TeacherDetailPageState extends State<TeacherDetailPage> {
                     ),
                   ),
                   ProfileTitle(text: AppLocalizations.of(context)!.rating),
-                  (tutorRowItem!.feedbacks == null ||
-                          tutorRowItem!.feedbacks!.length == 0)
-                      ? ProfileDescription(text: "No reviews")
+                  (feedbacks.isEmpty)
+                      ? Column(
+                          children: [
+                            ProfileDescription(
+                                text:
+                                    AppLocalizations.of(context)!.noReviewYet),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                          ],
+                        )
                       : ListView.builder(
                           reverse: true,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: tutorRowItem!.feedbacks!.length,
+                          itemCount: feedbacks.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CommentCard(
-                              feedBack: tutorRowItem!.feedbacks![index],
+                              feedBack: feedbacks[index],
                             );
                           },
                         ),

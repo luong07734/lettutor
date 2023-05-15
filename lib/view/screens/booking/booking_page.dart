@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/data/network/apis/schedule/schedule_apis.dart';
+import 'package:lettutor/data/provider/authentication_provider.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/main.dart';
 import 'package:lettutor/models/tutor_schedule.dart';
@@ -75,6 +76,8 @@ class _BookingPageState extends State<BookingPage> {
       _teacherSchedule = [];
       isLoading = false;
     }
+
+
   }
 
   static Future<List<ScheduleOfTutor>> _loadTutorSchedule(String id) async {
@@ -107,9 +110,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.booking
-        ),
+        title: Text(AppLocalizations.of(context)!.booking),
         centerTitle: true,
         elevation: 3,
       ),
@@ -164,6 +165,8 @@ class _BookingPageState extends State<BookingPage> {
                                     backgroundColor: Colors.green,
                                     duration: Duration(seconds: 2),
                                   ));
+
+                                
                                 } else {
                                   print("Booking failed!");
                                   scaffoldMessengerKey.currentState!

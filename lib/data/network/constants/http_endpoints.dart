@@ -23,6 +23,7 @@ class Endpoints {
   static const String tutorSearch = "/tutor/search";
   static const String addFavoriteTutors = "/user/manageFavoriteTutor";
   static const String reportTutor = "/report";
+  static const String comment = "/feedback/v2";
   // courses
   static const String courseList = "/course";
 

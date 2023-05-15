@@ -19,7 +19,7 @@ class TutorsPage extends StatefulWidget {
 
 class _TutorsPageState extends State<TutorsPage> {
   //final bool _showOptions = false;
-  final TextEditingController _textEditingController = TextEditingController();
+
   final _searchController = TextEditingController(); // Add this line
   // String _searchQuery = '';
 
@@ -46,10 +46,9 @@ class _TutorsPageState extends State<TutorsPage> {
     _searchController.addListener(() {
       setState(() {
         // _searchQuery = _searchController.text.toLowerCase();
-        context.read<TutorProvider>().search(
-            _searchController.text.toLowerCase(),
-            context.read<TutorProvider>().searchPage,
-            false);
+        context
+            .read<TutorProvider>()
+            .search(_searchController.text.toLowerCase(), 1, false);
       });
     });
   }
@@ -61,16 +60,20 @@ class _TutorsPageState extends State<TutorsPage> {
   }
 
   void _onScroll() {
+    print("onscroll");
     final provider = context.read<TutorProvider>();
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent) {
       // fetch next page of teacher data
-      if (_textEditingController.text.isEmpty &&
-          provider.specialities.isEmpty) {
+      if (_searchController.text.isEmpty &&
+          provider.specialities.isEmpty &&
+          provider.isVietnamese == null) {
         provider.loadTutorsInPage(page: provider.page + 1);
+        print("truong hop tren");
       } else {
+        print("load them search data");
         provider.search(_searchController.text.toLowerCase(),
-            context.read<TutorProvider>().searchPage + 1, true);
+            context.read<TutorProvider>().page + 1, true);
       }
     }
   }

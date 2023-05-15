@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title: AppLocalizations.of(context)!.name,
                         icon: Icons.person,
                         controller: _fullNameController,
-                        hint: "Enter your full name",
+                        hint: AppLocalizations.of(context)!.enterName,
                         enabled: true,
                       ),
                       const SizedBox(height: 16),
@@ -221,24 +221,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       DatePickerFormField(
                         title: AppLocalizations.of(context)!.birthday,
                         controller: _birthdayController,
-                        hint: "Select your birthday",
+                        hint: AppLocalizations.of(context)!.enterDob,
                       ),
                       const SizedBox(height: 16),
                       FlagTextFormField(
                         title: AppLocalizations.of(context)!.country,
                         controller: _countryController,
-                        hint: "Select your country",
+                        hint: AppLocalizations.of(context)!.enterCountry,
                       ),
                       const SizedBox(height: 16),
-                      // FormTextField(
-                      //     title: "Level",
-                      //     icon: Icons.numbers,
-                      //     controller: _myLevelController,
-                      //     hint: "Enter your level"),
-
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                          hintText: "Select Your Level",
+                          hintText: AppLocalizations.of(context)!.enterLevel,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -261,7 +255,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-
                       DropDownMultiSelect(
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -281,7 +274,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         selectedValues: _selectedTestPreps,
                         // whenEmpty: 'Select test preperation',
                       ),
-
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {

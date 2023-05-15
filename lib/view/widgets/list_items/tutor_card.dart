@@ -74,7 +74,7 @@ class _TutorCardState extends State<TutorCard> {
               subtitle: Row(
                 children: [
                   widget.tutor.rating == null
-                      ? Text("No reviews yet")
+                      ? Text(AppLocalizations.of(context)!.noReviewYet)
                       : RatingWidget(
                           double.parse(widget.tutor.rating.toString())
                               .toStringAsFixed(1)

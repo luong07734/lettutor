@@ -3,7 +3,6 @@ import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/ultilities/routes.dart';
-import 'package:lettutor/view/widgets/list_items/teacher_card.dart';
 import 'package:lettutor/view/widgets/list_items/tutor_card.dart';
 import 'package:provider/provider.dart';
 

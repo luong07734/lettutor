@@ -23,7 +23,7 @@ Future joinMeeting(ScheduleRowItem schedule) async {
     var options = JitsiMeetingOptions(
       roomNameOrUrl: roomId,
       serverUrl: serverUrl,
-      subject: "Letutot Meeting",
+      subject: "Letutor Meeting",
       token: token,
       isAudioMuted: true,
       isAudioOnly: false,
@@ -40,8 +40,8 @@ Future joinMeeting(ScheduleRowItem schedule) async {
       if (schedule.scheduleDetailInfo!.startPeriodTimestamp! <=
           DateTime.now().millisecondsSinceEpoch) {
         timer.cancel();
-      } else if (shouldDisplayToast) {
-        print(shouldDisplayToast);
+      } else if (shouldDisplayToast && _timer != null) {
+        print("should display $shouldDisplayToast");
         Fluttertoast.showToast(
             msg:
                 "$strTimeUntil\n ultil lesson start (${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})",
@@ -50,7 +50,8 @@ Future joinMeeting(ScheduleRowItem schedule) async {
             backgroundColor: Colors.black,
             textColor: Colors.white,
             timeInSecForIosWeb: 1,
-            fontSize: 16.0);
+            fontSize: 12.0);
+        // timer.cancel();
         // print(
         //     "$strTimeUntil\n ultil lesson start (${DateFormat("HH:mm, dd - MM - yyyy").format(DateTime.fromMillisecondsSinceEpoch(schedule.scheduleDetailInfo!.startPeriodTimestamp!))})");
       }
@@ -72,7 +73,7 @@ Future joinMeeting(ScheduleRowItem schedule) async {
             Fluttertoast.cancel();
             if (_timer != null) {
               _timer!.cancel();
-              _timer = null;
+              // _timer = null;
             }
             debugPrint("onConferenceTerminated: url: $url, error: $error");
           },
@@ -115,10 +116,11 @@ Future joinMeeting(ScheduleRowItem schedule) async {
             shouldDisplayToast = false;
             Fluttertoast.cancel();
 
-            print("timer ${_timer}");
-            _timer!.cancel();
-            _timer = null;
-
+            print("timer $_timer");
+            if (_timer != null) {
+              _timer!.cancel();
+              // _timer = null;
+            }
             debugPrint("onClosed");
           }),
     );
@@ -126,8 +128,10 @@ Future joinMeeting(ScheduleRowItem schedule) async {
     print("error: $error");
     Fluttertoast.cancel();
 
-    _timer!.cancel();
-    _timer = null;
+    if (_timer != null) {
+      _timer!.cancel();
+      // _timer = null;
+    }
   }
 }
 

@@ -14,6 +14,7 @@ import 'package:lettutor/view/widgets/view_items/textfields/date_picker_textfiel
 import 'package:lettutor/view/widgets/view_items/textfields/language_picker_textfiled.dart';
 import 'package:lettutor/view/widgets/view_items/textfields/paragraph_textfield.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class RegisterStepper extends StatefulWidget {
   @override
@@ -102,11 +103,14 @@ class _RegisterStepperState extends State<RegisterStepper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Become a Tutor'),
+        title: Text(AppLocalizations.of(context)!.becomeATutor),
         centerTitle: true,
         elevation: 3,
       ),
       body: Stepper(
+        controlsBuilder: (context, controller) {
+          return const SizedBox.shrink();
+        },
         currentStep: _currentStep,
         onStepTapped: (index) {
           setState(() {
@@ -133,8 +137,8 @@ class _RegisterStepperState extends State<RegisterStepper> {
         },
         steps: [
           Step(
-            title: const Text(
-              'Complete profile',
+            title: Text(
+              AppLocalizations.of(context)!.completeProfile,
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -144,10 +148,9 @@ class _RegisterStepperState extends State<RegisterStepper> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ProfileTitle(text: "Set up your tutor profile"),
-                const ProfileDescription(
-                    text:
-                        "You tutor profile is your chance to market yourself to students on Lettutor. You can make edits later on your profile settings page.\n\nNew students may browse tutor profiles to find a tutor that fits their learning goals and personality. Returning students may use the tutor profiles to find tutors they've had great experiences with already."),
+                ProfileTitle(text: AppLocalizations.of(context)!.setUpProfile),
+                ProfileDescription(
+                    text: AppLocalizations.of(context)!.step1Description),
                 const SizedBox(
                   height: 10,
                 ),
@@ -155,11 +158,11 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   thickness: 0.5,
                   color: Colors.grey[400],
                 ),
-                const ProfileTitle(text: "Basic Info"),
+                ProfileTitle(text: AppLocalizations.of(context)!.basicInfo),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    'Please upload your professional photo.',
+                    AppLocalizations.of(context)!.pleaseUploadPhoto,
                     style: TextStyle(
                       fontSize: 16.0,
                       color: ColorsManager.primaryColor,
@@ -193,7 +196,7 @@ class _RegisterStepperState extends State<RegisterStepper> {
                       ),
                 const SizedBox(height: 16),
                 FormTextField(
-                  title: "Full name",
+                  title: AppLocalizations.of(context)!.tutoringName,
                   icon: Icons.person,
                   controller: _fullnameController,
                   hint: "Enter your full name",
@@ -201,34 +204,34 @@ class _RegisterStepperState extends State<RegisterStepper> {
                 ),
                 const SizedBox(height: 16),
                 DatePickerFormField(
-                  title: 'Date of Birth',
+                  title: AppLocalizations.of(context)!.dob,
                   controller: _doBController,
                   hint: "Select your birthday",
                 ),
                 const SizedBox(height: 16),
                 FlagTextFormField(
-                  title: "Country",
+                  title: AppLocalizations.of(context)!.imFrom,
                   controller: _countryController,
                   hint: "Select your country",
                 ),
                 const ProfileTitle(text: "CV"),
                 ParagraphTextField(
-                    title: "Interests",
+                    title: AppLocalizations.of(context)!.interest,
                     controller: _interestController,
                     hint: "Interests, hobbies, ..."),
                 const SizedBox(height: 16),
                 ParagraphTextField(
-                    title: "Education",
+                    title: AppLocalizations.of(context)!.educationTutor,
                     controller: _educationController,
                     hint: "Enter your Education"),
                 const SizedBox(height: 16),
                 ParagraphTextField(
-                    title: "Experience",
+                    title: AppLocalizations.of(context)!.experienceTutor,
                     controller: _experienceController,
                     hint: "Enter your Experience"),
                 const SizedBox(height: 16),
                 ParagraphTextField(
-                    title: "Professsion",
+                    title: AppLocalizations.of(context)!.professionTutor,
                     controller: _professionController,
                     hint: "Current or Previous"),
                 const SizedBox(height: 8),
@@ -236,11 +239,12 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   thickness: 0.5,
                   color: Colors.grey[400],
                 ),
-                const ProfileTitle(text: "Language I speak"),
+                ProfileTitle(
+                    text: AppLocalizations.of(context)!.languageISpeak),
                 LanguageFormField(
                   languages: _languages,
                   icon: Icons.language,
-                  label: "Language",
+                  label: AppLocalizations.of(context)!.languages,
                   onSelectedLanguagesChanged: (languages) {
                     setState(() {
                       _selectedLanguages =
@@ -253,12 +257,12 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   thickness: 0.5,
                   color: Colors.grey[400],
                 ),
-                const ProfileTitle(text: "Who I teach"),
+                ProfileTitle(text: AppLocalizations.of(context)!.whoITeach),
                 ParagraphTextField(
-                    title: "Introduction",
+                    title: AppLocalizations.of(context)!.introduction,
                     controller: _introductionController,
                     hint: "Example: I was a teacher ..."),
-                const ProfileTitle(text: "My specialities are"),
+                ProfileTitle(text: AppLocalizations.of(context)!.mySpecialties),
                 LanguageFormField(
                   languages: _specialities,
                   icon: Icons.bookmark,
@@ -270,8 +274,7 @@ class _RegisterStepperState extends State<RegisterStepper> {
                     });
                   },
                 ),
-                const ProfileTitle(
-                    text: "I am best at teaching students who are"),
+                ProfileTitle(text: AppLocalizations.of(context)!.iAmBest),
                 Column(
                   children: [
                     RadioListTile(
@@ -311,8 +314,8 @@ class _RegisterStepperState extends State<RegisterStepper> {
           ),
           Step(
             isActive: true,
-            title: const Text(
-              'Video Introduction',
+            title: Text(
+              AppLocalizations.of(context)!.introductionVideo,
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -321,10 +324,10 @@ class _RegisterStepperState extends State<RegisterStepper> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ProfileTitle(text: "Introduce yourself"),
-                const ProfileDescription(
-                    text:
-                        "Let students know what they can expect from a lesson with you by recording a video highlighting your teaching style, expertise and personality. Students can be nervous to speak with a foreigner, so it really helps to have a friendly video that introduces yourself and invites students to call you."),
+                ProfileTitle(
+                    text: AppLocalizations.of(context)!.introduceYourself),
+                ProfileDescription(
+                    text: AppLocalizations.of(context)!.letStudentKnow),
                 const SizedBox(
                   height: 10,
                 ),
@@ -332,15 +335,16 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   thickness: 0.5,
                   color: Colors.grey[400],
                 ),
-                const ProfileTitle(text: "Introduction video"),
+                ProfileTitle(
+                    text: AppLocalizations.of(context)!.introductionVideo),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Container(
                     width: double.infinity,
                     color: Colors.blue,
                     padding: const EdgeInsets.all(16.0),
-                    child: const Text(
-                      'A few useful tips:\n1. Find a clean and quiet space\n2.Smile and look at the camera\n3. Dress smart\n4. Speak for 1-3 minutes\n5. Brand yourself and have fun',
+                    child: Text(
+                      AppLocalizations.of(context)!.usefulTips,
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -357,8 +361,8 @@ class _RegisterStepperState extends State<RegisterStepper> {
                         )
                       : Container()
                 else
-                  const Text(
-                    "Click on Pick Video to select video",
+                  Text(
+                    AppLocalizations.of(context)!.clickOnPickVideo,
                     style: TextStyle(fontSize: 18.0),
                   ),
                 const SizedBox(
@@ -368,14 +372,14 @@ class _RegisterStepperState extends State<RegisterStepper> {
                   onPressed: () {
                     _pickVideo();
                   },
-                  child: const Text("Pick Video From Gallery"),
+                  child: Text(AppLocalizations.of(context)!.chooseVideo),
                 ),
               ],
             ),
           ),
           Step(
-            title: const Text(
-              'Approval',
+            title: Text(
+              AppLocalizations.of(context)!.approval,
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -388,8 +392,8 @@ class _RegisterStepperState extends State<RegisterStepper> {
                 Image.asset(
                   AssetsManager.doneImage,
                 ),
-                const Text(
-                  "You have done all the steps\n Pleasse, wait for the operator's approval",
+                Text(
+                  AppLocalizations.of(context)!.submitForm,
                   style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -432,7 +436,7 @@ class _RegisterStepperState extends State<RegisterStepper> {
                       });
                     }
                   },
-                  child: const Text("Submit"),
+                  child: Text(AppLocalizations.of(context)!.submit),
                 ),
               ],
             ),

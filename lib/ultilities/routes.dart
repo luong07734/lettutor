@@ -7,7 +7,6 @@ import 'package:lettutor/view/screens/courses/course_page.dart';
 import 'package:lettutor/view/screens/favorite_tutors/favorite_tutors.dart';
 import 'package:lettutor/view/screens/forgot_password/forgot_password.dart';
 import 'package:lettutor/view/screens/history/history.dart';
-import 'package:lettutor/view/screens/home/home_page.dart';
 import 'package:lettutor/view/screens/lesson_detail/lesson_detail.dart';
 import 'package:lettutor/view/screens/log_in/log_in.dart';
 import 'package:lettutor/view/screens/not_found/not_found.dart';
@@ -20,31 +19,6 @@ import 'package:lettutor/view/screens/tutor_register/stepper.dart';
 import 'package:lettutor/view/screens/tutors/tutors_page.dart';
 import 'package:lettutor/view/screens/video_call/video_call.dart';
 
-// final Map<String, WidgetBuilder> routes = {
-//   // bottom navigation
-//   // HomePage.routeName: (BuildContext context) => HomePage(),
-//   // SchedulePage.routeName: (BuildContext context) => SchedulePage(),
-//   // TutorsPage.routeName: (BuildContext context) => TutorsPage(),
-//   // CoursePage.routeName: (BuildContext context) => CoursePage(),
-
-//   // drawer
-//   HistoryPage.routeName: (BuildContext context) => HistoryPage(),
-//   FavoriteTutorsPage.routeName: (BuildContext context) => FavoriteTutorsPage(),
-//   RegisterStepper.routeName: (BuildContext context) => RegisterStepper(),
-
-//   // video call
-//   VideoCallWidget.routeName: (BuildContext context) => VideoCallWidget(),
-
-//   //detail
-//   CourseDetailPage.routeName: (BuildContext context) => CourseDetailPage(),
-//   TeacherDetailPage.routeName: (BuildContext context) => TeacherDetailPage(),
-//   // '/lesson_detail': (BuildContext context) => CourseTopicPDFViewer(),
-
-//   // authorization
-//   LoginPage.routeName: (BuildContext context) => LoginPage(),
-//   SignUpPage.routeName: (BuildContext context) => SignUpPage(),
-//   ForgotPasswordPage.routeName: (BuildContext context) => ForgotPasswordPage(),
-// };
 
 class Routers {
   static const String Default = "/";

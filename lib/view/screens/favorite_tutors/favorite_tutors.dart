@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/constants/fake_data.dart';
 import 'package:lettutor/data/provider/tutor_provider.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/ultilities/routes.dart';

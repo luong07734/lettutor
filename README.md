@@ -12,3 +12,6 @@ Milestone 2: basic-online-app
 - [Link for youtube demo](https://youtu.be/nsZ_vKzRwMI)
 
 Milestone 3: advanced-online-app
+- [Link for youtube demo](https://youtu.be/lZdLlQ-drOE)
+- [Report](https://docs.google.com/document/d/1t_JdnvXHNTyuYXhwJ6zKu7jT-881swtHV1NwhRaO8Xs/edit?usp=sharing) 
+
